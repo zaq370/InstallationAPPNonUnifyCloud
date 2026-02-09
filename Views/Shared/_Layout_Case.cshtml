@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/case")
+    <link rel="stylesheet" href="https://use.typekit.net/mcu2fnz.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/custom/images/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="jumbotronImg" class="jumbotron">
+        <div class="container" id="container-header">
+            <h1 style="">@ViewBag.PageTitle</h1>
+        </div>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">
+                    <img src="~/Content/custom/images/matrix-logo-white-wpadding.png">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li class=""><a id="menubarModifyProfileM" href=@Url.Action("CustomerDetail")>@ViewBag.ActionCustomerDetails</a></li>
+                    <li class=""><a id="menubarNewServiceCaseM" href=@Url.Action("OrderMain")>@ViewBag.ActionNewServiceCase</a></li>
+                    <li class=""><a id="menubarViewCasesM" href=@Url.Action("OpenRepairRequest")>@ViewBag.ActionOpenRepairRequests</a></li>*@
+                    <li class=""><a id="menubarViewProductsM" href=@Url.Action("OrderInformation")>@ViewBag.ActionOrderInformation</a></li>
+                    <li class=""><a id="menubarEmailM" href=@Url.Action("EmailUs")>@ViewBag.ActionEmailUs</a></li>
+                    <li class=""><a id="menubarChangepwdM" href=@Url.Action("ChangePassword")>@ViewBag.ActionChangePassword</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href=@Url.Action("Logout", "Main")>@ViewBag.ActionLogOut</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer id="id_footer">
+        <div id="copyright-matrix-fitness">© 2024 Matrix Fitness </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/case")
+</body>
+
+</html>

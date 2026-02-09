@@ -1,0 +1,185 @@
+﻿@model InstallationAPPNonUnify.ViewModels.InstalledProductsViewModel
+@*@ViewBag.SalesOrderNumber：@if (Model.PagedProductDetail != null && Model.PagedProductDetail.Count() > 0)
+    {
+        var firstDetail = Model.PagedProductDetail.FirstOrDefault();
+        if (firstDetail != null)
+        {
+            @Html.DisplayFor(item => firstDetail.sa)
+        }
+    }*@
+<div class="container" id="body-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="form-container">
+                <div class="row">
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+
+                            <div id="InstallMainTable1">
+                                @*<h2>@ViewBag.RequestDate</h2>
+                                    <input type="date" id="requestDeliveryDate" class="left-aligned form-control" readonly />
+                                    <br />*@
+                                <div class="left-aligned" id="SearchMachine">
+                                    <h2>@ViewBag.SearchMachine</h2>
+                                    @Html.TextBoxFor(model => model.ProductNo, new { @class = "form-control", @placeholder = @ViewBag.SearchMachine })
+                                    <button id="AllmarkasnoIssue" onclick="searchProductData(event)" class="button">@ViewBag.SearchData</button>
+                                </div>
+                                @{
+                                    Html.RenderPartial("_ProductDetailPartial");   //initialize
+                                }
+                                <div id="viewPager" class="pager">
+                                    @*<p>Total Items: @Model.TotalItems</p>
+                                        <p>Total Pages: @Model.TotalPages</p>*@
+                                    @*@CustomHelper.Paging(
+                                            Model.PagedProductDetail.PageSize,
+                                            Model.PagedProductDetail.PageNumber,
+                                            Model.TotalItems, // 總項目數
+                                            new
+                                            {
+                                                action = Url.Action("InstallMain", new
+                                                {
+                                                    SalesOrderID = Request.QueryString["SalesOrderID"],
+                                                    RequestDeliveryBy = Request.QueryString["RequestDeliveryBy"],
+                                                    OriginalOrderBy = Model.OrderBy,
+                                                    OriginalAsc = Model.Asc,
+                                                    KeepSameSort = true,
+                                                    Page = Model.PagedProductDetail.PageNumber >= 1 ? string.Empty : Model.PagedProductDetail.PageNumber.ToString()
+                                                })
+                                            }
+                                        )*@
+                                </div>
+                            </div>
+                            <div id="InstallMainTable2" style="display:none">
+                                @*<h2>@ViewBag.RequestDate</h2>
+                                    <input type="date" id="requestDeliveryDate2" class="left-aligned form-control" readonly />
+                                    <br />
+                                    <div class="left-aligned" id="SearchMachine2">
+                                        <h2>@ViewBag.SearchMachine</h2>
+                                        @Html.TextBoxFor(model => model.ProductNo, new { @class = "form-control", @placeholder = @ViewBag.SearchMachine })
+                                        <button id="AllmarkasnoIssue2" onclick="searchProductData2(event)" class="button">@ViewBag.SearchData</button>
+                                    </div>*@
+                                @{
+                                    Html.RenderPartial("_ProductDetailPartial2");   //initialize
+                                }
+
+                                <div id="viewPager2" class="pager">
+
+                                    @*@CustomHelper.Paging(
+                                            Model.PagedProductDetail.PageSize,
+                                            Model.PagedProductDetail.PageNumber,
+                                            Model.PagedProductDetail.TotalItemCount,
+                                            new
+                                            {
+                                                action = @Url.Action(
+                                                    "InstallMain",
+                                                    new
+                                                    {
+                                                        SalesOrderID = Request.QueryString["SalesOrderID"],
+                                                        RequestDeliveryBy = Request.QueryString["RequestDeliveryBy"],
+                                                        //CustomerProductId = Model.ProductNo., // Assuming this is the correct field from Model.PagedProductDetail
+                                                        OriginalOrderBy = Model.OrderBy,
+                                                        OriginalAsc = Model.Asc,
+                                                        KeepSameSort = true
+                                                    }
+                                                )
+                                            }
+                                        )*@
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="reportIssueModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal(event)">&times;</span>
+                                <h3 id="modalProductName">Report Issue for Product Name</h3>
+
+                                <p class="serial-row">
+                                    <strong>Serial No:</strong>
+                                    <span id="serialno"></span>
+                                </p>
+
+                                <p class="productno-row">
+                                    <strong>Product no:</strong>
+                                    <span id="productno"></span>
+                                </p>
+                                <input type="hidden" id="productid" />
+                                @*<input type="text" id="productid2" />*@
+                            <label for="Excepted">@ViewBag.ExceptedAmount:</label>
+                                <input type="text" id="Excepted" value="5" class="form-control" readonly />
+                                <hr />
+
+                                <label for="Delivered">@ViewBag.DeliveredAmount:</label>
+                                <input type="text" id="Delivered" value="" class="form-control" />
+                                <hr />
+
+                                <label for="issue">@ViewBag.IssueTitle:</label>
+                                <select id="issue" class="form-control">
+                                    <option value="1">Product Unavailable</option>
+                                    <option value="2">Product Picking Error</option>
+                                    <option value="3">Johnson OOB Issue</option>
+                                    <option value="4">Johnson Pre-assembly Error</option>
+                                    <option value="5">Damaged Product</option>
+                                    <option value="6">Installed Different Product from Product Checklist</option>
+                                    <option value="7">Customer Site Not Ready</option>
+                                    <option value="8">Others (Please fill in Notes)</option>
+                                </select>
+
+                                <label for="notes">@ViewBag.IssueNotes:</label>
+                                    <textarea id="notes" class="form-control"></textarea>
+                                <hr />
+
+                                <label for="upload">@ViewBag.AttachImage:</label>
+                                <input type="file" id="upload" />
+                                <hr />
+
+                                <button class="save-issue-btn" onclick="saveIssue(event)">@ViewBag.IssueSave</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function handleButtonClick(saveUrl, redirectUrl) {
+        // 使用 Fetch API 發送 POST 請求到後端
+        fetch(saveUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ /* 可根據需要傳遞參數 */ })
+        })
+        .then(response => {
+            if (response.ok) {
+                // 資料庫操作成功後跳轉到指定頁面
+                window.location.href = redirectUrl;
+    } else {
+            alert('資料庫操作失敗，請稍後再試！');
+    }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    alert('發生錯誤，請稍後再試！');
+    });
+    }
+
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+
+    function Failed(result) {
+        //alert("failed!");
+        //導向重新登入
+        //document.location.href = logoutUrl;
+    }
+
+    function Successed(result) {
+        //alert("successed!");
+        if (result.error) {
+            document.location.href = logoutUrl;
+        }
+    }
+
+
+</script>

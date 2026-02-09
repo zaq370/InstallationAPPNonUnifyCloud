@@ -1,0 +1,100 @@
+﻿@model InstallationAPPNonUnify.ViewModels.InstalledProductsViewModel
+
+<div class="ai-safe-scope2">
+    <div class="product-list-wrapper">
+        <h2 class="text-left" style="font-size:30px;">@ViewBag.ProductList</h2>
+        <hr class="top-line" />
+        <div id="toBeInstalledSection" class="text-center">
+            <div class="container">
+                <div class="tables-wrapper">
+                    <!-- Left Side: With Serial Numbers -->
+                    <div class="table-box">
+                        @{
+                            var hasData = Model.ProductDetail != null && Model.ProductDetail.Any();
+                        }
+
+                        <table class="product-list-table text-center @(hasData ? "" : "table-empty")">
+                            <thead>
+                                <tr>
+                                    <th>@ViewBag.InstallMainAction</th>
+                                    <th>@ViewBag.ProductNo</th>
+                                    <th>@ViewBag.ProductName</th>
+                                    <th>@ViewBag.InstallMainQuantity</th>
+                                    <th>@ViewBag.InstallMainAction</th>
+                                    @*
+                <th>@ViewBag.ProductID</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (hasData)
+                                {
+                                    foreach (var product in Model.ProductDetail)
+                                    {
+                                        <tr class="product-row">
+                                            <td class="action-cell" data-label="@ViewBag.InstallMainAction">
+                                                <button type="button"
+                                                        class="report-noissue-button"
+                                                        data-pno-name="@product.ProductNo"
+                                                        onclick="nonIssue(event, this)">
+                                                    @ViewBag.ReportNoIssue
+                                                </button>
+                                            </td>
+                                            <td data-label="@ViewBag.ProductNo">
+                                                @product.ProductNo
+                                            </td>
+
+                                            <td data-label="@ViewBag.ProductName">
+                                                @product.Product
+                                            </td>
+
+                                            <td data-label="@ViewBag.InstallMainQuantity">
+                                                @product.InstalledQty
+                                            </td>
+
+                                            <td class="action-cell" data-label="@ViewBag.InstallMainAction">
+                                                <button class="report-issue-button" data-product-name="@product.Product" data-qty-name="@product.InstalledQty" data-id-name="@product.Productguid" data-pno-name="@product.ProductNo" data-sno-name="@product.SerialNo" onclick="openModal(this,event)">@ViewBag.ReportIssue</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">@ViewBag.NoData</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="top-line" />
+</div>
+
+<div>
+    <button type="button"
+            onclick="confirmInstallation(event)"
+            class="button"
+            id="ConfirmInstallation">
+        @ViewBag.ConfirmInstallation
+    </button>
+</div>
+
+<script>
+    (function () {
+        // 1. 從後端帶出布林值（true/false，小寫）
+        var hasData = @hasData.ToString().ToLower();  // 例如：true 或 false
+
+        // 2. 找到按鈕
+        var btn = document.getElementById("ConfirmInstallation");
+        if (!btn) return;  // 找不到就直接離開，避免錯誤
+
+        // 3. 沒資料時「不能按」
+        btn.disabled = !hasData;
+
+    })();
+</script>
+

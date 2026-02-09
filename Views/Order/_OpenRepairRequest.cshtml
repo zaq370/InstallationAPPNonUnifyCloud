@@ -1,0 +1,111 @@
+﻿@model InstallationAPP2024.ViewModels.RepairRequestViewModel
+
+
+<table id="OpenRepairRequestsTable" class="space table">
+    <tr class="header">
+        <th class="hidden-xs hidden-sm CustomerName">
+            @Ajax.ActionLink((string)ViewBag.CustomerName, "OpenRepairRequest", new { OrderBy = "CustomerName", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Ajax.ActionLink((string)ViewBag.CaseProductNo, "OpenRepairRequest", new { OrderBy = "CaseProductNo", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="d-none d-sm-none d-md-none d-lg-table-cell width-20">
+            @Ajax.ActionLink((string)ViewBag.ReportedDate, "OpenRepairRequest", new { OrderBy = "ReportedDate", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Ajax.ActionLink((string)ViewBag.ReportedBy, "OpenRepairRequest", new { OrderBy = "ProductName", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Ajax.ActionLink((string)ViewBag.ProductName, "OpenRepairRequest", new { OrderBy = "ProductName", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        @if (Model.ShowInternalNo) { 
+            <th class="hidden-xs hidden-sm">
+                @Ajax.ActionLink((string)ViewBag.InternalNo, "OpenRepairRequest", new { OrderBy = "InternalNo", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+            </th>
+        }
+        <th class="d-none d-sm-none d-md-none d-lg-table-cell width-30">
+            @Ajax.ActionLink((string)ViewBag.FrameSerialNo, "OpenRepairRequest", new { OrderBy = "FrameSerialNo", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Ajax.ActionLink((string)ViewBag.ConsoleSerialNo, "OpenRepairRequest", new { OrderBy = "ConsoleSerialNo", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="d-none d-sm-none d-md-none d-lg-table-cell width-30">
+            @Ajax.ActionLink((string)ViewBag.FaultDescription, "OpenRepairRequest", new { OrderBy = "FaultDescription", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+        <th class="d-none d-sm-none d-md-none d-lg-table-cell width-20">
+            @Ajax.ActionLink((string)ViewBag.Status, "OpenRepairRequest", new { OrderBy = "Status", OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, AccountProductId = Model.AccountProductId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "OpenRepairRequests", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" })
+        </th>
+    </tr>
+    @if (Model.PagedDetail != null && Model.PagedDetail.Count() > 0)
+    {
+        foreach (var detail in Model.PagedDetail)
+        {
+            var reportedDate = string.Empty;
+            if (detail.ReportedDate != DateTime.MinValue) {
+                reportedDate = string.Format("{0:" + Model.DateFormat + "}", Convert.ToDateTime(Html.DisplayFor(model => detail.ReportedDate).ToString()));
+            }
+            <tr class="content space">
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(item => detail.CustomerName)
+                </td>
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(item => detail.CaseProductNo)
+                </td>
+                <td class="d-none d-sm-none d-md-none d-lg-table-cell">
+                    @reportedDate
+                </td>
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(item => detail.ReportedBy)
+                </td>
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(item => detail.ProductName)
+                </td>
+                @if (Model.ShowInternalNo) {
+                    <td class="hidden-xs hidden-sm">
+                        @Html.DisplayFor(item => detail.InternalNo)
+                    </td>
+                }
+                <td class="d-none d-sm-none d-md-none d-lg-table-cell text-break-all">
+                    @Html.DisplayFor(item => detail.FrameSerialNo)
+                </td>
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(item => detail.ConsoleSerialNo)
+                </td>
+                <td class="d-none d-sm-none d-md-none d-lg-table-cell text-break-all">
+                    @Html.DisplayFor(item => detail.FaultDescription)
+                </td>
+                <td class="d-none d-sm-none d-md-none d-lg-table-cell">
+                    @Html.DisplayFor(item => detail.Status)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="10">@ViewBag.NoData</td></tr>
+    }
+</table>
+<div id="viewPager" class="pager">
+    @CustomHelper.Paging(
+        Model.PagedDetail.PageSize, Model.PagedDetail.PageNumber, Model.PagedDetail.TotalItemCount,
+        new
+        {
+            action = Url.Action("OpenRepairRequest", new { OriginalOrderBy = Model.OrderBy, OriginalAsc = Model.Asc, KeepSameSort = true, AccountProductId = Model.AccountProductId })
+        }
+    )
+</div>
+<script>
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+
+    function Failed(result) {
+        //alert("failed!");
+        //導向重新登入
+        //document.location.href = logoutUrl;
+    }
+
+    function Successed(result) {
+        if (result.error) {
+           document.location.href = logoutUrl;
+        }
+    }
+</script>

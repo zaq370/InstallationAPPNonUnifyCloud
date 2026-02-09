@@ -1,0 +1,87 @@
+﻿@model InstallationAPPNonUnify.ViewModels.OrderInformationViewModel
+
+@Html.HiddenFor(m => m.SalesOrderNumber)
+@Html.HiddenFor(m => m.CustomerName)
+@*@Html.HiddenFor(m => m.InternalNo)*@
+@Html.HiddenFor(m => m.Asc)
+@Html.HiddenFor(m => m.OrderBy)
+
+<div class="container-full" id="OrderInformation">
+    <table id="ProductServiceHistoryTable1" class="product-list-table">
+        <tr class="header space">
+            <th class="d-none d-sm-none d-md-none d-lg-table-cell width-30">
+                <a href='javascript:OrderInformation.RefershResult("SalesOrderNumber")'>
+                    @ViewBag.SalesOrderNumber
+                </a>
+            </th>
+            <th class="d-none d-sm-none d-md-none d-lg-table-cell width-32">
+                <a href='javascript:OrderInformation.RefershResult("CustomerName")'>
+                    @ViewBag.CustomerName
+                </a>
+            </th>
+
+            <th class="width-14"></th>
+        </tr>
+        @if (Model.PagedProductDetail != null && Model.PagedProductDetail.Count() > 0)
+        {
+            foreach (var detail in Model.PagedProductDetail)
+            {
+
+                <tr class="body space">
+                    @*<td class="hidden-xs hidden-sm">@Html.DisplayFor(item => detail.CustomerName)</td>*@
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell text-break-all">
+                        @Html.DisplayFor(item => detail.SalesOrderNumber)
+                    </td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell text-break-all">
+                        @Html.DisplayFor(item => detail.CustomerName)
+                    </td>
+
+                    <td>
+                        @*<input type="button" value='@ViewBag.Detail' class="report-issue-button" onclick="location.href='@Url.Action("CustomerOrderInformation", new { SalesOrderID = detail.SalesOrderId })'">*@
+                        @* ⬇⬇⬇ 這裡改成呼叫 JS，不再跳頁 ⬇⬇⬇ *@
+                        <input type="button"
+                               value='@ViewBag.Detail'
+                               class="report-issue-button"
+                               onclick="loadCustomerOrderInformation('@detail.SalesOrderId')" />
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="3">@ViewBag.NoData</td></tr>
+        }
+    </table>
+    <div id="viewPager" class="pager">
+        @CustomHelper.Paging(
+                Model.PagedProductDetail.PageSize, Model.PagedProductDetail.PageNumber, Model.PagedProductDetail.TotalItemCount,
+                new
+                {
+                    form = "OrderInformation.cshtml"
+                }
+        )
+    </div>
+    @* ⬇⬇⬇ CustomerOrderInformation 會被塞在這裡 ⬇⬇⬇ *@
+    <div id="CustomerOrderInformationContainer">
+        @* 點 Detail 後，用 AJAX 把 CustomerOrderInformation 畫面載入到這裡 *@
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function loadCustomerOrderInformation(salesOrderId) {
+            $.get('@Url.Action("CustomerOrderInformation", "Order")',
+                { SalesOrderID: salesOrderId },
+                function (html) {
+                    // 把回傳的畫面塞到最下面
+                    $('#CustomerOrderInformationContainer').html(html);
+
+                    // 捲動到這一段，讓工程師/安裝人員不用自己找
+                    $('html, body').animate({
+                        scrollTop: $('#CustomerOrderInformationContainer').offset().top
+                    }, 500);
+                }
+            );
+        }
+    </script>
+}

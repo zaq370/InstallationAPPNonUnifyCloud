@@ -1,0 +1,166 @@
+﻿@model InstallationAPP2024.ViewModels.CustomerProductViewModel
+@using Newtonsoft.Json
+
+<script>
+    @*var modelMessage = '@Html.Raw(Model.Message)';*@
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var selectMachineUrl = '@Url.Action("CustomerProductInfo", "Case")';
+    var checkOpenCaseUrl = '@Url.Action("CheckOpenCase", "Case")';
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+
+<div id="CustomerProductViewForm">
+    <div class="row col-sm-12 col-md-12 col-lg-12">
+        <h3 class="text-center">
+            <font color="black">
+                @ViewBag.SelectCustomerProduct
+            </font>
+        </h3>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <p class="row criteriaLabel">
+                    @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.ProductCriteria))
+                </p>
+                @Html.TextBoxFor(model => model.ProductCriteria, new { @class = "input-block-level criteriaInput " })
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <p class="row criteriaLabel">
+                    @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.ProuductSNCriteria))
+                </p>
+                @Html.TextBoxFor(model => model.ProuductSNCriteria, new { @class = "input-block-level criteriaInput" })
+            </div>
+            @if (Model.ShowInternalNo) { 
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                    <p class="row criteriaLabel">
+                        @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.InternalNoCriteria))
+                    </p>
+                    @Html.TextBoxFor(model => model.InternalNoCriteria, new { @class = "input-block-level criteriaInput" })
+                </div>
+            }
+            
+            @Html.HiddenFor(model => model.OrderBy)
+            @Html.HiddenFor(model => model.OrderByAsc)
+        </div>
+        <div class='clear'></div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                <input type="button" class="btn-red-primary btn-large criteriaButton" value='@ViewBag.SearchMachine' onclick="CaseMain.btn_select_Click()">
+            </div>
+        </div>
+        <br />
+        <table class="productDetailTable">
+            <thead>
+                <tr class="space">
+                    <th class="d-none d-sm-none d-md-none d-lg-table-cell">
+                        <a href='javascript:CaseMain.btn_select_Click("ProductName")'>@ViewBag.ProductName</a>
+                    </th>
+                    <th class="d-none d-sm-none d-md-none d-lg-table-cell">
+                        <a href='javascript:CaseMain.btn_select_Click("ProductSerialNo")'>@ViewBag.ProductSN</a>
+                    </th>
+                    <th class="hidden-xs hidden-sm">
+                        <a href='javascript:CaseMain.btn_select_Click("ConsoleSerialNo")'>@ViewBag.ConsoleSerialNo</a>
+                    </th>
+                    @if (Model.ShowInternalNo) { 
+                        <th class="d-none d-sm-none d-md-none d-lg-table-cell">
+                            <a href='javascript:CaseMain.btn_select_Click("InternalNo")'>@ViewBag.InternalNo</a>
+                        </th>
+                    }
+                    <th class="hidden-xs hidden-sm">
+                        <a href='javascript:CaseMain.btn_select_Click("InstallDate")'>@ViewBag.InstallDate</a>
+                    </th>
+                    <th class="hidden-xs hidden-sm">
+                        <a href='javascript:CaseMain.btn_select_Click("PartsExpiryDate")'>@ViewBag.PartsExpiryDate</a>
+                    </th>
+                    <th class="header-center" scope="col"> </th>
+                </tr>
+            </thead>
+            @if (Model.PagedDetail != null)
+            {
+                foreach (var detail in Model.PagedDetail)
+                {
+                    var detailInJson = Html.Raw(JsonConvert.SerializeObject(detail,
+                              new Newtonsoft.Json.JsonSerializerSettings
+                              {
+                                  StringEscapeHandling = Newtonsoft.Json.StringEscapeHandling.EscapeHtml
+                              }));
+                    var installDate = string.Empty;
+                    var PartsExpiryDate = string.Empty;
+                    if (detail.InstallDate != DateTime.MinValue)
+                    {
+                        installDate = string.Format("{0:" + Model.DateFormat + "}", Convert.ToDateTime(Html.DisplayFor(model => detail.InstallDate).ToString()));
+                    }
+                    if (detail.PartsExpiryDate != DateTime.MinValue)
+                    {
+                        PartsExpiryDate = string.Format("{0:" + Model.DateFormat + "}", Convert.ToDateTime(Html.DisplayFor(model => detail.PartsExpiryDate).ToString()));
+                    }
+
+                    <tr class="space tableContent" data-detail='@detailInJson'>
+                        <td>@Html.DisplayFor(item => detail.ProductName)</td>
+                        <td style="word-break:break-all">@Html.DisplayFor(item => detail.ProductSerialNo)</td>
+                        <td class="hidden-xs hidden-sm">@Html.DisplayFor(item => detail.ConsoleSerialNo)</td>
+                        @if (Model.ShowInternalNo)
+                        {
+                            <td>@Html.DisplayFor(item => detail.InternalSN)</td>
+                        }
+
+                        <td class="hidden-xs hidden-sm">@installDate</td>
+                        <td class="hidden-xs hidden-sm">@PartsExpiryDate</td>
+                        <td><input type="button" value='@ViewBag.Select' class="btn-red-primary btn-large" onclick="CustomerProduct.SelectCustomerProduct(this)"></td>
+                    </tr>
+                }
+            }
+        </table>
+        <div id="viewPager" class="pager">
+            @CustomHelper.Paging(
+                Model.PagedDetail.PageSize, Model.PagedDetail.PageNumber, Model.PagedDetail.TotalItemCount,
+                new
+                {
+                    form = "_CustomerProduct.cshtml"
+                }
+            )
+        </div>
+        <div style="text-align: center" class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <a href="javascript:CustomerProduct.CustomerProductClose()" style="color:black"> @ViewBag.Cancel</a>
+                </div>
+            </div>
+        </div>
+        <div id="duplicateModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <p>@ViewBag.DuplicateDialog1</p>
+                <p>@ViewBag.DuplicateDialog2</p>
+                <p>@ViewBag.DuplicateDialog3</p>
+                <input type="button" value='@ViewBag.Okay' class="btn-red-primary btn-large btn-sub" onclick="CustomerProduct.GoToOpenRepairReqeust()">
+                <input type="button" value='@ViewBag.Continue' class="btn-red-primary btn-large btn-sub" onclick="CustomerProduct.GoToNewServiceCase()">
+                <input type="hidden" name="AccountProductSN" id="AccountProductSN" />
+                <input type="hidden" name="AccountProductID" id="AccountProductID" />
+                <input type="hidden" name="AccountProductName" id="AccountProductName" />
+                <input type="hidden" name="AccountProductDetail" id="AccountProductDetail" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/new-service-case.jpg")' + ")";
+
+        document.getElementById("menubarNewServiceCaseM").parentElement.classList.add("active");
+
+        //關掉的按鈕
+        var closeDialogBtn = document.getElementsByClassName("modal-close")[0];
+        closeDialogBtn.onclick = function () {
+            document.getElementById("duplicateModal").style.display = "none";
+        }
+
+    })();
+</script>

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/unauth")
+    <link rel="stylesheet" href="https://use.typekit.net/mcu2fnz.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/custom/images/favicon.ico">
+</head>
+<body id="layout_unauth">
+    <nav class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="brand">
+                    <img src="~/Content/Custom/images/matrix-logo-white-wpadding.png" />
+                </div>
+
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer id="id_footer">
+        @*<div id="register-link">
+            <br />
+            <p><a href=@Url.Action("EmailUs") style="display:inline-block">@ViewBag.FooterServiceAnnounce</a></p>
+        </div>*@
+        <div id="copyright-matrix-fitness">@ViewBag.FooterAnnounce</div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/unauth")
+    <script>
+        $(document).ready(function () {
+            if (!navigator.cookieEnabled) {
+                alert(ModelMessageObejct["CookieDisabled"]);
+            };
+        });
+    </script>
+</body>
+
+</html>

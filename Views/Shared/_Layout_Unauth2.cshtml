@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/unauth")
+    <link rel="stylesheet" href="https://use.typekit.net/mcu2fnz.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Custom/images/favicon.ico">
+</head>
+<body id="layout_unauth2">
+    <div id="company">
+        <div class="container-fluid header">
+            <a href=@Url.Action("Login")>
+                <img src="~/Content/Custom/images/header-matrix-logo.png" border="0" alt="Johnson fitness logo" />
+            </a>
+        </div>
+    </div>
+    @RenderBody()
+    <footer id="id_footer">
+        <div id="loginfooter">
+            <h5>@ViewBag.FooterAnnounce</h5>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/unauth")
+</body>
+</html>

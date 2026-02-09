@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Unauth2.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <br /><br /><br /><br /><br><br>
+    <div id="OutOfServiceView">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="title">
+                        <p>
+                            @ViewBag.PageTitle
+                        </p>
+                        <p>
+                            @ViewBag.Message
+                        </p>
+                        <p>
+                            @ViewBag.BackInServiceTime
+                        </p>
+                        @if (!string.IsNullOrEmpty(ViewBag.Email) && !string.IsNullOrWhiteSpace(ViewBag.Email) 
+                            && !string.IsNullOrEmpty(ViewBag.Telephone) && !string.IsNullOrWhiteSpace(ViewBag.Telephone)) {
+                            <p class="small">
+                                @ViewBag.Message2
+                            </p>
+                            if (!string.IsNullOrEmpty(ViewBag.Email) && !string.IsNullOrWhiteSpace(ViewBag.Email)) { 
+                                <p class="small">
+                                    @ViewBag.Email
+                                    <a href="mailto: @ViewBag.EmailAddress">@ViewBag.EmailAddress</a>
+                                </p>
+                            }
+                            if (!string.IsNullOrEmpty(ViewBag.Telephone) && !string.IsNullOrWhiteSpace(ViewBag.Telephone))
+                            {
+                                <p class="small">
+                                    @ViewBag.Telephone
+                                </p>
+                            }
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br /><br /><br><br>
+</body>
+</html>

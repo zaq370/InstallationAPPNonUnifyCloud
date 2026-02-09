@@ -1,0 +1,71 @@
+﻿@model InstallationAPPNonUnify.ViewModels.InstalledProductsViewModel
+
+<div class="ai-safe-scope">
+    <div class="product-list-wrapper">
+        <h2 class="text-left" style="font-size:30px;">@ViewBag.ProductList</h2>
+        <!-- 副標題 -->
+        <div class="text-left" style="font-size:20px; color:#A6A6A6; margin-top:-5px; margin-bottom:15px;">
+            Click the ‘Report Issue’ button to adjust the previously checked item
+        </div>
+        <hr class="top-line" />
+        <div id="installedThisTimeSection" class="text-center">
+            <div class="container">
+                <div class="tables-wrapper">
+                    <div class="table-box">
+
+                        @{
+                            var hasData = Model.ProductDetail3 != null && Model.ProductDetail3.Any();
+                        }
+
+                        <table class="responsive-table @(hasData ? "" : "table-empty")">
+                            <thead>
+                                <tr>
+                                    <th>@ViewBag.InstallMainAction</th>
+                                    <th>@ViewBag.ProductNo</th>
+                                    <th>@ViewBag.ProductName</th>
+                                    <th>@ViewBag.ProductSN</th>
+                                    <th>@ViewBag.OrderMainQuantity</th>
+                                    <th>@ViewBag.InstallMainQuantity</th>
+                                    <th>@ViewBag.InstallMainIssue</th>
+                                    <th>@ViewBag.InstallMainIssueUpload</th>
+                                    <th>@ViewBag.InstallMainIssueNotes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (hasData)
+                                {
+                                    foreach (var product in Model.ProductDetail3)
+                                    {
+                                        var snText = string.IsNullOrWhiteSpace(product.ProductSN)
+                                            ? "No Serial Number"
+                                            : product.ProductSN;
+
+                                <tr>
+                                    <td class="action-cell" data-label="@ViewBag.InstallMainAction">
+                                        <button class="report-issue-button" data-product-name="@product.Product" data-qty-name="@product.InstalledQty" data-id-name="@product.Productguid" data-pno-name="@product.ProductNo" data-sno-name="@product.SerialNo" onclick="openModal(this,event)">@ViewBag.ReportIssue</button>
+                                    </td>
+                                    <td data-label="@ViewBag.ProductNo">@product.ProductNo</td>
+                                    <td data-label="@ViewBag.ProductName">@product.Product</td>
+                                    <td data-label="@ViewBag.ProductSN" class="break-all">@snText</td>
+                                    <td data-label="@ViewBag.OrderMainQuantity">@product.ExpectedQty</td>
+                                    <td data-label="@ViewBag.InstallMainQuantity">@product.InstalledQty</td>
+                                    <td data-label="@ViewBag.InstallMainIssue">@product.InstallMainIssue</td>
+                                    <td data-label="@ViewBag.InstallMainIssueUpload">@product.InstallMainIssueUpload</td>
+                                    <td data-label="@ViewBag.InstallMainIssueNotes">@product.InstallMainIssueNotes</td>
+                                </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="8">@ViewBag.NoData</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

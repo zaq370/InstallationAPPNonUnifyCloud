@@ -1,0 +1,70 @@
+﻿@model InstallationAPPNonUnify.ViewModels.CustomerOrderInformationViewModel
+
+@*<div class="sales-order-number">
+    @ViewBag.SalesOrderNumber：
+    @if (Model != null && Model.PagedDetail != null && Model.PagedDetail.Any())
+    {
+        var firstDetail = Model.PagedDetail.FirstOrDefault();
+        if (firstDetail != null)
+        {
+            @Html.DisplayFor(item => firstDetail.SalesOrderNumber)
+        }
+    }
+</div>*@
+
+<table id="CustomerOrderInformationTable1" class="product-list-table">
+    <tr class="header space">
+        <th class="d-none d-sm-none d-md-none d-lg-table-cell width-20">
+            @ViewBag.RequestDeliveryBy
+        </th>
+        <th class="width-14"></th>
+    </tr>
+
+    @if (Model != null && Model.PagedDetail != null && Model.PagedDetail.Any())
+    {
+        foreach (var detail in Model.PagedDetail)
+        {
+            <tr class="body space">
+                <td class="d-none d-sm-none d-md-none d-lg-table-cell text-break-all">
+                    @Html.DisplayFor(item => detail.RequestDeliveryBy)
+                </td>
+                <td>
+                    <input type="button"
+                           value="Go to installation"
+                           class="report-issue-button"
+                           onclick="handleButtonClick(
+                               '@Url.Action("OrderSaveData", new { SalesOrderID = detail.SalesOrderID, RequestDeliveryBy = detail.RequestDeliveryBy })',
+                               '@Url.Action("OrderMain", new { SalesOrderID = detail.SalesOrderID, RequestDeliveryBy = detail.RequestDeliveryBy })'
+                           )" />
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="2">@ViewBag.NoData</td>
+        </tr>
+    }
+</table>
+
+@if (Model != null && Model.PagedDetail != null && Model.PagedDetail.Any())
+{
+    <div id="viewPager" class="pager">
+        @CustomHelper.Paging(
+            Model.PagedDetail.PageSize,
+            Model.PagedDetail.PageNumber,
+            Model.PagedDetail.TotalItemCount,
+            new
+            {
+                action = Url.Action("CustomerOrderInformation", new
+                {
+                    CustomerProductId = Model.CustomerProductId,
+                    OriginalOrderBy = Model.OrderBy,
+                    OriginalAsc = Model.Asc,
+                    KeepSameSort = true
+                })
+            }
+        )
+    </div>
+}
