@@ -1,0 +1,91 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.PickLanguageSetViewModel
+
+@{
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+    if (Model.Countries != null)
+    {
+        foreach (var country in Model.Countries)
+        {
+            SelectListItem item = new SelectListItem();
+            item.Text = country.Value;
+            item.Value = country.Key;
+            listItems.Add(item);
+        }
+    }
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var IsSuperUser = ('@ViewBag.IsSuperUser' == 'True');
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+    document.getElementById("LanguageSettingNavbar").parentElement.classList.add("active");
+
+    $(document).ready(function () {
+        var screenHeight = 0;
+        $(".half-screen").each(function () {
+            if ($(this).outerHeight() > screenHeight)
+                screenHeight = $(this).outerHeight();
+        });
+        $(".half-screen").outerHeight(screenHeight);
+
+        $("#SubmitFile").css("display", "none");
+
+        $("#ImportFile").change(function () {
+            var filePath = $(this).val();
+            if (filePath) {
+                var fileName = filePath.substr(filePath.lastIndexOf('\\') + 1);
+                $("#FilePath").text(fileName);
+                $("#SubmitFile").css("display", "");
+            }
+        });
+    });
+
+</script>
+
+<div class="half-screen">
+    @using (Html.BeginForm("PickLanguageSet", "Main", FormMethod.Post, new { @class = "validationForm" }))
+    {
+        <br />
+        <div class="form-group">
+            <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.PickedCountry1))</label>
+            @Html.DropDownListFor(model => model.PickedCountry1, listItems)
+            @Html.ValidationMessageFor(model => model.PickedCountry1, "", new { @class = "filedError" })
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.PickedCountry2))</label>
+            @Html.DropDownListFor(model => model.PickedCountry2, listItems, "--")
+            @Html.ValidationMessageFor(model => model.PickedCountry2, "", new { @class = "filedError" })
+        </div>
+        <br />
+        <input type="submit" value='@ViewBag.StartModify' class="btn btn-danger">
+    }
+</div>
+<div class="half-screen">
+    <form action='@Url.Action("ImportLanguagePackage")' method="post" enctype="multipart/form-data">
+        <br />
+        <label class="btn btn-primary">
+            <input type="file" id="ImportFile" name="ImportFile" accept=".xml" style="opacity:0; width:0; display:inline-block">
+            @ViewBag.ImportLanguagePack
+        </label>
+        <input type="submit" id="SubmitFile" value="@ViewBag.Apply" class="btn btn-danger">
+        <br>
+        <span id="FilePath"></span>
+        
+        <br>
+        <br>
+        @Html.ActionLink((string)ViewBag.ExportLanguagePack, "ExportLanguagePackage", "", new { target = "_blank", @class="btn btn-success"})
+        @*<input type="button" id="ExportFile" value="@ViewBag.ExportLanguagePack" class="btn btn-success">*@
+    </form>
+</div>

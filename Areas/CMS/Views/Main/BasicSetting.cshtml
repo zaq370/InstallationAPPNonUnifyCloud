@@ -1,0 +1,82 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.BasicSettingViewModel
+
+@{
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var IsSuperUser = ('@ViewBag.IsSuperUser'=='True');
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+    document.getElementById("BasicSettingNavbar").parentElement.classList.add("active");
+</script>
+
+@using (Html.BeginForm("BasicSetting", "Main", FormMethod.Post, new { @class = "validationForm addRequiredStars" }))
+{
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.CompanyName))</label>
+        @Html.TextBoxFor(model => model.CompanyName, new { @class = "input-block-level input-field col-6" })
+        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.Telphone))</label>
+        @Html.TextBoxFor(model => model.Telphone, new { @class = "input-block-level input-field col-6" })
+        @Html.ValidationMessageFor(model => model.Telphone, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.ServiceEmail))</label>
+        @Html.TextBoxFor(model => model.ServiceEmail, new { @class = "input-block-level input-field col-8" })
+        @Html.ValidationMessageFor(model => model.ServiceEmail, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.Website))</label>
+        <input type="button" value='@ViewBag.OpenUrl' class="btn btn-success btn-sm open-website">
+        @Html.TextBoxFor(model => model.Website, new { @class = "input-block-level input-field col-8" })
+        @Html.ValidationMessageFor(model => model.Website, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.Website2))</label>
+        <input type="button" value='@ViewBag.OpenUrl' class="btn btn-success btn-sm open-website">
+        @Html.TextBoxFor(model => model.Website2, new { @class = "input-block-level input-field col-8" })
+        @Html.ValidationMessageFor(model => model.Website2, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.ShortenLink))</label>
+        <input type="button" value='@ViewBag.OpenUrl' class="btn btn-success btn-sm open-website">
+        @Html.TextBoxFor(model => model.ShortenLink, new { @class = "input-block-level input-field col-8" })
+        @Html.ValidationMessageFor(model => model.ShortenLink, "", new { @class = "filedError" })
+    </div>
+    <br />
+
+    <div class="form-group">
+        <input type="submit" value='@ViewBag.Apply' class="btn btn-danger">
+    </div>
+    <br />
+}
+<script>
+    $("input.open-website").on("touchstart click", function () {
+        var url = $(this).siblings("input").val();
+        if (!url) return;
+        if (url.indexOf("http://") < 0 && url.indexOf("https://") < 0)
+            url = "http://" + url;
+        window.open(url, '_blank');
+    });
+</script>
+

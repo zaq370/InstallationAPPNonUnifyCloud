@@ -1,0 +1,175 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.WhiteListViewModel
+
+@{
+    ViewBag.Title = "WhiteList";
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+
+    if (Model.WholeList != null)
+    {
+        Model.WholeList.ForEach(member =>
+        {
+            SelectListItem item = new SelectListItem();
+            item.Text = member.UserId;
+            item.Value = member.UserGuid;
+            listItems.Add(item);
+        });
+    }
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var IsSuperUser = ('@ViewBag.IsSuperUser' == 'True');
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+    document.getElementById("WhiteListNavbar").parentElement.classList.add("active");
+</script>
+
+<input type="text" id="IdFilter" class="searchInput w70" onkeyup="idFilter()" placeholder=@ViewBag.SearchForId>
+
+@using (Html.BeginForm("WhiteList", "Main", FormMethod.Post, new { @class = "validationForm addRequiredStars" }))
+{
+    @Html.Hidden("NewList")
+    <table class="table table-sm table-bordered" id="WhiteListTable">
+        <tr class="fixed-table-header">
+            <th>@ViewBag.CRMUserId</th>
+            <th>
+                <input type="submit" value='@ViewBag.Apply' class="btn btn-danger" onclick="FormSubmit()" disabled>
+            </th>
+        </tr>
+        <tr class="new-content">
+            <td class="userId">
+                @Html.DropDownList("NewMember", listItems, "-- Select Member --")
+            </td>
+            <td>
+                <input type="button" value='@ViewBag.Add' class="btn btn-warning" onclick="AddToList()">
+            </td>
+        </tr>
+        @if (Model.WhiteList != null)
+        {
+            foreach (var member in Model.WhiteList)
+            {
+                <tr class="body-content">
+                    <td class="userId" id='@member.UserGuid'>
+                        @Html.DisplayFor(item => member.UserId)
+                    </td>
+                    <td>
+                        <input type="button" value='@ViewBag.Remove' class="btn btn-success" onclick="RemoveFromList(this)">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}
+<script>
+    var isChanged = false;
+
+    function ChangeState(reset) {
+        if (reset) {
+            isChanged = false;
+        } else {
+            isChanged = true;
+        }
+
+        if (isChanged) {
+            $("#WhiteListTable").find("input[type='submit']").attr("disabled", false);
+        } 
+    }
+
+    $(document).ready(function () {
+        $("#SelectItem").hide();
+        RefreshSelectList();
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+        if (isChanged) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+
+    function RefreshSelectList() {
+        var SelectList = $("#NewMember");
+        var WhiteList = $("#WhiteListTable").find("td.userId");
+
+        SelectList.children().show();
+        for (var i = 0 ; i < WhiteList.length ; i++) {
+            if (WhiteList[i].id)
+                SelectList.children("option[value='" + WhiteList[i].id + "']").hide();
+        }
+        SelectList.children().first().prop("selected", true);
+    }
+
+    function idFilter() {
+        var input = $("#IdFilter").val().toLowerCase();
+        var table = $("#WhiteListTable");
+        var tr = table.find(".body-content");
+
+        for (var i = 0 ; i < tr.length ; i++) {
+            if ($(tr[i]).find("td.userId").text().toLocaleLowerCase().indexOf(input) >= 0)
+            {
+                $(tr[i]).css("display", "");
+            } else {
+                $(tr[i]).css("display", "none");
+            }
+        }
+    }
+
+    function AddToList() {
+        var table = $("#WhiteListTable");
+
+        if (!$("#NewMember").val()) return;
+
+        var newTr = document.createElement("tr");
+        $(newTr).addClass("body-content");
+        $(table).append(newTr);
+
+        var newTd = document.createElement("td");
+        $(newTd).addClass("userId");
+        $(newTd).attr("id", $("#NewMember").val());
+        $(newTd).text($("#NewMember").find(":selected").text());
+        $(newTr).append(newTd);
+
+        newTd = document.createElement("td");
+        $(newTr).append(newTd);
+
+        var newInput = document.createElement("input");
+        $(newInput).addClass("btn btn-success");
+        $(newInput)
+            .attr({
+                type: "button",
+                value: '@ViewBag.Remove',
+            });
+            $(newInput).on("click", function () { RemoveFromList(this); });
+            $(newTd).append(newInput);
+
+            RefreshSelectList();
+            ChangeState();
+        }
+
+        function RemoveFromList(element) {
+            $(element).closest("tr.body-content").remove();
+            RefreshSelectList();
+            ChangeState();
+        }
+
+        function FormSubmit() {
+            ChangeState(true);
+
+            var newList = [];
+            $("#WhiteListTable").find("td.userId").each(function () {
+                if (this.id)
+                    newList.push(this.id);
+            });
+
+            $("#NewList").val(JSON.stringify(newList));
+        }
+
+</script>

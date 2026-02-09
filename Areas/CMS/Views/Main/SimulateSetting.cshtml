@@ -1,0 +1,61 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.SimulateSettingViewModel
+
+@{
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+}
+
+<script type="text/javascript">
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var simulateUser = '@Html.Raw(Model.CurrentLoginUser)';
+    var IsSuperUser = ('@ViewBag.IsSuperUser' == 'True');
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+
+
+    })();
+
+    function SimulateUser() {
+        var url = '@Url.Action("CustomerDetail", "Order", new { Area = "" })';
+        window.open(url, '_blank');
+    }
+
+    window.onload = function () {
+        var simulateButton = document.getElementById('startSimulate');
+
+        if (simulateUser) {
+            simulateButton.disabled = false;
+        } else {
+            simulateButton.disabled = true;
+        }
+
+    }
+    document.getElementById("SimulateSettingNavbar").parentElement.classList.add("active");
+</script>
+
+@using (Html.BeginForm("SimulateSetting", "Main", FormMethod.Post, new { @class = "validationForm addRequiredStars" }))
+{ 
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.CurrentLoginUser))</label>
+        <input id="startSimulate" type="button" value='@ViewBag.StartSimulating' class="btn btn-success btn-sm" onclick="SimulateUser()">
+        @Html.TextBoxFor(model => model.CurrentLoginUser, new { @class = "input-block-level input-field col-4" , @readonly=true})
+        @Html.ValidationMessageFor(model => model.CurrentLoginUser, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.NewLoginUser))</label>
+        @Html.TextBoxFor(model => model.NewLoginUser, new { @class = "input-block-level input-field col-4" })
+        @Html.ValidationMessageFor(model => model.NewLoginUser, "", new { @class = "filedError" })
+    </div>
+    <br />
+    
+    <div class="form-group">
+        <input type="submit" name="login" value='@ViewBag.Apply' class="btn btn-danger">
+    </div>
+    <br />
+}

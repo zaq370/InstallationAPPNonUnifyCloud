@@ -1,0 +1,188 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.OutOfServiceViewModel
+
+@{
+    ViewBag.Title = "OutOfServiceSetting";
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var IsSuperUser = ('@ViewBag.IsSuperUser' == 'True');
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+
+    document.getElementById("OutOfServiceNavbar").parentElement.classList.add("active");
+</script>
+
+@using (Html.BeginForm("OutOfServiceSetting", "Main", FormMethod.Post, new { @class = "validationForm addRequiredStars" }))
+{ 
+    @Html.Hidden("NewList")
+        <table class="table table-sm table-striped table-block" id="OutOfServiceTable">
+            <tr class="fixed-table-header">
+                <th style="width:40%">@ViewBag.DescriptionField</th>
+                <th class="block">@ViewBag.StartTime</th>
+                <th class="block">@ViewBag.EndTime</th>
+                <th>
+                    <input type="submit" value='@ViewBag.Apply' class="submit-form btn btn-danger" onclick="FormSubmit()" disabled>
+                </th>
+            </tr>
+            <tr class="border new-content">
+                <td class="subject">@Html.TextBox("Subject")</td>
+                <td class="start-time block">
+                    @Html.TextBox("StartDate", DateTime.Now.ToString("yyyy-MM-dd"), new { @type = "date", @class = "w60" })
+                    @Html.TextBox("StartTime", "00:00:00", new { @class = "w30", @type = "time", @step = 2 })
+                </td>
+                <td class="end-time block">
+                    @Html.TextBox("EndDate", DateTime.Now.ToString("yyyy-MM-dd"), new { @type = "date", @class = "w60" })
+                    @Html.TextBox("EndTime", "23:59:59", new { @class = "w30", @type = "time", @step = 2 })
+                </td>
+                <td style="width:10%">
+                    <input type="button" value='@ViewBag.Add' class="btn btn-success" onclick="AddToList()">
+                </td>
+            </tr>
+            @if (Model.Detail != null)
+            {
+                foreach (var member in Model.Detail)
+                {
+                    var StartTime = member.StartDate.ToString("HH:mm:ss");
+                    var EndTime = member.EndDate.ToString("HH:mm:ss");
+                    <tr class="body-content border">
+                        <td class="subject" >
+                            @Html.TextBoxFor(item => member.Subject, new {  @readonly = true })
+                        </td>
+                        <td class="start-time block" >
+                            @Html.TextBoxFor(item => member.StartDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "w60",@readonly=true })
+                            @Html.TextBox("StartTime", StartTime, new { @class = "w30", @readonly = true, @type = "time" })
+                        </td>
+                        <td class="end-time block" >
+                            @Html.TextBoxFor(item => member.EndDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "w60", @readonly = true })
+                            @Html.TextBox("EndTime", EndTime, new { @class = "w30", @readonly = true, @type="time" })
+                        </td>
+                        <td>
+                            <input type="button" value='@ViewBag.Remove' class="btn btn-warning" onclick="RemoveFromList(this)">
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+}
+<script>
+    var isChanged = false;
+
+    function ChangeState(reset) {
+        if (reset) {
+            isChanged = false;
+        } else {
+            isChanged = true;
+        }
+
+        if (isChanged) {
+            $("#OutOfServiceTable").find("input[type='submit']").attr("disabled", false);
+        }
+    }
+
+    function AddToList() {
+        var isValid = true;
+        var errorMsg = "";
+
+        //檢查欄位有沒有填寫
+        var table = $("#OutOfServiceTable");
+        table.find("input").removeClass("input-required");
+
+        var newContent = $("#OutOfServiceTable").find(".new-content");
+        var subject = newContent.find("#Subject");
+        if (!subject.val()) {
+            isValid = false;
+            subject.toggleClass("input-required");
+        }
+
+        var startDate = newContent.find("#StartDate");
+        if (!startDate.val()) {
+            isValid = false;
+            startDate.toggleClass("input-required");
+        }
+
+        var endDate = newContent.find("#EndDate");
+        if (!endDate.val()) {
+            isValid = false;
+            endDate.toggleClass("input-required");
+        }
+
+        if (startDate.val() && endDate.val() && startDate.val() > endDate.val())
+        {
+            isValid = false;
+            if (!errorMsg) errorMsg = '@ViewBag.EndTimeError';
+            if (!endDate.hasClass("input-required"))
+                endDate.toggleClass("input-required");
+        }
+
+        var startTime = newContent.find("#StartTime");
+        if (!startTime.val()) startTime.val("00:00:00");
+        var endTime = newContent.find("#EndTime");
+        if (!endTime.val()) endTime.val("23:59:59");
+
+        if (startDate.val() == endDate.val() && startTime.val() >= endTime.val()) {
+            isValid = false;
+            if (!errorMsg) errorMsg = '@ViewBag.EndTimeError';
+            if (!endTime.hasClass("input-required"))
+                endTime.toggleClass("input-required");
+        }
+
+        if (isValid) {
+            ChangeState();
+            var content = newContent.clone(true,true);
+            content.removeClass("new-content").addClass("body-content border");
+            content.find("input:not([type='button'])").attr("disabled", true);
+            content.find("input[type='button']")
+                .removeClass("btn-success")
+                .addClass("btn-warning")
+                .val('@ViewBag.Remove')
+                .prop("onclick", null)
+                .on("click", function () { RemoveFromList(this) });
+            $(table).append(content);
+
+            //recover default value
+            newContent.find("#Subject").val("");
+
+        } else {
+            if (errorMsg) alert(errorMsg);
+        }
+    }
+
+    function RemoveFromList(element) {
+        ChangeState();
+        $(element).closest(".body-content").remove();
+    }
+
+    window.addEventListener('beforeunload unload', function (e) {
+        if (isChanged) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+
+    function FormSubmit() {
+        ChangeState(true);
+
+        var newList = [];
+        $("#OutOfServiceTable").find(".body-content").each(function ()
+        {
+            var duration = {
+                Subject: $(this).find(".subject").find("input").val(),
+                StartDate: $(this).find(".start-time").find("input[type='date']").val(),
+                StartTime: $(this).find(".start-time").find("input[type='time']").val(),
+                EndDate: $(this).find(".end-time").find("input[type='date']").val(),
+                EndTime: $(this).find(".end-time").find("input[type='time']").val()
+            };
+            newList.push(duration);
+        });
+
+        $("#NewList").val(JSON.stringify(newList));
+    }
+</script>

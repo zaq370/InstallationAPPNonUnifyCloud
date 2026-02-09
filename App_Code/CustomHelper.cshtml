@@ -1,0 +1,156 @@
+﻿@*如需詳細資訊請造訪 http://go.microsoft.com/fwlink/?LinkID=204658*@
+
+@using System.Web.Mvc;
+@using Newtonsoft.Json
+
+@helper DisplayName(Dictionary<string, string> fdCollection, string fieldName)
+{
+    string fieldDisplayName = "";
+    fdCollection.TryGetValue(fieldName, out fieldDisplayName);
+    if (string.IsNullOrEmpty(fieldDisplayName))
+    {
+        fieldDisplayName = fieldName;
+    }
+    var returnValue = new MvcHtmlString(fieldDisplayName);
+    @returnValue
+}
+
+@helper DisplayName(Dictionary<string, string> fdCollection, MvcHtmlString fieldName)
+{
+    @DisplayName(fdCollection, fieldName.ToString());
+}
+
+@helper Paging(int pageSize, int pageNumber, int totalItemCount, object otherSetting)
+{ 
+    var action = string.Empty;  //連結的路徑
+    int defaultDisplayPageNumber = 7; //畫面上最多幾個page
+    int displayPageNumber = defaultDisplayPageNumber;  
+    string actionFunctionCall = string.Empty;
+    
+    foreach (var property in otherSetting.GetType().GetProperties()) {
+        switch (property.Name.ToLower()) { 
+            case "action":
+                action = property.GetValue(otherSetting).ToString();
+                break;
+            case "displaypagenumber":
+                int.TryParse(property.GetValue(otherSetting).ToString(), out displayPageNumber);
+                if (displayPageNumber == 0) { displayPageNumber = defaultDisplayPageNumber; }
+                break;
+            case "form":
+                //需要特殊處理
+                actionFunctionCall = property.GetValue(otherSetting).ToString();
+                break;
+            default:
+                break;
+        }
+    }
+
+    int totalPage = Convert.ToInt16(Math.Ceiling((double)totalItemCount / (double)pageSize));
+
+    int startIndex = 1, endIndex = totalPage;
+    bool hideStartIndex = false, hideEndIndex = false;  //出現…
+    if (totalPage > displayPageNumber)
+    {
+        //如果總頁數超過了 displayPageNumber，顯示最前最後頁，再加上縮減部份按鈕
+        int actualDisplayPageNumber = displayPageNumber - 2;
+        
+        //算出需要出現哪些區間的按鈕
+        if (pageNumber - (actualDisplayPageNumber / 2) < 2)
+        {
+            startIndex = 2;
+        }
+        else {
+            startIndex = pageNumber - (actualDisplayPageNumber / 2);
+        }
+        
+        endIndex = startIndex + actualDisplayPageNumber - 1;
+        if (endIndex >= totalPage) {
+            startIndex = startIndex - (endIndex - totalPage) - 1;
+        }
+
+        if (startIndex > 2) { hideStartIndex = true; }
+        if (endIndex < totalPage - 1) { hideEndIndex = true; }
+    }
+
+    if (totalPage > 1) { 
+        for (var i = 1; i <= totalPage; i++) {
+            var tempAction = ActionFunctionCall(actionFunctionCall, action, i);
+        
+            //第一頁跟最後一頁固定要出現
+            if (i == 1 || i == totalPage)
+            {
+                if (pageNumber == i) { 
+                    <span class="current">@i</span>
+                }
+                else
+                {
+                    <a href=@tempAction title="FirstPage">@i</a>
+                }
+                continue;
+            } 
+        
+            //產生這一頁的按鈕
+            if (i >= startIndex && i <= endIndex) { 
+                if (pageNumber == i) { 
+                    <span class="current">@i</span>
+                }
+                else
+                {
+                    if ((i == startIndex && hideStartIndex) || (i == endIndex && hideEndIndex))
+                    {
+                        //<span class="spancer">…</span>
+                        if (i == startIndex && hideStartIndex) {
+                            var j = i - 1;
+                            if (j > 1)
+                            {
+                                var jumpAction = ActionFunctionCall(actionFunctionCall, action, j);
+                                <a href=@jumpAction title="@j">…</a>
+                            }
+                            else
+                            {
+                                <span class="spancer">…</span>
+                            }
+                        }
+                    
+                        if (i == endIndex && hideEndIndex) { 
+                            var j = i + 1;
+                            if (j < totalPage)
+                            {
+                                var jumpAction = ActionFunctionCall(actionFunctionCall, action, j);
+                                <a href=@jumpAction title="@j">…</a>
+                            }
+                            else
+                            {
+                                <span class="spancer">…</span>
+                            }
+                        }
+                    }
+                    else { 
+                        <a href=@tempAction title=@i>@i</a>
+                    }
+                
+                }
+            }
+        }
+    }
+}
+
+@functions{
+
+    public static string ActionFunctionCall(string type, string action, int page) { 
+        var newAction = string.Empty;
+        switch (type)
+        {
+            case "_CustomerProduct.cshtml":
+                newAction = "javascript:OrderMain.btn_select_Click('',true,"+page+")";
+                break;
+            case "OrderInformation.cshtml":
+                newAction = "javascript:OrderInformation.RefershResult('',true," + page + ")";
+                break;
+            default:
+                newAction = action + "&Page=" + page;
+                break;
+        }
+        return newAction;
+    }
+}

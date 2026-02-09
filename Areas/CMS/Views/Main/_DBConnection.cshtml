@@ -1,0 +1,58 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+
+@using (Html.BeginForm("UpdateDBConnection", "Main", FormMethod.Post, new { @class = "validationForm" }))
+{ 
+    <input type="submit" value='@ViewBag.Apply' class="btn btn-danger fixed-top-button">
+    <div class="section">
+        <div class="alert alert-danger ">
+            <strong>@ViewBag.Alert</strong> <br />@ViewBag.DBConnectionDescription
+        </div>
+        <br>
+        <input class="btn btn-warning align-right TestDBConnection" type="button" value='@ViewBag.TestConnection' onclick="TestDBConnection()">
+        <br>
+
+        <div class=" form-group Server">
+            <label>Service IP</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.Server, new { data_original_data = Model.DBConnectionString.Server })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.Server, "", new { @class = "filedError" })
+        </div>
+        <div class=" form-group InitialCatalog">
+            <label>Initial Catalog</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.InitialCatalog, new { data_original_data = Model.DBConnectionString.InitialCatalog })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.InitialCatalog, "", new { @class = "filedError" })
+        </div>
+        <div class=" form-group PersistSecurityInfo">
+            <label>Persist Security Info</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.PersistSecurityInfo, new { data_original_data = Model.DBConnectionString.PersistSecurityInfo })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.PersistSecurityInfo, "", new { @class = "filedError" })
+        </div>
+        <div class=" form-group UserId">
+            <label>User Id</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.UserId, new { data_original_data = Model.DBConnectionString.UserId })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.UserId, "", new { @class = "filedError" })
+        </div>
+        <div class=" form-group Password">
+            <label>User Password</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.Password, new { data_original_data = Model.DBConnectionString.Password, type="password" })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.Password, "", new { @class = "filedError" })
+        </div>
+        <div class=" form-group TimeOut">
+            <label>Time Out</label>
+            <br>
+            @Html.TextBoxFor(model => model.DBConnectionString.TimeOut, new { data_original_data = Model.DBConnectionString.TimeOut })
+            <br>
+            @Html.ValidationMessageFor(model => model.DBConnectionString.TimeOut, "", new { @class = "filedError" })
+        </div>
+    </div>
+}

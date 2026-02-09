@@ -1,0 +1,102 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+@using (Html.BeginForm("UpdateSmtp", "Main", FormMethod.Post, new { @class = "validationForm " }))
+{
+    <input type="submit" value='@ViewBag.Apply' class="btn btn-danger fixed-top-button">
+    
+    <div class="section section-smtp">
+        <h4 class="alert alert-success">@ViewBag.SmtpDesc </h4>
+        <input class="btn btn-warning align-right" id="SmtpSetting" type="button" value='@ViewBag.SendTestMail' onclick="SendTestMail(this)">
+
+        <div class=" form-group ip">
+            <label>IP</label>
+            <br>
+            @Html.TextBoxFor(model => model.SmtpSetting.Ip, new { data_original_data = Model.SmtpSetting.Ip })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.Ip, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group port">
+            <label>Port</label>
+            <br>
+            @Html.TextBoxFor(model => model.SmtpSetting.Port, new { data_original_data = Model.SmtpSetting.Port })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.Port, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group id">
+            <label>Login ID</label>
+            <br>
+            @Html.TextBoxFor(model => model.SmtpSetting.Id, new { data_original_data = Model.SmtpSetting.Id })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.Id, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group password">
+            <label>Login Password</label>
+            <br>
+            @Html.TextBoxFor(model => model.SmtpSetting.Password, new { data_original_data = Model.SmtpSetting.Password, type="password" })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.Password, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group adminSender">
+            <label>@ViewBag.AdminSender</label>
+            <br>
+            @Html.TextBoxFor(model => model.SmtpSetting.AdminSender, new { data_original_data = Model.SmtpSetting.AdminSender })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.AdminSender, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group adminReceiver">
+            <label>@ViewBag.AdminReceiver</label>
+            <br>
+            @Html.TextAreaFor(model => model.SmtpSetting.Admin, new { data_original_data = Model.SmtpSetting.Admin, Style = "width:95%" })
+            <br>
+            @Html.ValidationMessageFor(model => model.SmtpSetting.Admin, "", new { @class = "filedError" })
+        </div>
+    </div>
+    <br>
+    <div class="section section-test-mode-smtp">
+        <h4 class="alert alert-success">@ViewBag.TestModeSmtpDesc</h4>
+        <input class="btn btn-warning align-right" id="TestModeSmtpSetting" type="button" value='@ViewBag.SendTestMail' onclick="SendTestMail(this)">
+        <div class="form-group ip">
+            <label>IP</label>
+            <br>
+            @Html.TextBoxFor(model => model.TestModeSmtpSetting.Ip, new { data_original_data = Model.TestModeSmtpSetting.Ip })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.Ip, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group port">
+            <label>Port</label>
+            <br>
+            @Html.TextBoxFor(model => model.TestModeSmtpSetting.Port, new { data_original_data = Model.TestModeSmtpSetting.Port })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.Port, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group id">
+            <label>Login ID</label>
+            <br>
+            @Html.TextBoxFor(model => model.TestModeSmtpSetting.Id, new { data_original_data = Model.TestModeSmtpSetting.Id })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.Id, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group password">
+            <label>Login Password</label>
+            <br>
+            @Html.TextBoxFor(model => model.TestModeSmtpSetting.Password, new { data_original_data = Model.TestModeSmtpSetting.Password, type = "password" })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.Password, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group adminSender">
+            <label>@ViewBag.AdminSender</label>
+            <br>
+            @Html.TextBoxFor(model => model.TestModeSmtpSetting.AdminSender, new { data_original_data = Model.TestModeSmtpSetting.AdminSender })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.AdminSender, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group adminReceiver">
+            <label>@ViewBag.AdminReceiver</label>
+            <br>
+            @Html.TextAreaFor(model => model.TestModeSmtpSetting.Admin, new { data_original_data = Model.TestModeSmtpSetting.Admin, Style = "width:95%" })
+            <br>
+            @Html.ValidationMessageFor(model => model.TestModeSmtpSetting.Admin, "", new { @class = "filedError" })
+        </div>
+    </div>
+}
+    

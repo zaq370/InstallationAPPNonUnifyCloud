@@ -1,0 +1,50 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+@using (Html.BeginForm("UpdateSmtp", "Main", FormMethod.Post, new { @class = "validationForm " }))
+{
+    <div class="section">
+        <div class="form-group ">
+            <h4 class="alert alert-success">@ViewBag.MultipleCaseProductDesc </h4>
+            <span style="margin-right:5px;">@ViewBag.MultipleCaseProduct</span>
+            <br>
+            <label class="switch">
+                <input id="MultipleCaseProduct" type="checkbox" onclick="OtherSettingSwitchMode('MultipleCaseProduct', this);">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="form-group ">
+            <h4 class="alert alert-success">@ViewBag.PasswordEncryptionDesc </h4>
+            <span style="margin-right:5px;">@ViewBag.PasswordEncryption</span>
+            <br>
+            <label class="switch">
+                <input id="PasswordEncryption" type="checkbox" onclick="OtherSettingSwitchMode('PasswordEncryption', this);">
+                <span class="slider"></span>
+            </label>
+            <br>
+            @Ajax.ActionLink((string)ViewBag.CorrectPassword, "CorrectPassword", null, new AjaxOptions { HttpMethod = "Get", OnFailure = "Failed", OnSuccess = "ConsoleCabinetUpdateCompeleted" }, new { @class = "btn btn-success " })
+        </div>
+        <div class="form-group ">
+            <h4 class="alert alert-success">@ViewBag.SendActivateAccountInvitationDesc </h4>
+            <span style="margin-right:5px;">@ViewBag.SendActivateAccountInvitation</span>
+            <br>
+            <label class="switch">
+                <input id="SendInvitation" type="checkbox" onclick="ChangeSendInvitationButton(this);">
+                <span class="slider"></span>
+            </label>
+            <br>
+            @Ajax.ActionLink((string)ViewBag.SendInvitation, "SendInvitation", null, new AjaxOptions { HttpMethod = "Get", OnFailure = "Failed", OnSuccess = "ConsoleCabinetUpdateCompeleted" }, new { @class = "btn btn-success ", @id = "SendInvitationButton", style="display:none" })
+        </div>
+    </div> 
+}
+<script>
+    //這邊放的script是因為如果執行 partial view，不會重跑 AdvancedSetting 下的 document.ready
+    $(document).ready(function () {
+        OtherSettingUpdateData("MultipleCaseProduct", '@Model.OtherSetting.MultipleCaseProduct');
+        OtherSettingUpdateData("PasswordEncryption", '@Model.OtherSetting.PasswordEncryption');
+
+        $("#SendInvitationButton").on("click", function () {
+            $(this).hide();
+            document.getElementById("SendInvitation").checked = false;
+        });
+    });
+</script>

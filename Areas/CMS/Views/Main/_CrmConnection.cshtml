@@ -1,0 +1,78 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+
+@using (Html.BeginForm("UpdateCRMConnection", "Main", FormMethod.Post, new { @class = "validationForm" }))
+{
+    <input type="submit" value='@ViewBag.Apply' class="btn btn-danger fixed-top-button">
+    
+    <div class="section">
+        <div class="alert alert-danger ">
+            <strong>@ViewBag.Alert</strong> <br />@ViewBag.CRMConnectionDescription
+        </div>
+        <br>
+        <input class="btn btn-warning align-right TestCRMConnection" type="button" value='@ViewBag.TestConnection' onclick="TestCRMConnection()">
+        <br>
+
+        <div class="form-group CRMOrganizationName">
+            <label>CRM Organization Name</label>
+            <br>
+            @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMOrganizationName, new { data_original_data = Model.CRMConnectionSetting.CRMOrganizationName })
+            <br>
+            @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMOrganizationName, "", new { @class = "filedError" })
+        </div>
+        <div class="form-group CRMDecryptUrl">
+            <label>CRM DecryptUrl</label>
+            <br>
+            @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMDecryptUrl, new { data_original_data = Model.CRMConnectionSetting.CRMDecryptUrl })
+            <br>
+            @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMDecryptUrl, "", new { @class = "filedError" })
+        </div>
+        @if (Model.IsTestMode) { 
+            <div class=" form-group CRMServiceUser">
+                <label>CRM Service User</label>
+                <br>
+                @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMServiceUser, new { data_original_data = Model.CRMConnectionSetting.CRMServiceUser })
+                <br>
+                @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMServiceUser, "", new { @class = "filedError" })
+            </div>
+            <div class=" form-group CRMServicePassword">
+                <label>CRM Service Password</label>
+                <br>
+                @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMServicePassword, new { data_original_data = Model.CRMConnectionSetting.CRMServicePassword, type = "password" })
+                <br>
+                @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMServicePassword, "", new { @class = "filedError" })
+            </div>
+            <div class=" form-group CRMDomain">
+                <label>CRM Domain</label>
+                <br>
+                @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMDomain, new { data_original_data = Model.CRMConnectionSetting.CRMDomain })
+                <br>
+                @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMDomain, "", new { @class = "filedError" })
+            </div>
+            <div class=" form-group CRMUrl">
+                <label>CRM Url</label>
+                <br>
+                @Html.TextBoxFor(model => model.CRMConnectionSetting.CRMUrl, new { data_original_data = Model.CRMConnectionSetting.CRMUrl })
+                <br>
+                @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMUrl, "", new { @class = "filedError" })
+            </div>
+        }
+        <div class=" form-group CRMServiceUrl">
+            <label>CRM Service Url</label>
+            <input type="button" value='@ViewBag.OpenUrl' class="btn btn-success btn-sm open-website">
+            <br>
+            @Html.TextAreaFor(model => model.CRMConnectionSetting.CRMServiceUrl, new { data_original_data = Model.CRMConnectionSetting.CRMServiceUrl })
+            <br>
+            @Html.ValidationMessageFor(model => model.CRMConnectionSetting.CRMServiceUrl, "", new { @class = "filedError" })
+        </div>
+    </div>
+}
+<script>
+    $("input.open-website").on("touchstart click", function () {
+        var url = $(this).siblings("textarea").val();
+        if (!url) return;
+        if (url.indexOf("http://") < 0 && url.indexOf("https://") < 0)
+            url = "http://" + url;
+        window.open(url, '_blank');
+    });
+</script>

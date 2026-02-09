@@ -1,0 +1,109 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+@{
+    var LPList = new SelectList(Model.Country, "LanguagePackage", "CountryName");
+    var LCList = new SelectList(Model.LanguageCulture, "LangCultureName", "DisplayName");
+}
+
+
+@using (Html.BeginForm("UpdateCountry", "Main", FormMethod.Post, new { @class = "validationForm ", onsubmit="return CountryCheckForm();"}))
+{ 
+    @Html.Hidden("AddNewCountry")
+    @Html.Hidden("UpdateContent")
+    @Html.Hidden("RemoveCountry")
+    <table class="table table-striped table-block" id="LanguageSettingTable">
+        <thead>
+            <tr class="fixed-table-header">
+                <th>
+                    @ViewBag.Sequence
+                </th>
+                <th>
+                    @ViewBag.CountryName
+                </th>
+                <th>
+                    @ViewBag.LanguagePackage
+                </th>
+                <th>
+                    @ViewBag.RedirectLanguagePackage
+                </th>
+                <th>
+                    <input type="submit" value='@ViewBag.Apply' class="submit-form btn btn-danger" onclick="CountryFormSubmit('Apply')" style="margin:2px 0;">
+                </th>
+            </tr>
+        </thead>
+        @* 第一筆放新增 *@
+        <tr class="new-content">
+            <td></td>
+            <td>
+                @Html.DropDownList("NewCountryName", LCList, "---Pick A Country---")
+            </td>
+            <td id="NewLanguagePackage">
+            </td>
+            <td>
+                @Html.DropDownList("NewRedirectLanguagePackage", LPList)
+            </td>
+            <td>
+                <input type="submit" value='@ViewBag.Add' class="submit-form btn btn-warning" onclick="CountryFormSubmit('Add')" style="margin:2px 0;">
+            </td>
+        </tr>
+        @foreach (var country in Model.Country) {
+            
+            <tr class="body-content">
+                <td class="sequence" data-content='@country.Sequence'>
+                    @country.Sequence
+                </td>
+                <td class="countryName" data-content='@country.CountryName'>
+                    @country.CountryName
+                </td>
+                <td class="languagePackage" data-content='@country.LanguagePackage'>
+                    @country.LanguagePackage
+                </td>
+                <td class="redirect-LP" data-content='@country.RedirectLanguagePackage'>
+                    @Html.DropDownList("RedirectLanguagePackage", LPList)
+                </td>
+                <td class="block" style="padding:8px 4px 0 4px;">
+                    <input type="button" value='∧' class="btn btn-info btn-sm" onclick="CountryChangeOrder('upper',this)" style="padding:5px 8px; margin:0px 2px;">
+                    <input type="button" value='∨' class="btn btn-info btn-sm" onclick="CountryChangeOrder('lower', this)" style="padding: 5px 8px; margin: 0px 2px;">
+                </td>
+                <td class="block">
+                    @{
+                        if (!country.LanguagePackage.ToLower().Equals("en-us")) { 
+                            <input type="submit" value='@ViewBag.Remove' class="submit-form btn btn-success " onclick="CountryFormSubmit('remove', this)">
+                        }
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    //這邊放的script是因為如果執行 partial view，不會重跑 AdvancedSetting 下的 document.ready
+    $(document).ready(function () {
+        $(".body-content").find(".redirect-LP").each(function () {
+            var value = $(this).data("content");
+            $(this).find("option[value='" + value + "']").attr("selected", true);
+        });
+
+        //新增的資料
+        $("#NewCountryName").on("change", function () {
+            $(this).closest("tr").find("#NewLanguagePackage").text($(this).val());
+
+            //導向語言別
+            var redirectLP = $(this).closest("tr").find("#NewRedirectLanguagePackage");
+
+            //先移除
+            redirectLP.find("option.newOption").remove();
+
+            //new option
+            var newOption = document.createElement("option");
+            $(newOption).val($(this).val());
+            $(newOption).text($(this).find("option:selected").text());
+            $(newOption).addClass("newOption");
+            //加入
+            redirectLP.append(newOption);
+            redirectLP.find("option[value='" + $(this).val() + "']").attr("selected", true);
+        });
+    });
+</script>

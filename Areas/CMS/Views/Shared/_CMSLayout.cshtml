@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/cms")
+        <link rel="shortcut icon" type="image/x-icon" href="~/Content/custom/images/favicon.ico">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="container navbar-container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-nav" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <ul class="nav navbar-nav navbar-collapse collapse">
+                        <li><a id="BasicSettingNavbar" href=@Url.Action("BasicSetting")>@ViewBag.BasicSetting</a></li>
+                        <li><a id="LanguageSettingNavbar" href=@Url.Action("PickLanguageSet")>@ViewBag.LanguageSetting</a></li>
+                        <li><a id="WhiteListNavbar" href=@Url.Action("WhiteList")>@ViewBag.WhiteListSetting</a></li>
+                        <li><a id="SimulateSettingNavbar" href=@Url.Action("SimulateSetting")>@ViewBag.SimulationSetting</a></li>
+                        <li><a id="OutOfServiceNavbar" href=@Url.Action("OutOfServiceSetting")>@ViewBag.OutOfServiceSetting</a></li>
+                        <li><a id="AdvancedSettingNavbar" href=@Url.Action("AdvancedSetting")>@ViewBag.AdvancedSetting</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right navbar-collapse collapse">
+                        <li><a href=@Url.Action("Logout")>@ViewBag.ActionLogOut</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        @Scripts.Render("~/bundles/jquery")
+        <div id="render-body">
+            @if (ViewBag.Description != null) { 
+                <div class="settingDescritpion alert alert-danger ">
+                    <strong>@ViewBag.Alert</strong> <br />@ViewBag.Description
+                </div>
+            }
+            @RenderBody()
+        </div>
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/cms")
+    </body>
+</html>

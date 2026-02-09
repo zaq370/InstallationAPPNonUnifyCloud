@@ -1,0 +1,427 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+@{
+    Layout = "~/Areas/CMS/Views/Shared/_CMSLayout.cshtml";
+    string action = (ViewBag.Action == null) ? "ConsoleCabinet" : ViewBag.Action;
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var IsSuperUser = ('@ViewBag.IsSuperUser'=='True');
+    var action = '@action';
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "")
+                alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+    document.getElementById("AdvancedSettingNavbar").parentElement.classList.add("active");
+</script>
+
+<div></div>
+<div id="AdvancedSettingSideNavbar" class="sideNav">
+    @Ajax.ActionLink("Console Cabinet", "ConsoleCabinet", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed", OnBegin="ClearForm" }, new { @class = "ConsoleCabinet" })
+    @Ajax.ActionLink("Country", "Country", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed", OnBegin = "ClearForm" }, new { @class = "Country" })
+    @Ajax.ActionLink("SMTP", "Smtp", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" }, new { @class = "Smtp" })
+    @Ajax.ActionLink("CRM Connection", "CRMConnection", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" }, new { @class = "CRMConnection" })
+    @Ajax.ActionLink("DB Connection", "DBConnection", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" }, new { @class = "DBConnection" })
+    @Ajax.ActionLink("Others", "OtherSetting", null, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "subFunction", InsertionMode = InsertionMode.Replace, OnFailure = "Failed", OnSuccess = "Successed" }, new { @class = "OtherSetting" })
+</div> 
+<div id="subFunction">
+    @{
+        
+        switch (action.ToLower()) { 
+            case "country":
+                Html.RenderPartial("_Country");   //initialize
+                break;
+            case "smtp":
+                 Html.RenderPartial("_Smtp");   //initialize
+                 break;
+            case "crmconnection":
+                 Html.RenderPartial("_CrmConnection");
+                 break;
+            case "dbconnection":
+                 Html.RenderPartial("_DBConnection");
+                 break;
+            case "othersetting":
+                 Html.RenderPartial("_OtherSetting");
+                 break;
+            case "consolecabinet":   
+            default:
+                Html.RenderPartial("_ConsoleCabinet");   //initialize
+                break;
+        }
+    }
+</div>
+<script>
+    $(document).ready(function(){
+        //當 .sideNav 下的click事件發生，讓該<a>加上class: active
+        $(".sideNav").children("a").on("click",function () {
+            if (!$(this).hasClass("active")) {
+                $(".sideNav").children("a").removeClass("active");
+                $(this).addClass("active");
+            }
+        });
+
+        $(".sideNav").children("a").removeClass("active");
+        $(".sideNav").children("a."+action).addClass("active");
+
+        AdjustFixedButton();
+        ConsoleCabinetUpdateData('@Model.TestMode.ToString()');
+
+        
+    });
+
+    function SendTestMail(element){
+        if (!element) return;
+
+        var section = $(element).closest(".section");
+
+        var parameter= {
+            type: element.id,
+            ip : $(section).find(".form-group.ip").find("input").val(),
+            port: $(section).find(".form-group.port").find("input").val(),
+            id: $(section).find(".form-group.id").find("input").val(),
+            password: $(section).find(".form-group.password").find("input").val(),
+            adminSender: $(section).find(".form-group.adminSender").find("input").val(),
+            adminReceiver: $(section).find(".form-group.adminReceiver").find("textarea").val(),
+        };
+
+        $.ajax({
+            url: '@Url.Action("SendTestMail", "Main")',
+            type: 'GET',
+            data: parameter,
+            cache: false,
+            success: function (data) {
+                ConsoleCabinetUpdateCompeleted(data);
+            },
+            error: function () {
+                Failed();
+            }
+        });
+    }
+
+    function Failed() {
+        //導向重新登入
+        document.location.href= logoutUrl;
+    }
+
+    function ClearForm(){
+        $("#subFunction").children().remove();
+    }
+
+    function Successed(){
+        AdjustFixedButton();
+        $.validator.unobtrusive.parse($("#subFunction"));
+        Common.ReplaceErrorMessage();
+        Common.AddStartToRequiredField();
+        SmtpRemoveRequired();   //如果是 smtp畫面，拿掉部份必填欄位
+    }
+
+    function AdjustFixedButton(){
+        var navbarHeight = $(".navbar-header").first().outerHeight();
+        if (navbarHeight == 0)
+            navbarHeight = $(".navbar-nav").first().outerHeight();
+
+        var fixedTop = $(".fixed-top-button");
+        fixedTop.each(function () {
+            $(this).css({
+                top: navbarHeight + 10
+            });
+        });
+    }
+
+    function SmtpRemoveRequired(){
+        var smtpContent = $("#subFunction").find(".section-test-mode-smtp");
+        if (smtpContent.length > 0){
+            smtpContent.find("input").rules("remove","required");
+        }
+    }
+
+    function SwitchTestMode(element) {
+        var parameter = {
+            Segment: "TestMode",
+            NewValue: element.checked
+        };
+        $(element).attr("disabled",true);
+
+        $.post('@Url.Action("UpdateConsleCabinet", "Main")', parameter, function () { })
+        .done(function (data) {
+            if (!data["IsSuccessed"]) {
+                alert(data["AlertMessage"]);
+            } 
+            ConsoleCabinetUpdateData(data["NewContent"], data["IsSuccessed"]);
+            $(element).removeAttr("disabled");
+        })
+        .fail(function (xhr, textStatus) {
+            Failed();
+        });
+    }
+
+    function ConsoleCabinetUpdateData(newValue, popout) {
+        if (newValue == undefined || newValue == null) return;
+
+        try {
+            if ($("#testMode")) {
+                if (newValue.toLocaleLowerCase() == 'true'){
+                    document.getElementById("testMode").checked = true;
+                    if (popout)
+                        alert(ModelMessageObejct["TestModeTurnedOn"]);
+                }
+                else{
+                    document.getElementById("testMode").checked = false;
+                    if (popout)
+                        alert(ModelMessageObejct["TestModeTurnedOff"]);
+                }
+                    
+            }
+        } catch (e) { }
+    }
+
+    function ConsoleCabinetUpdateCompeleted(data) {
+        if (data["AlertMessage"])
+            alert(data["AlertMessage"]);
+    }
+
+    function OtherSettingUpdateData(type, newValue) {
+        var MultipleCaseProduct = '@Model.OtherSetting.MultipleCaseProduct';
+        var PasswordEncryption = '@Model.OtherSetting.PasswordEncryption';
+
+        if (type != undefined && newValue != undefined){
+            switch(type.toLowerCase()){
+                case "multiplecaseproduct":
+                    MultipleCaseProduct = newValue;
+                    break;
+                case "passwordencryption":
+                    PasswordEncryption = newValue;
+                    break;
+            }
+        }
+
+        try {
+            var MultipleCaseProductElement = $("#MultipleCaseProduct");
+            var PasswordEncryptionElement = $("#PasswordEncryption");
+            if (type!=undefined && type.toLowerCase() == "multiplecaseproduct" && MultipleCaseProductElement.length > 0) {
+                if (MultipleCaseProduct.toLocaleLowerCase() == 'true') {
+                    document.getElementById("MultipleCaseProduct").checked = true;
+                } else{
+                    document.getElementById("MultipleCaseProduct").checked = false;
+                }
+            }
+            if (type!=undefined && type.toLowerCase() == "passwordencryption" && PasswordEncryptionElement.length > 0) {
+                if (PasswordEncryption.toLocaleLowerCase() == 'true') {
+                    document.getElementById("PasswordEncryption").checked = true;
+                } else{
+                    document.getElementById("PasswordEncryption").checked = false;
+                }
+            }
+        } catch (e) { }
+    }
+
+    function OtherSettingSwitchMode(type,element) {
+        if (!type || !element) return;
+
+        var originalValue = 'true';
+        if (element.checked) {
+            originalValue = 'false';
+        }
+
+        //password encryption 會影響全部的密碼，要確定執行
+        if (type == "PasswordEncryption") {
+            if (!confirm(ModelMessageObejct["ChangePasswordEncryptionAlert"])){
+                OtherSettingUpdateData(type, originalValue, false);
+                return;
+            }
+        }
+
+        var parameter = {
+            Segment: type,
+            NewValue: element.checked
+        };
+        $(element).attr("disabled",true);
+
+        $.post('@Url.Action("UpdateOtherSetting", "Main")', parameter, function () { })
+        .done(function (data) {
+            alert(data["AlertMessage"]);
+            OtherSettingUpdateData(type, data["NewContent"], true);
+            $(element).removeAttr("disabled");
+        })
+        .fail(function (xhr, textStatus) {
+            Failed();
+        });
+    }
+
+    function TestCRMConnection() {
+        $("input.TestCRMConnection").attr("disabled",true);
+        var parameter = {
+            CRMOrganizationName: $(".form-group.CRMOrganizationName").find("input[type=text]").val(),
+            CRMServiceUser: $(".form-group.CRMServiceUser").find("input[type=text]").val(),
+            CRMServicePassword: $(".form-group.CRMServicePassword").find("input[type=password]").val(),
+            CRMDomain: $(".form-group.CRMDomain").find("input[type=text]").val(),
+            CRMUrl: $(".form-group.CRMUrl").find("input[type=text]").val(),
+            CRMServiceUrl: $(".form-group.CRMServiceUrl").find("textarea").val(),
+            CRMDecryptUrl: $(".form-group.CRMDecryptUrl").find("input[type=text]").val()
+        };
+
+        $.ajax({
+            url: '@Url.Action("TestCRMConnection", "Main")',
+            type: 'POST',
+            data: parameter,
+            cache: false,
+            success: function (data) {
+                ConsoleCabinetUpdateCompeleted(data);
+                $("input.TestCRMConnection").removeAttr("disabled");
+            },
+            error: function () {
+                Failed();
+            }
+        });
+    }
+
+    function TestDBConnection() {
+        $("input.TestDBConnection").attr("disabled",true);
+        var parameter = {
+            Server: $(".form-group.Server").find("input[type=text]").val(),
+            InitialCatalog: $(".form-group.InitialCatalog").find("input[type=text]").val(),
+            PersistSecurityInfo: $(".form-group.PersistSecurityInfo").find("input[type=text]").val(),
+            UserId: $(".form-group.UserId").find("input[type=text]").val(),
+            Password: $(".form-group.Password").find("input[type=password]").val(),
+            TimeOut: $(".form-group.TimeOut").find("input[type=text]").val(),
+        };
+
+        $.ajax({
+            url: '@Url.Action("TestDBConnection", "Main")',
+            type: 'POST',
+            data: parameter,
+            cache: false,
+            success: function (data) {
+                ConsoleCabinetUpdateCompeleted(data);
+                $("input.TestDBConnection").removeAttr("disabled");
+            },
+            error: function () {
+                Failed();
+            }
+        });
+    }
+
+    function CountryFormSubmit(type, element) {
+        switch (type) {
+            case "Add":
+                //確認新增
+                var languagePackage = $("#NewCountryName").val();
+                var redirectLanguagePackage = $("#NewRedirectLanguagePackage").val() ? $("#NewRedirectLanguagePackage").val() : $("#NewLanguagePackage").val();
+                if (languagePackage != redirectLanguagePackage || confirm(ModelMessageObejct["AddLanguageConfirm"])) {
+                    var newContent = {
+                        LanguagePackage: languagePackage,
+                        CountryName: $("#NewCountryName").find("option:selected").text(),
+                        RedirectLanguagePackage: redirectLanguagePackage
+                    };
+                    $("#AddNewCountry").val(JSON.stringify(newContent));
+                } 
+                break;
+            case "Apply":
+                var contentArray = new Array();
+                $(".body-content").each(function () {
+                    var content = {
+                        Sequence: $(this).find(".sequence").text().trim(),
+                        CountryName: $(this).find(".countryName").text().trim(),
+                        LanguagePackage: $(this).find(".languagePackage").text().trim(),
+                        RedirectLanguagePackage: $(this).find(".redirect-LP").find("option:selected").val()
+                    };
+                    contentArray.push(JSON.stringify(content));
+                });
+                $("#UpdateContent").val(JSON.stringify(contentArray));
+                break;
+            case "remove":
+                var languagePackage = $(element).closest(".body-content").find(".languagePackage").text().trim();
+                var redirectLanguagePackage = $(element).closest(".body-content").find(".redirect-LP").find("option:selected").val().trim();
+
+                if (languagePackage != redirectLanguagePackage || confirm(ModelMessageObejct["RemoveLanguageConfirm"])) {
+                    var removeContent = {
+                        LanguagePackage: languagePackage
+                    }
+                    $("#RemoveCountry").val(JSON.stringify(removeContent));
+                }
+                break;
+        }
+        return true;
+    }
+
+    function CountryCheckForm() {
+        var newContent = $("#AddNewCountry").val();
+        var removeContent = $("#RemoveCountry").val();
+        var updateContent = $("#UpdateContent").val();
+
+        if (!newContent && !removeContent && !updateContent)
+            return false;
+
+        return true;
+    }
+
+    function CountryChangeOrder(direction, element) {
+
+        var table = $(element).closest("table");
+        var bodyContent = $(element).closest(".body-content");
+        var newBodyContent = $(element).closest(".body-content").clone(true,true);
+        var currentIndex = $(bodyContent).find(".sequence").text().trim();
+        
+        var previousBodyContent, nextBodyContent;
+        var previousIndex, nextIndex;
+        table.find(".body-content").each(function () {
+            var index = $(this).find(".sequence").text().trim();
+            if (index < currentIndex) {
+                previousBodyContent = $(this);
+                previousIndex = index;
+            }
+            if (index > currentIndex)
+            {
+                nextBodyContent = $(this);
+                nextIndex = index;
+                return false;
+            }
+        });
+        switch (direction.toLowerCase()) {
+            case "upper":
+                if (previousBodyContent) {
+                    $(bodyContent).remove();
+                    $(newBodyContent).insertBefore(previousBodyContent);
+                    $(previousBodyContent).find(".sequence").text(currentIndex);
+                    $(newBodyContent).find(".sequence").text(previousIndex);
+                }
+                break;
+            case "lower":
+                if (nextBodyContent) {
+                    $(bodyContent).remove();
+                    $(newBodyContent).insertAfter(nextBodyContent);
+                    $(nextBodyContent).find(".sequence").text(currentIndex);
+                    $(newBodyContent).find(".sequence").text(nextIndex);
+                }
+                break;
+        }
+    }
+
+    function ChangeSendInvitationButton(element) {
+        if (!element) return;
+
+        var button = $("#SendInvitationButton");
+        if (button.length <=0) return;
+
+        if (element.checked) {
+            if (!confirm(ModelMessageObejct["SendInvitationAlert"])) {
+                element.checked = false;
+            }
+        } 
+
+        if (!element.checked) {
+            button.hide();
+        } else {
+            button.show();
+        }
+    }
+
+
+
+</script>

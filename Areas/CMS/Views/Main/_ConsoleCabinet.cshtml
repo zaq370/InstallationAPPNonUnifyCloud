@@ -1,0 +1,149 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.AdvancedSettingViewModel
+
+<div class="section">
+    <div class="alert alert-danger ">
+        <strong>@ViewBag.Alert</strong> <br />@ViewBag.TestModeDescription
+    </div>
+    <br>
+    <span style="margin-right:5px;">@ViewBag.TestMode</span>
+    <label class="switch">
+        <input id="testMode" type="checkbox" onclick="SwitchTestMode(this);">
+        <span class="slider"></span>
+    </label>
+    <br>
+</div>
+<br>
+<div class="section">
+    <div class="alert alert-danger ">
+        <strong>@ViewBag.Alert</strong> 
+        <br />@ViewBag.AdminLogDescription1
+    </div>
+    <br>
+    <input type="button" value='@ViewBag.OpenAdminLog' class="btn btn-success open-adminLog">
+    <br>
+</div>
+<br>
+<div class="section">
+    <div class="alert alert-danger ">
+        <strong>@ViewBag.Alert</strong> <br />
+        @ViewBag.RenewLanguageDesc1 <br>
+        @ViewBag.RenewLanguageDesc2 <br>
+        @ViewBag.RenewLanguageDesc3
+    </div>
+    <br>
+    @Ajax.ActionLink((string)ViewBag.RenewLanguagePack, "UpdateLanguagePack", null, new AjaxOptions { HttpMethod = "Get", OnFailure = "Failed", OnSuccess = "ConsoleCabinetUpdateCompeleted" }, new { @class = "btn btn-success " })
+    <br><br>
+    <form id="ImportAndApplyFile">
+        <label class="btn btn-primary">
+            <input type="file" id="ImportLanguagePackFile" name="ImportFile" accept=".json" style="opacity:0; width:0; display:inline-block">
+            @ViewBag.ImportAndApplyLanguagePack
+        </label>
+    </form>
+    <br>
+    <form id="ImportDifferenceAndApplyFile">
+        <label class="btn btn-primary">
+            <input type="file" id="ImportNewLanguagePackFile" name="ImportFile" accept=".json" style="opacity:0; width:0; display:inline-block">
+            @ViewBag.ImportNewAndApplyLanguagePack
+        </label>
+    </form>
+</div>
+<br>
+<div class="section">
+    <div class="alert alert-danger ">
+        <strong>@ViewBag.Alert</strong> <br />
+        @ViewBag.RenewBackendInfoDesc1 <br>
+        @ViewBag.RenewBackendInfoDesc2 <br>
+    </div>
+    <br>
+    @Ajax.ActionLink((string)ViewBag.RenewBackendInfo, "UpdateBackendInfo", null, new AjaxOptions { HttpMethod = "Get", OnFailure = "Failed", OnSuccess = "ConsoleCabinetUpdateCompeleted" }, new { @class = "btn btn-success " })
+    <br><br>
+    <form id="ImportAndApplyFile">
+        <label class="btn btn-primary">
+            <input type="file" id="ImportBackendInfoFile" name="ImportFile" accept=".json" style="opacity:0; width:0; display:inline-block">
+            @ViewBag.ImportAndApplyBackendInfo
+        </label>
+    </form>
+    <br>
+</div>
+<script>
+    //這邊放的script是因為如果執行 partial view，不會重跑 AdvancedSetting 下的 document.ready
+    $(document).ready(function () {
+        ConsoleCabinetUpdateData('@Model.TestMode.ToString()');
+    });
+
+    $("#ImportBackendInfoFile").change(function (e) {
+        var files = e.target.files;
+
+        if (files.length <= 0) {
+            alert(ModelMessageObejct["FailToExecute"]);
+            return;
+        }
+
+        var data = new FormData();
+        data.append(files[0].name, files[0]);
+
+        $.ajax({
+            url: '@Url.Action("ImportUpdateBackendInfo", "Main")',
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                ConsoleCabinetUpdateCompeleted(data);
+            },
+            error: function () {
+                Failed();
+            }
+        });
+    });
+
+    $("#ImportLanguagePackFile,#ImportNewLanguagePackFile").change(function (e) {
+        var files = e.target.files;
+
+        if (files.length <= 0) {
+            alert(ModelMessageObejct["FailToExecute"]);
+            return;
+        }
+
+        var action = '@Url.Action("ImportUpdateLanguagePack", "Main")';
+        if (e.target.id == "ImportNewLanguagePackFile") {
+            action = '@Url.Action("ImportUpdateNewLanguagePack", "Main")';
+        } 
+
+        var data = new FormData();
+        data.append(files[0].name, files[0]);
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                ConsoleCabinetUpdateCompeleted(data);
+            },
+            error: function () {
+                Failed();
+            }
+        });
+    });
+
+    $("input.open-adminLog").on("touchstart click", function () {
+            @{
+                var url = string.Format("{0}://{1}{2}{3}",
+                  Request.Url.Scheme,
+                  Request.Url.Host,
+                  Request.Url.Port == 80 ? string.Empty : ":" + Request.Url.Port,
+                  Request.ApplicationPath);
+            }
+        var url = '@url';
+        if (url.substring(url.length-1,url.length) != '/'){
+            url = url + '/';
+        } 
+        url = url +"AdminLogging/ErrorLog.axd";
+            
+        window.open(url, '_blank');
+    });
+</script>

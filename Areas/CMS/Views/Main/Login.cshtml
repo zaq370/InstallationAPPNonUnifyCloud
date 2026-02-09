@@ -1,0 +1,67 @@
+﻿@model InstallationAPPNonUnify.Areas.CMS.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/cms")
+        <link rel="shortcut icon" type="image/x-icon" href="~/Content/custom/images/favicon.ico">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">  
+        <script>
+            var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+            var modelMessage = '@Html.Raw(Model.Message)';
+            var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+
+            (function () {
+                try {
+                    if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+                } catch (e) { }
+            });
+</script>
+    </head>
+    <body>
+        <div id="CMSLoginForm">
+            <div id="bg-image"></div>
+            @using (Html.BeginForm("Login", "Main", FormMethod.Post, new { @class = "validationForm "}))
+            {
+                @Html.AntiForgeryToken()
+                <div class="frame">
+                    <div class="page-title">@ViewBag.PageTitle</div>
+                    <div class="form-group">
+                        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.UserId))</label>
+                        @Html.TextBoxFor(model => model.UserId, new { @class = "input-block-level input-field" })
+                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "filedError" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>@CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.UserPassword))</label>
+                        @Html.PasswordFor(model => model.UserPassword, new { @class = "input-block-level input-field" })
+                        @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "filedError" })
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value='@ViewBag.Submit' class="btn btn-default">
+                    </div>
+                </div>
+            }
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/cms")
+    </body>
+</html>
+<script>
+    (function () {
+        document.getElementById("bg-image").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/login_002_new.jpg")' + ")";
+    })();
+    $(document).ready(function () {
+        if (!navigator.cookieEnabled) {
+            alert(ModelMessageObejct["CookieDisabled"]);
+        };
+    });
+</script>
