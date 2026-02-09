@@ -1,0 +1,96 @@
+﻿#layout_unauth2 #company .header {
+    background-color: black;
+    padding: 1%;
+    text-align: center;
+    height: 60px;
+}
+#layout_unauth2 #loginfooter {
+    height: 60px;
+    text-align: center;            
+    display: table;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+#layout_unauth2 #loginfooter h5 {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#EmailUsView {
+    min-height: 800px;
+    /*background-image: url('/../Content/custom/images/email-us.jpg');*/
+    background-size: 1600px 160px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: white;
+}
+#EmailUsView .container > header h2 {
+    font-family: "aaux-next", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 6vmin;
+    line-height: 16px;
+    position: relative;
+    padding: 0px 0px 5px 0px;
+    font-weight: 400;
+    text-align: center;
+    color:white;
+}
+
+#EmailUsView .background {
+    background-color: black;
+    padding: 10px 10px 30px;
+}
+#EmailUsView .btn-red-primary {
+    color: #FFFFFF;
+    background-color: #E1261C; /* red */
+    border-color: #E1261C;
+    height:40px;
+    width:150px;
+}
+#EmailUsView .btn-red-primary:hover,
+#EmailUsView .btn-outline-primary:active:hover, 
+#EmailUsView .btn-outline-primary.active:hover {
+    color: #FFFFFF;
+    background-color: #8f1111; /* darker red for hover */
+    border-color: #8f1111;
+}
+
+#EmailUsView .btn-red-primary.active,
+#EmailUsView .btn-red-primary.active.focus {
+    border-color: #FFFFFF;
+    color: #f70505; /* red color for active/focus */
+    background-color:#f70505;
+}
+
+#EmailUsView .text-left{
+    color:white;
+    font-family:'aaux-next','Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+#EmailUsView .fieldLabel{
+    color:white;
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+    #EmailUsView .container {
+        padding-top: 25px;
+        padding-right: 25px;
+        padding-left: 25px;
+        margin-bottom:20px;
+    }
+}
+
+@media (min-width: 769px) {
+    #EmailUsView .row {
+        width: 90%;
+        margin: 0px auto;
+    }
+
+    #EmailUsView .container {
+        padding-top: 25px;
+        padding-right: 35px;
+        padding-left: 35px;
+        margin-bottom:20px;
+    }
+}
+

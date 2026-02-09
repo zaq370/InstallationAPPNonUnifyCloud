@@ -1,0 +1,187 @@
+﻿/* =========================================================
+   ProductDetailPartial2.css  (Installed This Time)
+   ========================================================= */
+
+.ai-safe-scope * {
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+/* ========= 外層容器：讓桌機也滿版 ========= */
+
+.ai-safe-scope .container {
+    max-width: 100% !important; /* 取消 Bootstrap 容器寬度限制 */
+    width: 100% !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+}
+
+.ai-safe-scope .product-list-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 12px;
+    border: none !important;
+}
+
+.ai-safe-scope .tables-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.ai-safe-scope .table-box {
+    min-width: 0;
+}
+
+/* ========= 桌機 & 共用 ========= */
+
+.ai-safe-scope .responsive-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px !important;
+    padding: 10px;
+    border: none !important;
+}
+
+    /* 表頭：深灰底 + 白字 */
+    .ai-safe-scope .responsive-table thead th {
+        background-color: #595959;
+        color: #FFFFFF;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* 儲存格：白色 0.5px 實線，桌機預設置中 */
+    .ai-safe-scope .responsive-table th,
+    .ai-safe-scope .responsive-table td {
+        padding: .6rem .5rem;
+        border: 0.5px solid #FFFFFF;
+        vertical-align: top;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        text-align: center;
+    }
+
+    /* 斑馬線 */
+    .ai-safe-scope .responsive-table tbody tr:nth-child(odd) {
+        background-color: #F0F0F0;
+    }
+
+    .ai-safe-scope .responsive-table tbody tr:nth-child(even) {
+        background-color: #E1E1E1;
+    }
+
+/* 上下分隔線 */
+.top-line {
+    border: 0;
+    border-top: 0.5px solid #000000;
+    width: 100%;
+    margin: 20px 0 30px 0;
+}
+
+/* Report Issue 按鈕 */
+.ai-safe-scope .report-issue-button {
+    background-color: #E1261C;
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .ai-safe-scope .report-issue-button:hover {
+        filter: brightness(0.95);
+    }
+
+/* =========================================================
+   手機 / 平板：卡片式 (<= 991px)，內容靠左
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    /* 讓整個區塊真正吃滿螢幕寬，但保留左右 12px 內距 */
+    .ai-safe-scope {
+        width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        overflow-x: hidden;
+        padding-left: 12px; /* 🔹新增 */
+        padding-right: 12px; /* 🔹新增 */
+        box-sizing: border-box;
+    }
+
+        .ai-safe-scope .responsive-table {
+            width: 100% !important;
+            max-width: 100% !important;
+            table-layout: fixed;
+            border-radius: 10px;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+            /* 後面 td、tr 那些保持你現在的設定就可以 */
+
+            /* 只有有資料時才卡片化；table-empty = No Data */
+            .ai-safe-scope .responsive-table:not(.table-empty) thead {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            .ai-safe-scope .responsive-table:not(.table-empty),
+            .ai-safe-scope .responsive-table:not(.table-empty) tbody,
+            .ai-safe-scope .responsive-table:not(.table-empty) tr,
+            .ai-safe-scope .responsive-table:not(.table-empty) td {
+                display: block !important;
+                width: 100% !important;
+                border: none !important;
+            }
+
+                /* 一筆資料 = 一張卡片 */
+                .ai-safe-scope .responsive-table:not(.table-empty) tr {
+                    margin: 0 0 12px 0;
+                    padding: 10px 12px;
+                    box-shadow: 0 1px 6px rgba(0,0,0,.08);
+                    background: #fff;
+                    border-radius: 10px;
+                }
+
+                /* 每列：左邊 label，右邊值（靠左） */
+                .ai-safe-scope .responsive-table:not(.table-empty) td {
+                    /*display: flex !important;*/
+                    align-items: flex-start;
+                   /* justify-content: space-between;
+                    gap: 8px;*/
+                    padding: 6px 0;
+                    text-align: left !important;
+                }
+
+                    /* 左側 label */
+                    .ai-safe-scope .responsive-table:not(.table-empty) td[data-label]::before {
+                        content: attr(data-label) "：";
+                        font-weight: 600;
+                        flex: 0 0 40%;
+                        max-width: 45%;
+                        color: #666;
+                        line-height: 1.4;
+                        text-align: left;
+                    }
+
+                    /* ✅ Action 欄位：不要顯示 label 文字 */
+                    .ai-safe-scope .responsive-table:not(.table-empty) td.action-cell::before {
+                        content: "";
+                    }
+
+                    /* ✅ 手機：Report Issue 按鈕滿版 */
+                    .ai-safe-scope .responsive-table:not(.table-empty) td.action-cell button {
+                        display: block !important;
+                        width: 100% !important;
+                        max-width: none !important;
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                        text-align: center;
+                    }
+}

@@ -1,0 +1,131 @@
+﻿/* =============================
+   OrderInformation.css
+   ============================= */
+
+/* 產品列表表格 (從 cshtml 搬出來) */
+.product-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .product-list-table th,
+    .product-list-table td {
+        border: 1.5px solid #333; /* 邊框 */
+        padding: 10px; /* 內邊距 */
+        text-align: left; /* 文字左對齊 */
+    }
+
+    .product-list-table th {
+        background-color: #f2f2f2; /* 表頭背景色 */
+        color: #333;
+    }
+
+/* 報表按鈕 (紫色那顆) */
+.report-issue-button {
+    background-color: #7033FF; /* 按鈕顏色 */
+    color: white; /* 按鈕文字 */
+    padding: 5px 10px; /* 內邊距 */
+    cursor: pointer; /* 滑鼠樣式 */
+    border: 1.5px dashed lightgray;
+    border-radius: 5px; /* 圓角 */
+}
+
+    .report-issue-button:hover {
+        background-color: #7033FF; /* hover 同色即可 */
+    }
+
+/* ===== 既有的輸入與表格樣式 ===== */
+
+#OrderInformationForm .input-field {
+    background-color: #C2C6C9;
+    color: #5B6770;
+    font-size: 12px;
+    padding: 7px 9px;
+}
+
+#SearchMachine {
+    padding: 8px;
+    border-width: 0px;
+    border-style: none;
+}
+
+#ProductServiceHistoryTable {
+    border-width: 0px;
+    width: 100%;
+    /*word-break:break-all;*/
+    word-wrap: break-word;
+}
+
+    #ProductServiceHistoryTable tr.header {
+        color: white;
+        background-color: #5B6770;
+        font-size: small;
+    }
+
+    #ProductServiceHistoryTable tr.body {
+        color: black;
+        background-color: #E8E8E8;
+        border-color: white;
+        border-width: 2px;
+        border-style: solid;
+        font-size: small;
+    }
+
+    #ProductServiceHistoryTable th a {
+        color: white;
+    }
+
+    #ProductServiceHistoryTable tr.body td input {
+        border: 1px solid #FFF;
+    }
+
+    #ProductServiceHistoryTable .text-break-all {
+        word-break: break-all;
+    }
+
+/* RWD：container-full 寬度調整 */
+@media (min-width: 0px) and (max-width: 320px) {
+    #OrderInformationForm .container-full {
+        width: 110%;
+        margin: 0px auto;
+        margin-left: -5%;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+    #OrderInformationForm .container-full {
+        width: 110%;
+        margin: 0px auto;
+        margin-left: -5%;
+    }
+
+    #ProductServiceHistoryTable .width-14 {
+        width: 14%;
+    }
+
+    #ProductServiceHistoryTable .width-24 {
+        width: 24%;
+    }
+
+    #ProductServiceHistoryTable .width-30 {
+        width: 30%;
+    }
+
+    #ProductServiceHistoryTable .width-32 {
+        width: 32%;
+    }
+}
+
+@media (min-width: 769px) {
+    #OrderInformationForm .container-full {
+        width: 98%;
+        margin: 0px auto;
+    }
+}
+
+/* ===== 輸入框字體放大 (從 cshtml 搬出來) ===== */
+/* 這裡保留 !important，確保會蓋過 12px 的設定 */
+#body-container input.input-field,
+#body-container input.input-block-level {
+    font-size: 18px !important;
+}

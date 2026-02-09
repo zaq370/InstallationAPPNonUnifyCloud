@@ -1,0 +1,151 @@
+﻿/* ========== AlreadyInstalled.css (desktop table + mobile cards) ========== */
+
+/* 基本容器（桌機 & 手機共用） */
+.ai-page .ai-safe-scope .container {
+    max-width: 100% !important;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 20px;
+}
+
+/* 外層容器 */
+.ai-page .ai-safe-scope .tables-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.ai-page .ai-safe-scope .table-box {
+    min-width: 0;
+}
+
+/* ===== 桌機 / 一般版：標準表格 ===== */
+
+.ai-page .ai-safe-scope .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #ccc; /* 淺灰實線 */
+}
+
+    /* 表頭深灰 */
+    .ai-page .ai-safe-scope .responsive-table thead th {
+        background-color: #595959;
+        color: #FFFFFF;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* 儲存格 */
+    .ai-page .ai-safe-scope .responsive-table th,
+    .ai-page .ai-safe-scope .responsive-table td {
+        padding: .6rem .5rem;
+        border: 1px solid #ccc;
+        text-align: center;
+        vertical-align: top;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font-size: 16px;
+    }
+
+/* SN 過長換行 */
+.ai-page .ai-safe-scope .break-all {
+    word-break: break-all;
+}
+
+/* 沒資料情況（table-empty）：保持正常表格，不做卡片化 */
+.ai-page .ai-safe-scope .responsive-table.table-empty {
+    border-radius: 12px;
+}
+
+/* ===== 手機 / 平板：卡片模式（只有有資料時啟用） ===== */
+
+@media (max-width: 991px) {
+
+    /* 只對「有資料」的表格做卡片化 */
+    .ai-page .ai-safe-scope .responsive-table:not(.table-empty) {
+        border: none !important;
+        padding: 0 !important;
+    }
+
+        .ai-page .ai-safe-scope .responsive-table:not(.table-empty) thead {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        .ai-page .ai-safe-scope .responsive-table:not(.table-empty),
+        .ai-page .ai-safe-scope .responsive-table:not(.table-empty) tbody,
+        .ai-page .ai-safe-scope .responsive-table:not(.table-empty) tr,
+        .ai-page .ai-safe-scope .responsive-table:not(.table-empty) td {
+            display: block !important;
+            width: 100% !important;
+        }
+
+            /* 一筆資料一張卡片 */
+            .ai-page .ai-safe-scope .responsive-table:not(.table-empty) tr {
+                margin: 0 0 1rem 0;
+                border: 1px solid #ccc; /* 實線外框 */
+                border-radius: 12px;
+                padding: 10px;
+                box-shadow: 0 1px 4px rgba(0,0,0,.05);
+                background: #fff;
+            }
+
+            /* 卡片內的每一欄位改成「Label：值」 */
+            .ai-page .ai-safe-scope .responsive-table:not(.table-empty) td {
+                border: none; /* 內部不要再畫格線 */
+                text-align: left;
+                font-size: 14px;
+                padding: .4rem 0;
+            }
+
+                .ai-page .ai-safe-scope .responsive-table:not(.table-empty) td[data-label]::before {
+                    content: attr(data-label) "：";
+                    font-weight: 600;
+                    display: inline-block;
+                    margin-right: .5rem;
+                }
+}
+
+/* ============================= */
+/* 底部 Back 按鈕                */
+/* ============================= */
+
+.ai-page .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+    .ai-page .button-group button {
+        padding: 12px 35px !important;
+        font-size: 18px !important;
+        border-radius: 6px;
+        border: 0.5px solid #000000;
+        cursor: pointer;
+        background-color: #F2F2F2;
+        color: #000000;
+    }
+
+        .ai-page .button-group button:hover {
+            filter: brightness(0.92);
+        }
+
+/* 手機按鈕直排 */
+@media (max-width: 768px) {
+    .ai-page .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        .ai-page .button-group button {
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+        }
+}

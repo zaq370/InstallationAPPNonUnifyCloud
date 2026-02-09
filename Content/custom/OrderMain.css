@@ -1,0 +1,270 @@
+﻿/* ========== OrderMain.css (om-page scoped) ========== */
+
+/* 整頁基本 */
+.om-page {
+    background-color: var(--ia-bg-page, #ffffff);
+    color: var(--ia-text-main, #222222);
+    padding: 10px 12px 30px 12px;
+}
+
+    /* 標題下的細線 */
+    .om-page .top-line {
+        border: 0;
+        border-top: 0.5px solid #000000;
+        width: 100%;
+        margin: 20px 0 30px 0;
+    }
+
+    /* ============================= */
+    /* 上半部資訊區 (Order / Customer / Email / Install + Contact) */
+    /* ============================= */
+
+    .om-page .info-section {
+        margin-bottom: 30px;
+    }
+
+    /* 外層左右兩欄：桌機橫向排列，高度一致 */
+    .om-page .info-row-flex {
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+        /* 左右欄都是 column，方便堆疊內部區塊 */
+        .om-page .info-row-flex .left-info-col,
+        .om-page .info-row-flex .right-info-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+    /* 左欄只有一個 info-box，要跟右欄總高度一樣高 */
+    .om-page .left-info-col .info-box {
+        flex: 1 1 auto; /* 撐滿整欄高度 */
+    }
+
+    /* 灰底資訊框（左欄＋右上欄共用） */
+    .om-page .info-box {
+        background-color: #F2F2F2;
+        padding: 20px 25px;
+        text-align: left;
+        min-height: 0; /* 高度由內容決定，由 flex 控制整體高度 */
+        width: 100%;
+    }
+
+    /* 每行一組 label/value */
+    .om-page .info-row {
+        margin-bottom: 6px;
+    }
+
+        .om-page .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+    /* 左側資訊：標題粗體、內容一般 */
+    .om-page .info-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .om-page .info-value {
+        font-weight: normal;
+    }
+
+    /* 右側 Install Date：標題一般、日期粗體 */
+    .om-page .info-box-date .info-label {
+        font-weight: normal;
+    }
+
+    .om-page .info-box-date .info-value {
+        font-weight: bold;
+    }
+
+    /* 深灰聯絡資訊框（右下） */
+    .om-page .contact-box {
+        background-color: #595959;
+        color: #FFFFFF;
+        padding: 18px 25px;
+        text-align: left;
+        margin-top: 4px; /* 灰框與深灰框間距縮小一點 */
+        width: 100%;
+    }
+
+        .om-page .contact-box .info-label,
+        .om-page .contact-box .info-value {
+            color: #FFFFFF;
+        }
+
+    /* 資訊區字體大小統一 */
+    .om-page .info-box,
+    .om-page .info-box-date,
+    .om-page .contact-box {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .om-page .info-label,
+    .om-page .info-value {
+        font-size: 18px;
+    }
+
+    /* ============================= */
+    /* Team Section (Purple Boxes)   */
+    /* ============================= */
+
+    .om-page .team-section {
+        margin: 30px 0;
+    }
+
+    .om-page .team-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .om-page .team-row .col-md-6 {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+    /* 紫色框本體，色系用我們前面定的紫色 */
+    .om-page .team-box {
+        background-color: #7033FF;
+        color: #FFFFFF;
+        font-weight: bold;
+        font-size: 18px;
+        border-radius: 5px;
+        padding: 12px 15px;
+        width: 100%;
+        text-align: center;
+    }
+
+        /* 下拉選單字體 */
+        .om-page .team-box select.form-control {
+            font-size: 18px;
+            height: 42px;
+            padding: 5px 10px;
+            margin-top: 6px;
+        }
+
+    /* ============================= */
+    /* Bottom Buttons                */
+    /* ============================= */
+
+    .om-page .button-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+        .om-page .button-group button {
+            padding: 12px 35px;
+            font-size: 18px;
+            border-radius: 6px;
+            border: 0.5px solid #000000;
+            cursor: pointer;
+        }
+
+    /* Back */
+    .om-page .button-back {
+        background-color: #F2F2F2;
+        color: #000000;
+    }
+
+    /* Products Already Installed */
+    .om-page .button-installed {
+        background-color: #F2F2F2;
+        color: #000000;
+    }
+
+    /* Installation Page（依你前面色系，這裡改成品牌紅也可以） */
+    .om-page .button-installation {
+        background-color: #E1261C; /* 如果你想維持橘色就改回 #FE7000 */
+        color: #FFFFFF;
+    }
+
+    /* hover 效果稍微加強 */
+    .om-page .button-group button:hover {
+        filter: brightness(0.92);
+    }
+
+/* ============================= */
+/* RWD for Mobile (<= 768px)     */
+/* ============================= */
+
+@media (max-width: 768px) {
+    /* 避免外層高度鎖死導致不能滑到底 */
+    html, body {
+        height: auto !important;
+        min-height: 100% !important;
+        overflow-y: auto !important;
+    }
+
+    #body-container,
+    #form-container,
+    .form-horizontal {
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+    }
+
+    .container,
+    .row {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* 上半部資訊改直排 */
+    .om-page .info-row-flex {
+        flex-direction: column;
+    }
+
+        .om-page .info-row-flex .left-info-col,
+        .om-page .info-row-flex .right-info-col {
+            width: 100%;
+            max-width: 100%;
+        }
+
+    .om-page .left-info-col .info-box {
+        flex: none; /* 手機就不要撐滿高度了 */
+        min-height: auto;
+        margin-bottom: 10px;
+    }
+
+    .om-page .info-box {
+        min-height: auto;
+        padding: 15px 15px;
+    }
+
+    .om-page .contact-box {
+        margin-top: 5px;
+        padding: 15px 15px;
+    }
+
+    /* Team 區塊直排滿版 */
+    .om-page .team-row {
+        flex-direction: column;
+    }
+
+        .om-page .team-row .col-md-6 {
+            width: 100%;
+            max-width: 100%;
+        }
+
+    .om-page .team-box {
+        margin-bottom: 10px;
+    }
+
+    /* 按鈕改直排，好點按 */
+    .om-page .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        .om-page .button-group button {
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+        }
+}

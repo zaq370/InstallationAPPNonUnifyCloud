@@ -1,0 +1,88 @@
+﻿body,html {
+    height:100%;
+}
+
+#CMSLoginForm {
+    height:100%;
+    width:100%;
+}
+
+
+#CMSLoginForm #bg-image {
+    height:100%;
+    /*background-image: url('/../../Content/custom/images/login_002_new.jpg');*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.7;
+
+    /* Add the blur effect */
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+#CMSLoginForm form .frame{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    padding:20px;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+    width:40%;
+    border: 3px solid #f1f1f1;
+}
+
+#CMSLoginForm form .frame .form-group {
+    width:60%;
+    margin:auto;
+}
+
+#CMSLoginForm form label{
+    color:white;
+    font-size:large;
+}
+
+#CMSLoginForm form .filedError{
+    font-size:medium;
+    background-color:rgba(0,0,0, 0.4);
+}
+
+#CMSLoginForm form .frame .page-title {
+    color:white;
+    font-size:x-large;
+    text-align:center;
+    margin-bottom:40px;
+}
+
+@media (max-width: 575.99px) {
+    #CMSLoginForm form .frame {
+        width:80%;
+    }
+
+    #CMSLoginForm form .frame .form-group {
+        width:80%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 1199.99px) { 
+    #CMSLoginForm form .frame {
+        width:60%;
+    } 
+
+    #CMSLoginForm form .frame .form-group {
+        width:80%;
+    }
+}
+
+@media (min-width: 1200px) { 
+    #CMSLoginForm form .frame {
+        width:40%;
+    } 
+
+    #CMSLoginForm form .frame .form-group {
+        width:60%;
+    }
+}
+
+

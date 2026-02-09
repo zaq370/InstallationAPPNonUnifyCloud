@@ -1,0 +1,109 @@
+﻿#OpenRepairRequestsTable {
+    border-width:0px;
+    width:100%;
+    /*table-layout:fixed;*/
+    border-spacing: 0 2px;
+    margin-bottom:0px;
+}
+
+#OpenRepairRequestsTable tr.header{
+    color:white;
+    background-color:#5B6770;
+    font-size:small;
+    height:auto;
+    
+}
+
+#OpenRepairRequestsTable tr.header th {
+    overflow:hidden;
+    word-wrap:break-word;
+    /*text-overflow:ellipsis;*/
+    vertical-align:middle;
+}
+
+#OpenRepairRequestsTable tr.content {
+    color:black;
+    background-color:#E8E8E8;
+    border-color:white;
+    border-width:2px;
+    border-style:solid;
+    font-size:small;
+    height:auto;
+}
+
+#OpenRepairRequestsTable .text-break-all {
+    word-break:break-all;
+}
+
+    #OpenRepairRequestsForm .float-right {
+        float:right;
+        margin-right:8%;
+    }
+
+    #OpenRepairRequestsForm .btn-sub {
+        margin:4px;
+        padding: 4px 4px 4px 4px;
+        font-size:small;
+    }
+
+#createNewCaseSection span {
+    font-size:larger;
+}
+
+@media  (min-width: 0px) and (max-width: 320px){
+    #OpenRepairRequestsForm .container-full{
+		width: 110%;
+        margin-left:-5%;/*20200602 SHIN edit 手機GridView沒有置中*/
+	}
+
+    #createNewCaseSection span {
+        font-size:small;
+    }
+
+    #OpenRepairRequestsForm .btn-sub {
+        margin:4px;
+        padding: 4px 4px 4px 4px;
+        font-size:small;
+    }
+
+    #OpenRepairRequestsForm .float-right {
+        float:right;
+        margin-right:3%;
+    }
+}
+@media  (min-width: 321px) and (max-width: 768px){
+     #OpenRepairRequestsForm .container-full{
+		width: 110%;
+        margin-left:-5%;/*20200602 SHIN edit 手機GridView沒有置中*/
+	}
+
+    #OpenRepairRequestsForm .width-20 {
+        width:20%;
+    }
+    #OpenRepairRequestsForm .width-30 {
+        width:30%;
+    }
+
+        #createNewCaseSection span {
+        font-size:samll;
+    }
+
+    #OpenRepairRequestsForm .btn-sub {
+        margin:4px;
+        padding: 4px 6px 4px 6px;
+    }
+
+    #OpenRepairRequestsForm .float-right {
+        float:right;
+        margin-right:3%;
+    }
+}
+@media  (min-width: 769px) {
+	#OpenRepairRequestsForm .container-full{
+		width: 96%;
+        margin: 0px auto;
+	}
+
+
+}
+

@@ -1,0 +1,17 @@
+﻿#GlobalErrorView p,
+#OutOfServiceView p{
+    height: 60px;
+    color: black;
+    font-size: 36px;
+    line-height: 30px;
+    text-align: center;
+}
+
+#GlobalErrorView p.small,
+#OutOfServiceView p.small{
+    height: 48px;
+    color: black;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+}

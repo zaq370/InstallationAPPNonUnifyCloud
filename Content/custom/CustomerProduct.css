@@ -1,0 +1,137 @@
+﻿#CustomerProductViewForm {
+    position:relative;
+    margin-top:0px !important;
+}
+
+#CustomerProductViewForm .criteriaLabel{
+    color:black;
+}
+
+#CustomerProductViewForm .criteriaInput{
+    background-color:#C2C6C9;
+    color:#5B6770;
+    font-size:12px;
+    padding:7px 9px;
+}
+
+#CustomerProductViewForm .criteriaButton{
+    padding:8px;
+    border-width:0px;
+    border-style:none;
+}
+
+#CustomerProductViewForm .productDetailTable {
+    width:100%;
+    border-width:0px;
+}
+
+#CustomerProductViewForm .productDetailTable tr {
+    color:black;
+    background-color: #E8E8E8;
+    border-color:white;
+    border-width:2px;
+    border-style:solid;
+    font-size:small;
+}
+
+#CustomerProductViewForm .productDetailTable td {
+    word-break:break-all;
+}
+
+#CustomerProductViewForm .productDetailTable td input {
+    border:1px solid #FFFFFF;
+}
+
+/* The Modal (background) */
+#CustomerProductViewForm .modal {
+  display:none;  /*Hidden by default */
+  /*position: sticky; Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+#CustomerProductViewForm .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  color:black;
+  top: 20%;
+}
+
+/* The Close Button */
+#CustomerProductViewForm .modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#CustomerProductViewForm .modal-close:hover,
+#CustomerProductViewForm .modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#CustomerProductViewForm .btn-sub {
+  margin:4px;
+  padding: 2px 6px 2px 6px;
+}
+
+@media (min-width: 0px) and (max-width: 320px) {
+    #CustomerProductViewForm .row {
+        /*width: 98%;*/
+        margin: 0px auto;
+        margin-left: 1%;
+    }
+
+    /* Modal Content/Box */
+    #CustomerProductViewForm .modal-content {
+        width: 90%;
+        top: 30%;
+    }
+
+    #CustomerProductViewForm .form-group {
+        width: 99%;
+        margin: 0px auto;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+    #CustomerProductViewForm .row {
+        /*width: 98%;*/
+        margin: 0px auto;
+        margin-left: 1%;
+    }
+
+    #CustomerProductViewForm .form-group {
+        width: 99%;
+        margin: 0px auto;
+    }
+
+    /* Modal Content/Box */
+    #CustomerProductViewForm .modal-content {
+        width: 80%;
+    }
+}
+
+@media (min-width: 769px) {
+    #CustomerProductViewForm .form-group {
+        margin-left: 1px;
+    }
+
+    /* Modal Content/Box */
+    #CustomerProductViewForm .modal-content {
+        width: 50%;
+    }
+}
+

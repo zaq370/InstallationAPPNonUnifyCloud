@@ -1,0 +1,79 @@
+﻿#EmailUsViewForm .background,
+#EmailUsViewForm .container-fluid,
+#EmailUsViewForm .form-container .row,
+#EmailUsViewForm .emailcolumnsection{
+    background-color:black;
+}
+
+#EmailUsViewForm .text-left{
+    color:white;
+}
+
+#EmailUsViewForm .fieldLabel{
+    color:white;
+}
+
+#EmailUsViewForm .input-field{
+    width:100%;
+}
+
+#EmailUsViewForm .btn-red-primary {
+    color:white;
+    height:40px;
+    width:140px;
+}
+
+@media  (min-width: 0px) and (max-width: 320px){
+	#EmailUsViewForm .row{
+		width: 100%;
+        margin: 0px auto;
+	}
+    #EmailUsViewForm .container-fluid{
+        width: 100%;
+        margin: 0px auto;
+    }
+    #EmailUsViewForm .container{
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+    #EmailUsViewForm .background{
+        width: 100%;
+        margin: 0px auto;
+    }
+    #EmailUsViewForm .emailcolumnsection{
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+}
+@media  (min-width: 321px) and (max-width: 768px) {
+	#EmailUsViewForm .row{
+		width: 100%;
+        margin: 0px auto;
+	}
+    #EmailUsViewForm .container-fluid{
+        width: 100%;
+        margin: 0px auto;
+    }
+    #EmailUsViewForm .container{
+        width: 100%;
+        margin: 0px auto;
+        background-color: white;
+    }
+    #EmailUsViewForm .background{
+        width: 100%;
+        margin: 0px auto;
+    }
+    #EmailUsViewForm .emailcolumnsection{
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+}
+@media  (min-width: 769px){
+	#EmailUsViewForm .row{
+		width: 90%;
+        margin: 0px auto;
+	}
+}

@@ -1,0 +1,455 @@
+﻿
+/*
+colors: 
+white: #FFFFFF;
+black: #000000;
+red: #E1261C;
+light gray: #C2C6C9;
+dark gray: #5B6770;
+*/
+
+body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    /*background-color: #000000;2020/02/12 SHIN 先拿掉這樣上面會有一塊黑色塊我另外在id-footer加上背景黑色就好*/ 
+    font-family: "aaux-next", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    /* box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4); */ /* this gives a dark transparent overlay to the background image */
+}
+
+/* styles from header *********************************************************************************************************** */
+
+.jumbotron {
+    /*background-image: url('/inc/images/header/open-repair-requests.jpg');*/ 
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 0;   
+    top: 0;
+    border-width: 0 0 1px; 
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    min-height: 50px;
+    position: relative;
+     height: 175px; 
+    height: 200px;
+}
+
+.jumbotron h1 {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 50px;
+}
+
+.container-full {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* new white background body container */
+#body-container {
+    background-color: #FFFFFF ;
+  
+    width: 100%;
+   
+}
+
+/* end stylesles from header * from header **********em header **************************************
+}
+
+/* end styles from header *********************************************************************************************************** */
+
+.checkbox {
+    color: #FFFFFF;
+    margin-bottom: 12px;
+}
+
+.btn-red-primary {
+    color: #FFFFFF;
+    background-color: #E1261C; /* red */
+    border-color: #E1261C;
+}
+
+.btn-primary {
+    outline: none !important; /* prevent blue border when clicking */
+}
+
+@media (hover:hover) {
+    .btn-red-primary:hover,
+    .btn-outline-primary:active:hover,
+    .btn-outline-primary.active:hover {
+        color: #FFFFFF;
+        background-color: #8f1111; /* darker red for hover */
+        border-color: #8f1111;
+    }
+}
+
+.btn-red-primary.active,
+.btn-red-primary.active.focus {
+    border-color: #FFFFFF;
+    color: #f70505; /* red color for active/focus */
+    background-color:#f70505;
+}
+
+.clear {
+    clear: both;
+}
+
+.btn-upload-img {
+    color: #FFFFFF;
+    background-color: #000000;
+    border: 2px solid #E1261C; /* red */
+    text-align: center;
+}
+
+.btn-upload-img:hover, .btn-upload-img:focus, .btn-upload-img:active:hover {
+    color: #FFFFFF;
+}
+
+/*#form1 {*/
+.form1 {
+    margin-top: 50px !important;
+    background-color: #000000 !important;
+    background: rgba(0,0,0,0.8) !important;
+}
+
+.panel {
+    border: none;
+}
+
+.panel-body {
+    background: rgba(0,0,0,0.8) !important;
+    color: #FFFFFF;
+}
+
+.control-label {
+    color: #FFFFFF !important;
+}
+
+/* override border-radius rounded corners from bootstrap styles */
+.alert {
+    /* border-radius: 4px; */
+    border-radius: 0;
+}
+
+/* try coloring menu background gray, then overriding when screen size is big enough */
+
+/* these extra styles will help the navbar to only collapse at 'medium' and lower. by default, it only collapses at small or lower. 
+this is a problem because at 'small' screen size, the menu items wrap
+*/
+
+@media (min-width: 768px) {
+    .container-full {
+        /* margin-top: 200px !important; */
+    }
+
+    /* logout link on collapsed menu needed extra spacing to the right */
+    .navbar-right {
+        margin-right: 3px;
+    }
+
+}
+
+/* styles for larger screens */
+@media (min-width: 1200px) {
+
+    #navbar {
+        background-color: #000000 ;
+    }
+
+    .navbar-nav>li.active a {
+        background-color: #000000  ;
+    }
+
+    .navbar-nav>li a {
+        color: #9d9d9d  ;
+    }
+
+}
+
+/* styles for smaller screens */
+/* @media (max-width: 992px) { */
+@media (max-width: 1200px) {
+
+    #navbar {
+        /* background-color: #C2C6C9 !important; */
+        background-color: #ECECEC !important;
+        color: #E1261C !important;
+        text-align: right;
+        width: 280px;
+        float: right;
+    }
+
+    .navbar-nav>li.active a {
+        background-color: #C2C6C9 !important;
+    }
+
+    .navbar-nav>li a {
+        color: #E1261C !important;
+    }
+
+    .navbar-header {
+        float: none;
+    }
+
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+
+    /* logout link needed extra padding at smaller sizes */
+    .navbar-right {
+        /* margin-right: 3px; */
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+
+    .navbar-nav {
+        float: none!important;
+        /*margin-top: 7.5px;*/
+        margin-top: 0px !important;
+    }
+
+    .navbar-nav>li {
+        float: none;
+    }
+
+    .navbar-nav>li>a {
+        /*height: 50px;*/
+        color: #DA291C;
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 13px;
+        padding: 15px 30px !important;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+}
+
+.btn-primary {
+    color: #FFFFFF;
+    background-color: #E1261C;
+    border-color: #E1261C;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #FFFFFF;
+    background-color: #E1261C;
+    border-color: #E1261C;
+}
+
+/* hover over table */
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    /* background-color: #606060; */ /* gray for hover #686868 #696969 #909090 #787878 #888888 #D3D3D3 */
+    background-color: #999999; /* gray */
+    color: #FFFFFF; /* white text */
+}
+
+a {
+    color: #E1261C;
+}
+
+a:hover {
+    color: #E1261C !important;
+}
+
+.navbar-brand {
+    padding: 0;
+    margin-top: -5px;
+}
+
+/* on small screen widths, the hamburger icon jumps too far to the left. this helps to fix that */
+@media (max-width: 768px) {
+    .navbar-toggle {
+        margin-left: 25px !important;
+    }
+}
+
+/* on very small screen widths, the logo breaks to the next line */
+@media (max-width: 345px) {
+    .navbar-brand img {
+        /* width: 230px; */
+        width: auto;
+    }
+}
+
+/* on very small screens, logout link does not need right margin */
+@media (max-width: 400px) {
+    div#navbar.navbar-collapse.collapse.in.navbar-right {
+        /* margin-right: 0px !important; */
+    }
+}
+
+/* this is to remove the orange text in the navbar right after clicking a link (and moving away from link) (orange color: #EF9630) */
+a:focus, a:hover {
+    color: #E1261C !important;
+}
+
+/* fix for red buttons showing blue upon clicking */
+.btn-primary:active:focus {
+    background-color: #E1261C !important; 
+    border-color: #E1261C !important;
+}
+
+input:not([type=submit]):not([type=button]) {
+    border: 1px solid #FFFFFF;
+}
+
+textarea {
+    border: 1px solid #FFFFFF;
+}
+
+#id_footer {
+    box-sizing: border-box;
+    bottom: 0;
+    width: 100%;
+    color: #FFFFFF;
+    text-align: center;
+    height: 150px;
+    background-color: #000000;
+}
+
+#navbar {
+    margin-left: -10px;
+}
+
+.navbar-inverse {
+    background-color: #000000;
+}
+
+.navbar-inverse .navbar-toggle {
+    /* border-color: none; */
+    border: 0;
+}
+
+.navbar {
+    font-weight: bold;
+}
+
+/* override border-radius rounded corners on hamburger from bootstrap styles */
+.navbar-toggle {
+    /* border-radius: 4px; */
+    border-radius: 0;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    /* border-top: 1px solid #ddd; */
+}
+
+/* on the white background full-width body div, it shows a scrollbar. this will prevent that */
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+/* this will move the hamburger icon to the right side rather than left side */
+.navbar-header .navbar-toggle {
+    float: right !important;
+}
+
+.navbar .container {
+    width: auto;
+    margin: 0px 5px;
+}
+
+/* styles from dashboard page (active requests) ******************************************************************************************* */
+
+/* put spacing between rows of table */
+.table {
+    border-collapse: separate;
+    border-spacing:0 5px;
+}
+
+.table a {
+    color: #FFFFFF;
+}
+
+.table tr {
+    background-color: #C2C6C9;
+    height: 42px;
+}
+
+.table thead {
+    /* background-color: #5B6770 !important; */
+}
+
+.table thead tr {
+    background-color: #5B6770 !important;
+    height: 42px;
+}
+
+.table thead tr {
+    color: #000 !important;
+}
+
+.table {
+    /*max-width: 1440px;*/
+}
+
+/* this removes a 2px bottom gray border that was built in to bootstrap */
+.table>thead>tr>th {
+    /* border-bottom: 2px solid #ddd; */
+    border-bottom: none;
+}
+
+#copyright-matrix-fitness {
+    height: 24px;
+    color: #C1C6C8;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 70px;
+}
+
+#container-header {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+#container-header h1 {
+    margin-bottom: 20px;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 38px;
+}
+
+
+/* code snippet to stack table columns as new rows */
+@media only screen and (max-width: 767px) {
+    /*.table>tbody>tr>td,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>td,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>thead>tr>th {
+        display: block;
+        min-width: 100% !important;
+    }*/
+
+    .table>thead>tr>th {
+        /* display: none; */
+    }
+
+    .table .filterBody span {
+        display: block;
+    }
+}

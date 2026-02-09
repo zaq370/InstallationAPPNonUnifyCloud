@@ -1,0 +1,215 @@
+﻿#NewServiceCaseViewForm .columnsection {
+    color: white;
+}
+#NewServiceCaseViewForm .panel-body,
+#NewServiceCaseViewForm .panel-default {
+    background-color:black;
+}
+
+#NewServiceCaseViewForm .align-left {
+    padding-left:20px;
+}
+
+#NewServiceCaseViewForm .btn-35px{
+    height:35px;
+}
+
+#NewServiceCaseViewForm .btn-scan{
+    background-color:#586770;
+    border-color:#586770;
+}
+
+#NewServiceCaseViewForm .btn-upload-img:hover,
+#NewServiceCaseViewForm .btn-upload-img:focus, 
+#NewServiceCaseViewForm .btn-upload-img:active:hover{
+    color:white;
+    background-color:red;
+    border-color:brown;
+}
+#NewCaseServiceForm .table,
+#NewCaseServiceForm .panel-body {
+    background-color:black;
+}
+
+#NewCaseServiceForm input, #NewCaseServiceForm textarea {
+    color:black;
+}
+
+#NewCaseServiceForm label,
+#NewCaseServiceForm input[type=submit],
+#NewCaseServiceForm input[type=button]{
+    color:white;
+}
+
+#NewCaseServiceForm .control-fileupload .text-left {
+    width:100%;
+    color:white;
+    font-weight:700;
+}
+
+#NewCaseServiceForm .upload-file-btn {
+    height:32px;
+    width:138px;
+    position:relative;
+    background-color:#586770;
+    border-color:white;
+}
+
+#NewCaseServiceForm .remove-file-btn {
+    height:32px;
+    width:138px;
+    position:relative;
+    overflow: hidden;
+    background-color:red;
+    border-color:white;
+}
+
+#NewCaseServiceForm input[type=file] {
+    position: absolute;
+    font-size: 10px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+#head_Pan_select {
+    display: none; 
+    border: solid 1px black; 
+    background-color: White; 
+    overflow:auto; 
+    height: 80%;
+    top:10%;
+    width:70%;
+    left:15%;
+}
+
+/* The Modal (background) */
+#NewServiceCaseViewForm .modal {
+  display:none;  /*Hidden by default */
+  /*position: sticky; Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+#NewServiceCaseViewForm .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  color:black;
+  top: 20%;
+}
+
+/* The Close Button */
+#NewServiceCaseViewForm .modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#NewServiceCaseViewForm .modal-close:hover,
+#NewServiceCaseViewForm .modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (min-width: 0px) and (max-width: 320px) {
+    #NewServiceCaseViewForm .panel {
+        width: 100%;
+        margin: 0px auto;
+    }
+
+    #NewServiceCaseViewForm .panel-body {
+        width: 100%;
+        margin: 0px auto;
+    }
+
+    #NewServiceCaseViewForm .panel panel-default {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .table tr {
+        background-color: white;
+    }
+
+    #head_Pan_select {
+        width:90%;
+        left:5%;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+    #NewServiceCaseViewForm .panel {
+        width: 100%;
+        margin: 0px auto;
+        /*background-color: black;*/
+    }
+
+    #NewServiceCaseViewForm .panel-body {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .panel panel-default {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .table tr {
+        background-color: white;
+    }
+
+    #head_Pan_select {
+        width:94%;
+        left:3%;
+    }
+}
+
+@media (min-width: 769px) {
+    #NewServiceCaseViewForm .table {
+        width: 78%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .table tr {
+        background-color: white;
+    }
+
+    #NewServiceCaseViewForm .panel-body {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .panel panel-default {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #NewServiceCaseViewForm .columnsection {
+        width: 100%;
+        margin: 0px auto;
+        background-color: black;
+    }
+
+    #head_Pan_select {
+        width:70%;
+        left:15%;
+    }
+}

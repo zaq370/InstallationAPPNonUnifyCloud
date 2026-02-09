@@ -1,0 +1,60 @@
+﻿#CustomerOrderInformationTable  {
+    border-width:0px;
+    width:100%;
+}
+
+#CustomerOrderInformationTable tr.header {
+    color:white;
+    background-color:#5B6770;
+    font-size:small;
+}
+
+#CustomerOrderInformationTable tr.body {
+    color:black;
+    background-color:#E8E8E8;
+    font-size:small;
+    border-color:white;
+    border-width:2px;
+    border-style:solid;
+}
+
+#CustomerOrderInformationTable th a {
+    color:white;
+}
+
+#CustomerOrderInformationTable .text-break-all {
+    word-break:break-all;
+}
+
+@media  (min-width: 0px) and (max-width: 320px){
+    #CustomerOrderInformationForm .container-full{
+		width: 110%;
+        margin: 0px auto;
+        margin-left:-5%;
+	}
+}
+@media  (min-width: 321px) and (max-width: 768px){
+    #CustomerOrderInformationForm .container-full{
+		width: 110%;
+        margin: 0px auto;
+        margin-left:-5%;
+	}
+
+    #CustomerOrderInformationTable .width-20 {
+        width:20%;
+    }
+
+    #CustomerOrderInformationTable .width-25 {
+        width:25%;
+    }
+
+    #CustomerOrderInformationTable .width-35 {
+        width:35%;
+    }
+}
+@media  (min-width: 769px){
+	#CustomerOrderInformationForm .container-full{
+		width: 98%;
+        margin: 0px auto;
+	}
+}

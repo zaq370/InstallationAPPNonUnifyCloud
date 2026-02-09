@@ -1,0 +1,74 @@
+﻿/* ========== CustomerOrderInformation.css (ci-) ========== */
+
+.ci-page {
+    background-color: var(--ia-bg-page);
+    padding: 12px;
+}
+
+/* 上方資訊區（Order / Customer / Email / Status） */
+.ci-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.ci-info-box {
+    background-color: #F2F2F2;
+    padding: 14px 16px;
+    border-radius: 6px;
+}
+
+.ci-info-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* 下方訂單明細表格 */
+.ci-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.ci-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .ci-table thead th {
+        background-color: var(--ia-thead-bg);
+        color: var(--ia-thead-color);
+        text-align: center;
+        padding: 8px 6px;
+    }
+
+    .ci-table th,
+    .ci-table td {
+        border: 1px solid var(--ia-table-border);
+        padding: 6px 6px;
+        font-size: 16px;
+    }
+
+/* Details 按鈕：紫色 Secondary */
+.ci-detail-btn {
+    /* 組合：ia-btn ia-btn-secondary + ci-detail-btn */
+}
+
+/* RWD */
+@media (max-width: 992px) {
+    .ci-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .ci-page {
+        padding: 8px 6px;
+    }
+
+    .ci-table th,
+    .ci-table td {
+        font-size: 14px;
+    }
+}

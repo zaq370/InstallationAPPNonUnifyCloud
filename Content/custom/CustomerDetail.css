@@ -1,0 +1,39 @@
+﻿#CustomerDetailForm .form-group label {
+    font-weight: normal !important;
+}
+   
+#CustomerDetailForm .control-label {
+    color: #000 !important;
+}
+
+#CustomerDetailForm .form-group .input-field {
+    background-color: #C2C6C9; 
+    color: #080808; 
+    font-size: 16px; 
+    padding: 7px 9px
+
+}
+
+#CustomerDetailForm .gv_contact {
+    border-width:0px;
+    width:100%;
+}
+
+#CustomerDetailForm .gv_contact tr.space.header{
+    color:white;
+    background-color:#5B6770;
+    font-size:small;
+}
+
+#CustomerDetailForm .gv_contact tr.space.body{
+    color:black;
+    background-color:#E8E8E8;
+    font-size:small;
+    border-color:white;
+    border-width:2px;
+    border-style:solid;
+}
+
+#CustomerDetailForm .gv_contact tr.space{
+    height:42px;
+}

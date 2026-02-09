@@ -1,0 +1,7 @@
+﻿#ErrorView p {
+    height: 36px;
+    color: black;
+    font-size: 36px;
+    line-height: 30px;
+    text-align: center;
+}

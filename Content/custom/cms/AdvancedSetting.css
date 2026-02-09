@@ -1,0 +1,202 @@
+﻿
+.sideNav {
+    position:fixed;
+    width:15%;
+    display:flex;
+    flex-direction:column;
+}
+
+.sideNav a {
+  position: relative;  
+  transition: 0.3s; 
+  padding: 10px 5px; 
+  text-decoration: none; 
+  font-size: Small; 
+  color: white; 
+  border-radius: 0 5px 5px 0; 
+  width:80%;
+  word-wrap:break-word;
+  background-color: #555;
+  margin-top:10px;
+}
+
+.sideNav a:hover {
+  background-color:#a6d8a6;
+  color:#555;
+}
+
+.sideNav a.active {
+  width: 95%; 
+  text-align:right;
+  background-color:#5cb85c;
+}
+
+#subFunction {
+    width:83%;
+    float:right;
+    position:relative;
+    top:20px;
+}
+
+.section {
+    border: 1px solid #e6e6e6;
+    border-radius: 0 5px 5px 0;
+    padding:10px;
+}
+
+    .section input[type="text"],
+    .section input[type="password"],
+    .section textarea {
+        width:80%;
+    }
+
+    .section input[type="text"].narrow,
+    .section input[type="password"].narrow,
+    .section textarea.narrow {
+        width:40%;
+    }
+
+    .fixed-top-button {
+        position: sticky;
+        float:right;
+        margin-right:10%;
+    }
+
+.section .form-group {
+    display:inline-block;
+    width:95%;
+}
+
+.section .align-right {
+   float:right;
+}
+
+.section .alert {
+   margin-bottom:5px;
+   margin-top:5px;
+}
+
+/*ConsoleCabinet*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+#LanguageSettingTable input,
+#LanguageSettingTable th,
+#LanguageSettingTable td,
+#LanguageSettingTable option,
+#LanguageSettingTable select {
+    font-size:small
+}
+
+#LanguageSettingTable th,
+#LanguageSettingTable td{
+    padding: 8px 4px;
+}
+
+@media (max-width: 1000px) and (min-width: 601px) {
+    .sideNav a {
+        font-size:smaller;
+        padding: 15px 3px;
+    }
+    .sideNav {
+        position:fixed;
+        width:25%;
+    }
+    #subFunction {
+        width:75%;
+    }
+    .section {
+        padding:5px;
+        width:80%;
+    }
+    .section input[type="text"] {
+        width:90%;
+    }
+    .fixed-top-button {
+        margin-right:5%;
+    }
+
+    .section input[type="text"].narrow,
+    .section input[type="password"].narrow,
+    .section textarea.narrow {
+        width:50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .sideNav a {
+        font-size:smaller;
+        padding: 15px 3px;
+    }
+    .sideNav {
+        position:fixed;
+        width:25%;
+    }
+    #subFunction {
+        width:75%;
+    }
+    .section {
+        padding:5px;
+        width:90%;
+    }
+    .section input[type="text"] {
+        width:95%;
+    }
+    .fixed-top-button {
+        margin-right:0%;
+    }
+
+    .section input[type="text"].narrow,
+    .section input[type="password"].narrow,
+    .section textarea.narrow {
+        width:80%;
+    }
+}

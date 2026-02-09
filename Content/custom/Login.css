@@ -1,0 +1,187 @@
+﻿html {
+    background-color: #000000 !important;
+}
+
+#layout_unauth{
+    padding-top: 20px;
+    padding-bottom: 0px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: #000000 !important;
+    font-family: "aaux-next", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+}
+
+#layout_unauth .navbar-inverse {
+    background-color: #000000 !important;
+}
+
+#layout_unauth .brand{
+    text-align:center;
+}
+
+#LoginView .jumbotron {
+    /*background-image: url('Content/custom/images/login_002_new.jpg');*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 0 !important; 
+    height: 315px;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.4);
+}
+
+#LoginView .body-container {
+    background-color: #FFFFFF;
+    margin: 0 auto;
+    width: 100%;
+    padding: 15px 10px !important;
+    height: 440px;
+}
+
+#LoginView .row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#LoginView .title {
+    text-align: center;
+    margin-top: 110px;
+    height: 85px;
+}
+
+#welcome-to-the {
+    color: #FFFFFF;
+    height: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+}
+
+#matrix-service-portal {
+    height: 60px;
+    color: #FFFFFF;
+    font-size: 36px;
+    line-height: 30px;
+    text-align: center;
+}
+
+#LoginView .form-signin {
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: rgba(0,0,0,0.9);
+    margin-top: 3%;
+    max-width: 450px;
+}
+
+#LoginView .sign-in {
+    height: 24px;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+#LoginView .form-signin input[type="text"],
+#LoginView .form-signin input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+#LoginView .columnName{
+    color:#fff;
+}
+
+#LoginView .input-field {
+    width: 100%;
+    background-color: #C2C6C9;
+    color: #5B6770;
+    height: 45px;
+}
+
+#LoginView input {
+    border: 1px solid #FFFFFF;
+}
+
+#LoginView .ok {
+    height: 36px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 15px;
+    text-align: center;
+}
+
+#LoginView .btn-red-primary {
+    color: white;
+    background-color: #E1261C;
+    border-color: #E1261C;
+}
+
+#LoginView .btn-red-primary:hover,
+#LoginView .btn-outline-primary:active:hover, 
+#LoginView .btn-outline-primary.active:hover {
+    color: white;
+    background-color: #8f1111;
+    border-color: #8f1111;
+}
+
+#LoginView .btn-red-primary.active,
+#LoginView .btn-red-primary.active.focus {
+    border-color: white;
+    color: #f70505;
+    background-color: #f70505;
+}
+
+/* fixes issue with blue outline on red buttons */
+#LoginView .btn-red-primary {
+   outline: none !important;
+}
+
+#layout_unauth footer {
+    box-sizing: border-box;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    background-color:#000;
+}
+
+#copyright-matrix-fitness {
+    height: 24px;
+    color: #C1C6C8;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 70px;
+}
+
+#LoginView .form-container {
+    margin-top: -95px;
+}
+
+#LoginView .text-align-center {
+    width:100%;
+    text-align:center;
+    display:inline-block;
+}
+
+
+
+/* when screen is big, make the jumbotron bigger and the move the form up */
+@media (min-width: 992px) {
+    #LoginView .form-container {
+        margin-top: -255px;
+    }
+    #LoginView .jumbotron {
+        height: 500px;
+    }
+
+    #LoginView .body-container {
+        height: 300px;
+    }
+}
