@@ -1,0 +1,31 @@
+﻿@{
+    if (@ViewBag.Layout != null)
+    {
+        Layout = "~/Views/Shared/" + @ViewBag.Layout;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout_Case.cshtml";
+    }
+        
+}
+<script>
+    document.getElementById("jumbotronImg").style.backgroundColor = '#666666';
+</script>
+<br /><br /><br /><br /><br />
+<div id="ErrorView">
+    <div class="container" id="body-container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="title">
+                    <a href=@Url.Action("EmailUs")>
+                        <p>
+                            @ViewBag.ErrorMessage
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br /><br /><br />

@@ -1,0 +1,125 @@
+﻿@model InstallationAPPNonUnify.ViewModels.OrderInformationViewModel
+@using Newtonsoft.Json
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+<script>
+    @*var modelMessage = '@Html.Raw(Model.Message)';*@
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var searchUrl = '@Url.Action("SearchOrderInformation", "Order")';
+    var historyUrl = '@Url.Action("CustomerOrderInformation", "Order")';
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+<div id="OrderInformationForm" class="form1">
+    <div class="container" id="body-container" style=" font-size: 18px !important;">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div id="form-container">
+                    <div class="row">
+                        <div class="form-group" style="background-color: white;">
+                            @*@using (Html.BeginForm("SearchOrderInformation", "Order", new { @Search = true }, FormMethod.Post))*@
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-4">
+                                    @*<p class="rwdtxt">*@
+                                    @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.SalesOrderNumber))
+                                    @*</p>*@
+                                    @Html.TextBoxFor(model => model.SalesOrderNumber, new { @class = "input-block-level input-field" })
+                                    <br />
+                                </div>
+                                @*<div class="col-xs-12 col-sm-12 col-md-4">
+                                        <p class="rwdtxt">
+                                            @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.CustomerName))
+                                        </p>
+                                        @Html.TextBoxFor(model => model.CustomerName, new { @class = "input-block-level input-field" })
+                                        <br />
+                                    </div>*@
+                                @*@if (Model.ShowInternalNo) {
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
+                                            <p class="rwdtxt">
+                                                @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.InternalNo))
+                                            </p>
+                                            @Html.TextBoxFor(model => model.InternalNo, new { @class = "input-block-level input-field" })
+                                            <br />
+                                        </div>
+                                    }*@
+
+                            </div>
+                            <br />
+                            @Html.HiddenFor(model => model.OrderBy)
+                            @Html.HiddenFor(model => model.Asc)
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                    <input type="button" id="SearchMachine" formnovalidate value='@ViewBag.SearchData' class="btn-red-primary btn-large  btn-block buttons-primary-red ok" onclick="OrderInformation.RefershResult()">
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="container-full" id="OrderInformation">
+                            @*load ProductServiceHistoryTable*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url("+'@Url.Content("~/Content/custom/images/CaseHeader/product-history.jpg")'+")";
+
+        //共用目錄中按鈕的名稱反白 (jQuery還沒載入，所以直接用JS)
+        document.getElementById("menubarViewProductsM").parentElement.classList.add("active");
+    })();
+</script>
+<script>
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var searchUrl = '@Url.Action("SearchOrderInformation", "Order")';
+    var historyUrl = '@Url.Action("CustomerOrderInformation", "Order")';
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+
+    function loadCustomerOrderInformation(salesOrderId) {
+        $.get(historyUrl, { SalesOrderID: salesOrderId }, function (html) {
+            $('#CustomerOrderInformationContainer').html(html);
+
+            $('html, body').animate({
+                scrollTop: $('#CustomerOrderInformationContainer').offset().top
+            }, 500);
+        });
+    }
+
+    function handleButtonClick(saveUrl, redirectUrl) {
+        fetch(saveUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(function (response) {
+            if (response.ok) {
+                window.location.href = redirectUrl;
+            } else {
+                alert('資料庫操作失敗，請稍後再試！');
+            }
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+            alert('發生錯誤，請稍後再試！');
+        });
+    }
+</script>
+

@@ -1,0 +1,74 @@
+﻿@model InstallationAPPNonUnify.ViewModels.CustomerOrderInformationViewModel
+@using Newtonsoft.Json
+
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+@*<style>
+    .product-list-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .product-list-table th,
+        .product-list-table td {
+            border: 1.5px solid #333; /* 邊框虛線 */
+            padding: 10px; /* 內邊距 */
+            text-align: left; /* 文字左對齊 */
+        }
+
+        .product-list-table th {
+            background-color: #f2f2f2; /* 表頭背景色 */
+            color: #333;
+        }
+
+    .report-issue-button {
+        background-color: #7033FF; /* 按鈕顏色 */
+        color: white; /* 按鈕文字 */
+        padding: 5px 10px; /* 內邊距 */
+        cursor: pointer; /* 鼠標樣式 */
+        border: 1.5px dashed lightgray;
+        border-radius: 5px; /* 圓角 */
+    }
+
+        .report-issue-button:hover {
+            background-color: #7033FF; /* 懸停效果 */
+        }
+</style>*@
+<script>
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    @*var modelMessage = '@Html.Raw(Model.Message)';*@
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+<form id="CustomerOrderInformationForm" class="form1" enctype="multipart/form-data">
+    <div class="ci-page ia-root">
+        <div class="container" id="body-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group" style="background-color:white" id="CustomerOrderInformation">
+                        @* loading CustomerOrderInformationTable *@
+                        @{
+                            Html.RenderPartial("_CustomerOrderInformation");   //initialize
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/product-history.jpg")' + ")";
+
+        //共用目錄中按鈕的名稱反白 (jQuery還沒載入，所以直接用JS)
+        document.getElementById("menubarViewProductsM").parentElement.classList.add("active");
+
+    })();
+</script>

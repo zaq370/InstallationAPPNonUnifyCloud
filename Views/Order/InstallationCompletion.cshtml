@@ -1,0 +1,540 @@
+@model InstallationAPPNonUnify.ViewModels.InstalledProductsViewModel
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+
+    // 獲取當前日期
+    var today = DateTime.Now.ToString("yyyy-MM-dd");
+}
+<div class="ic-page ia-root">
+    <div class="container" id="body-container">
+        <div id="form-container">
+            <div class="form-horizontal">
+
+                <!-- Installer Signing Screen -->
+                <div id="installerSection" class="section">
+                    <h2 style="text-align:center">@ViewBag.InstallerSigning</h2>
+
+                    <h3><label for="installer">@ViewBag.Installer :</label></h3>
+                    <input type="text"
+                           id="installer"
+                           class="form-control"
+                           placeholder="@ViewBag.InstallerName" />
+
+                    <div class="signature-block">
+                        <div class="signature-wrapper">
+                            <canvas id="installerSignature" class="signature-canvas"></canvas>
+                            <!-- Locked 遮罩 -->
+                            <div id="installerLockedOverlay" class="signature-locked-overlay">
+                                Locked
+                            </div>
+                        </div>
+
+                        <div class="button-container">
+                            <!-- Clear signature -->
+                            <button id="clearInstallerSignature"
+                                    type="button"
+                                    onclick="clearSignature('installerSignature','lockInstallerSignature','installerLockedOverlay')"
+                                    class="button btn-clear-signature">
+                                @ViewBag.ClearSignature
+                            </button>
+                            <!-- Lock signature -->
+                            <button id="lockInstallerSignature"
+                                    type="button"
+                                    class="button btn-lock-signature">
+                                @ViewBag.LockSignature
+                            </button>
+                            <input type="hidden" id="signatureData" name="signatureData" />
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <!-- Club Manager Signing Screen -->
+                <div id="clubManagerSection" class="section">
+                    <h2 style="text-align:center; color:#BFBFBF;">
+                        @ViewBag.ClubManagerSigning
+                    </h2>
+
+                    <h3>
+                        <label for="clubManager">@ViewBag.ClubManager :</label>
+                    </h3>
+                    <input type="text"
+                           id="clubManager"
+                           class="form-control"
+                           placeholder="@ViewBag.ClubManagerName" />
+
+                    <h3><label for="clubManagerMail">@ViewBag.ClubManagerMail :</label></h3>
+                    <input type="text"
+                           id="clubManagerMail"
+                           class="form-control"
+                           placeholder="@ViewBag.ClubManagerEnterEmail" />
+                    <br />
+
+                    <div class="signature-block">
+                        <div class="signature-wrapper">
+                            <canvas id="clubManagerSignature" class="signature-canvas"></canvas>
+                            <!-- Locked 遮罩 -->
+                            <div id="clubManagerLockedOverlay" class="signature-locked-overlay">
+                                Locked
+                            </div>
+                        </div>
+
+                        <div class="button-container">
+                            <!-- Clear signature -->
+                            <button id="clearClubManagerSignature"
+                                    type="button"
+                                    onclick="clearSignature('clubManagerSignature','lockClubManagerSignature','clubManagerLockedOverlay')"
+                                    class="button btn-clear-signature">
+                                @ViewBag.ClearSignature
+                            </button>
+                            <!-- Lock signature -->
+                            <button id="lockClubManagerSignature"
+                                    type="button"
+                                    class="button btn-lock-signature">
+                                @ViewBag.LockSignature
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3>
+                        <label for="signatureDate">@ViewBag.DateofSignature:</label>
+                    </h3>
+                    <input type="date" id="signatureDate" value="@today" class="form-control" />
+
+                    <hr />
+
+                    <div class="button-container2">
+                        <button type="button"
+                                onclick="window.history.back()"
+                                class="button2 btn-back">
+                            @ViewBag.Return
+                        </button>
+
+                        <button type="button"
+                                id="btnCompleteInstallation"
+                                class="button2 btn-complete"
+                                onclick="window.completeInstallation && window.completeInstallation(this)">
+                            @ViewBag.CompleteInstallation
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        // 載入上方底圖
+        document.getElementById("jumbotronImg").style.backgroundImage =
+            "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/product-history.jpg")' + ")";
+    })();
+</script>
+
+<script>
+// 將完成訊息做 JSON 安全輸出
+const COMPLETED_TITLE = @Html.Raw(Json.Encode(ViewBag.InstallationCompletedMess ?? "Completed"));
+
+// 封裝一個給按鈕用的清除函式
+// 會：清畫布 + 解鎖畫布 + 關閉遮罩 + 解鎖 Lock 按鈕
+function clearSignature(canvasId, lockBtnId, overlayId) {
+    // 1) 清除 canvas 內容（呼叫底層 clearCanvasCore）
+    if (window.clearCanvasCore) {
+        window.clearCanvasCore(canvasId);
+    }
+
+    // 2) 解鎖畫布
+    const canvas = document.getElementById(canvasId);
+    if (canvas) {
+        canvas.style.pointerEvents = 'auto';
+    }
+
+    // 3) 關閉 Locked 遮罩
+    const overlay = document.getElementById(overlayId);
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+
+    // 4) 解鎖 Lock 按鈕
+    const lockBtn = document.getElementById(lockBtnId);
+    if (lockBtn) {
+        lockBtn.disabled = false;
+        lockBtn.classList.remove('is-disabled');
+    }
+}
+
+// Complete Installation
+window.completeInstallation = function (btn) {
+  if (btn) {
+    btn.disabled = true;
+    btn.classList && btn.classList.add('is-disabled');
+  }
+
+  Swal.fire({
+    title: 'Processing...',
+    icon: 'info',
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    width: '50rem',
+    didOpen: function () { Swal.showLoading(); }
+  });
+
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const installerInput = document.getElementById('installer');
+    const installerValue = installerInput ? installerInput.value.trim() : "";
+
+    if (!installerValue) {
+      try { Swal.close(); } catch(e){}
+      Swal.fire({
+        title: 'Please fill in your name as installer (mandatory).',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      if (btn) {
+        btn.disabled = false;
+        btn.classList && btn.classList.remove('is-disabled');
+      }
+      if (installerInput) installerInput.focus();
+      return;
+    }
+
+    localStorage.setItem('installerValue', installerValue);
+
+    const clubManagerValue       = document.getElementById('clubManager').value;
+    const clubManagerEmailValue  = document.getElementById('clubManagerMail').value;
+    const signatureDateValue     = document.getElementById('signatureDate').value;
+    const salesOrderID           = urlParams.get('salesOrderId');
+    const requestDeliveryBy      = urlParams.get('requestDeliveryBy');
+
+    const s1 = document.getElementById('installerSignature');
+    if (s1) localStorage.setItem('installerSignature', s1.toDataURL());
+    const installerSignatureimg = localStorage.getItem('installerSignature') || "";
+
+    const s2 = document.getElementById('clubManagerSignature');
+    if (s2) localStorage.setItem('clubManagerSignature', s2.toDataURL());
+    const clubManagerSignatureimg = localStorage.getItem('clubManagerSignature') || "";
+
+    $.ajax({
+      url: '@Url.Action("SaveInstallationData", "Order")',
+      type: 'POST',
+      data: {
+        salesOrderId: salesOrderID,
+        RequestDeliveryBy: requestDeliveryBy,
+        Installer: installerValue,
+        ClubManager: clubManagerValue,
+        ClubManagerEmail: clubManagerEmailValue,
+        SignatureDate: signatureDateValue,
+        InstallerSignatureimg: installerSignatureimg,
+        ClubManagerSignatureimg: clubManagerSignatureimg
+      }
+    })
+    .done(function (data) {
+      try { Swal.close(); } catch(e){}
+
+      if (data && data.success) {
+        Swal.fire({
+          title: COMPLETED_TITLE,
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000,
+          width: '50rem'
+        });
+        setTimeout(function () {
+          window.location.href = '@Url.Action("OrderInformation", "Order")';
+        }, 2000);
+      } else {
+        Swal.fire({
+          title: (data && data.message) || 'Save failed. Please try again.',
+          icon: 'error',
+          confirmButtonText: '確定'
+        });
+      }
+    })
+    .fail(function () {
+      try { Swal.close(); } catch(e){}
+      Swal.fire({
+        title: 'An error occurred. Please contact the administrator.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    })
+    .always(function () {
+      if (btn) {
+        btn.disabled = false;
+        btn.classList && btn.classList.remove('is-disabled');
+      }
+    });
+
+  } catch (e) {
+    try { Swal.close(); } catch(_){}
+    Swal.fire({
+      title: 'Unexpected error. Please try again later.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+    if (btn) {
+      btn.disabled = false;
+      btn.classList && btn.classList.remove('is-disabled');
+    }
+  }
+};
+</script>
+
+<script>
+(function(){
+  // 畫畫時鎖住整頁捲動
+  let __scrollY = 0;
+  function __preventTouch(e){ e.preventDefault(); }
+  function lockScroll(){
+    if (document.body.classList.contains('lock-scroll')) return;
+    __scrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = `-${__scrollY}px`;
+    document.body.classList.add('lock-scroll');
+    document.addEventListener('touchmove', __preventTouch, {passive:false});
+  }
+  function unlockScroll(){
+    if (!document.body.classList.contains('lock-scroll')) return;
+    document.body.classList.remove('lock-scroll');
+    document.body.style.top = '';
+    window.scrollTo(0, __scrollY);
+    document.removeEventListener('touchmove', __preventTouch, {passive:false});
+  }
+
+  // 初始化簽名 pad
+  function initSignature(canvasId, options = {}) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const lineWidth = options.lineWidth || 2;
+    const lineColor = options.lineColor || '#222';
+    const lineCap   = options.lineCap   || 'round';
+
+    let drawing=false, lastX=0, lastY=0;
+
+    function applyBrush(){
+      ctx.lineWidth   = lineWidth;
+      ctx.lineCap     = lineCap;
+      ctx.strokeStyle = lineColor;
+    }
+
+    function resizeCanvas(preserve = true){
+      const dpr  = Math.max(window.devicePixelRatio || 1, 1);
+      const rect = canvas.getBoundingClientRect();
+      let snapshot = null;
+
+      if (preserve && rect.width > 0 && rect.height > 0){
+        try { snapshot = canvas.toDataURL('image/png'); } catch(_) {}
+      }
+
+      const displayW = Math.max(1, Math.round(rect.width));
+      const displayH = Math.max(1, Math.round(rect.height));
+      canvas.width   = Math.round(displayW * dpr);
+      canvas.height  = Math.round(displayH * dpr);
+
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.scale(dpr, dpr);
+      applyBrush();
+
+      if (snapshot){
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0,0,displayW,displayH);
+          ctx.drawImage(img, 0, 0, displayW, displayH);
+        };
+        img.src = snapshot;
+      } else {
+        ctx.clearRect(0,0,displayW,displayH);
+      }
+    }
+
+    function getPoint(e){
+      const r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    function onDown(e){
+      if (e.pointerType === 'touch') { e.preventDefault(); lockScroll(); }
+      canvas.setPointerCapture(e.pointerId);
+      drawing = true;
+      const p = getPoint(e);
+      lastX = p.x;
+      lastY = p.y;
+    }
+
+    function onMove(e){
+      if (!drawing) return;
+      if (e.pointerType === 'touch') e.preventDefault();
+      const p = getPoint(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX,lastY);
+      ctx.lineTo(p.x,p.y);
+      ctx.stroke();
+      lastX = p.x;
+      lastY = p.y;
+    }
+
+    function onUpCancel(e){
+      if (e.pointerType === 'touch') e.preventDefault();
+      drawing = false;
+      unlockScroll();
+      try { canvas.releasePointerCapture(e.pointerId); } catch(_){}
+    }
+
+    canvas.addEventListener('pointerdown',   onDown,    {passive:false});
+    canvas.addEventListener('pointermove',   onMove,    {passive:false});
+    canvas.addEventListener('pointerup',     onUpCancel,{passive:false});
+    canvas.addEventListener('pointercancel', onUpCancel,{passive:false});
+    canvas.addEventListener('pointerout',    onUpCancel,{passive:false});
+
+    function hookResponsive(){
+      window.addEventListener('orientationchange', () => {
+        setTimeout(() => resizeCanvas(true), 200);
+      });
+
+      const parent = canvas.parentElement || canvas;
+      if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => resizeCanvas(true));
+        ro.observe(parent);
+      }
+
+      document.addEventListener('shown.bs.modal', () => resizeCanvas(true));
+      document.addEventListener('shown.bs.tab',   () => resizeCanvas(true));
+    }
+
+    resizeCanvas(false);
+    hookResponsive();
+
+    return {
+      clear(){
+        const rect = canvas.getBoundingClientRect();
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.clearRect(0,0,rect.width,rect.height);
+      },
+      resize: resizeCanvas,
+      toDataURL(type='image/png'){ return canvas.toDataURL(type); }
+    };
+  }
+
+  window.initSignature = initSignature;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // 初始化兩個簽名區
+    if (document.getElementById('installerSignature')){
+      window.installerSignaturePad = initSignature('installerSignature');
+    }
+    if (document.getElementById('clubManagerSignature')){
+      window.clubManagerSignaturePad = initSignature('clubManagerSignature');
+    }
+
+    // Installer name 未填不能按 Complete
+    const installerInput = document.getElementById('installer');
+    const completeBtn    = document.getElementById('btnCompleteInstallation');
+    function toggleCompleteState(){
+      if (!installerInput || !completeBtn) return;
+      const empty = installerInput.value.trim() === '';
+      completeBtn.disabled = empty;
+      completeBtn.classList.toggle('is-disabled', empty);
+    }
+    if (installerInput && completeBtn){
+      installerInput.addEventListener('input', toggleCompleteState);
+      toggleCompleteState();
+    }
+
+    // Installer Lock
+    const lockInstallerBtn       = document.getElementById('lockInstallerSignature');
+    const installerCanvas        = document.getElementById('installerSignature');
+    const installerLockedOverlay = document.getElementById('installerLockedOverlay');
+
+    if (lockInstallerBtn && installerCanvas && installerInput){
+      lockInstallerBtn.addEventListener('click', function(){
+        const name = installerInput.value.trim();
+        if (!name){
+          Swal.fire({
+            title: 'Please fill in your name as installer (mandatory).',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+          installerInput.focus();
+          return;
+        }
+
+        installerCanvas.style.pointerEvents = 'none';
+        if (installerLockedOverlay) {
+          installerLockedOverlay.style.display = 'flex';
+        }
+
+        lockInstallerBtn.disabled = true;
+        lockInstallerBtn.classList.add('is-disabled');
+      });
+    }
+
+    // Club Manager Lock
+    const clubManagerInput         = document.getElementById('clubManager');
+    const clubManagerCanvas        = document.getElementById('clubManagerSignature');
+    const lockClubManagerBtn       = document.getElementById('lockClubManagerSignature');
+    const clubManagerLockedOverlay = document.getElementById('clubManagerLockedOverlay');
+
+    if (lockClubManagerBtn && clubManagerCanvas) {
+      lockClubManagerBtn.addEventListener('click', function () {
+        // 若要強制輸入 Club Manager 名字，可打開這段
+        /*
+        const name = (clubManagerInput && clubManagerInput.value.trim()) || '';
+        if (!name) {
+          Swal.fire({
+            title: 'Please enter the club manager name before locking the signature.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+          if (clubManagerInput) clubManagerInput.focus();
+          return;
+        }
+        */
+
+        clubManagerCanvas.style.pointerEvents = 'none';
+        if (clubManagerLockedOverlay) {
+          clubManagerLockedOverlay.style.display = 'flex';
+        }
+
+        lockClubManagerBtn.disabled = true;
+        lockClubManagerBtn.classList.add('is-disabled');
+      });
+    }
+  });
+})();
+</script>
+
+<script>
+// 取得 pad（目前沒用到，但保留）
+function __getPadById(id){
+  if (id === 'installerSignature')   return window.installerSignaturePad;
+  if (id === 'clubManagerSignature') return window.clubManagerSignaturePad;
+  return null;
+}
+
+/* 底層：只負責真的清除 canvas（含高 DPI） */
+window.clearCanvasCore = function(id){
+  const cv  = document.getElementById(id);
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+
+  try { cv.releasePointerCapture && cv.releasePointerCapture(0); } catch(_) {}
+
+  const w = cv.width, h = cv.height;
+  cv.width  = w;
+  cv.height = h;
+
+  const pad = __getPadById(id);
+  if (pad && typeof pad.resize === 'function') {
+    pad.resize(false); // false: 不保留筆跡，等於整個清空
+  } else {
+    const dpr = Math.max(window.devicePixelRatio || 1, 1);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+  }
+};
+</script>

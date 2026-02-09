@@ -1,0 +1,209 @@
+﻿@*@model InstallationAPPNonUnify.ViewModels.NewServiceCaseViewModel*@
+@*@using Newtonsoft.Json*@
+@model InstallationAPPNonUnify.ViewModels.InstallationConfirmationViewModel
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+@*@{
+        // 從網址中取得 RequestDeliveryBy 參數
+        string installationDate = Request.QueryString["RequestDeliveryBy"];
+
+        // 判斷是否有值，若無則設置為預設值
+        if (String.IsNullOrEmpty(installationDate))
+        {
+            installationDate = "Date not provided";  // 預設顯示訊息
+        }
+    }*@
+<div class="om-page ia-root">
+    <div class="container" id="body-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="form-container">
+                    <div class="row">
+                        <div class="form-horizontal">
+                            <!-- 標題 -->
+                            <div class="col-md-12 text-center">
+                                <h1>@ViewBag.OrderMainTitle</h1>
+                                <hr class="top-line" />
+                            </div>
+
+                            @* 資料處理 *@
+                            @{
+                                string installationDate = string.IsNullOrEmpty(Model.InstallationDate) ? "&nbsp;" : Model.InstallationDate;
+                                string customerName = string.IsNullOrEmpty(Model.CustomerName) ? "&nbsp;" : Model.CustomerName;
+                                string customerEmail = string.IsNullOrEmpty(Model.CustomerEmail) ? "&nbsp;" : Model.CustomerEmail;
+                                string orderNumber = string.IsNullOrEmpty(Model.OrderNumber) ? "&nbsp;" : Model.OrderNumber;
+                            }
+
+                            <!-- 上半部資訊區：左右等高 -->
+                            <div class="col-md-12 info-section">
+                                <div class="row info-row-flex">
+                                    <!-- 左：Order / Customer / Email（灰框撐滿整欄） -->
+                                    <div class="col-md-6 left-info-col">
+                                        <div class="info-box">
+                                            <div class="info-row">
+                                                <span class="info-label">@ViewBag.SalesOrderNumber:</span>
+                                                <span class="info-value">@Html.Raw(orderNumber)</span>
+                                            </div>
+                                            <div class="info-row">
+                                                <span class="info-label">@ViewBag.CustomerName:</span>
+                                                <span class="info-value">@Html.Raw(customerName)</span>
+                                            </div>
+                                            <div class="info-row">
+                                                <span class="info-label">@ViewBag.CustomerEmail:</span>
+                                                <span class="info-value">@Html.Raw(customerEmail)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 右：Installation date + 聯絡資訊 -->
+                                    <div class="col-md-6 right-info-col">
+                                        <div class="info-box info-box-date">
+                                            <div class="info-row">
+                                                <span class="info-label">@ViewBag.DateOfInstallation:</span>
+                                                <span class="info-value">@Html.Raw(installationDate)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="contact-box">
+                                            <div class="info-row">
+                                                <span class="info-label">Matrix contact person:</span>
+                                                <span class="info-value">Inside Sales</span>
+                                            </div>
+                                            <div class="info-row">
+                                                <span class="info-label">Phone:</span>
+                                                <span class="info-value">+31301234567</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="top-line" />
+
+                            <!-- Team 區塊：左右與上面 col-md-6 對齊 -->
+                            <div class="col-md-12 team-section">
+                                <div class="row team-row">
+                                    <div class="col-md-6">
+                                        <div class="team-box">
+                                            Installation Team:
+                                            <br />
+                                            <select id="InstallationTeamName" name="InstallationTeamName" class="form-control">
+                                                @foreach (var team in ViewBag.InstallationTeams as List<SelectListItem>)
+                                                {
+                                                    <option value="@team.Value" selected="@(team.Value == Model.InstallationTeamName ? "selected" : null)">
+                                                        @team.Text
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="team-box">
+                                            Transport Team:
+                                            <br />
+                                            <select id="TransportTeamName" name="TransportTeamName" class="form-control">
+                                                @foreach (var team in ViewBag.TransportTeams as List<SelectListItem>)
+                                                {
+                                                    <option value="@team.Value" selected="@(team.Value == Model.TransportTeamName ? "selected" : null)">
+                                                        @team.Text
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="top-line" />
+
+                            <!-- 按鈕區 -->
+                            <div class="col-md-12 text-center">
+                                <div class="button-group">
+                                    <button type="button" class="button-back" onclick="window.history.back()">
+                                        @ViewBag.Return          @* Back *@
+                                    </button>
+
+                                    <button type="button" class="button-installed" onclick="alreadyInstalled()">
+                                        @ViewBag.AlreadyInstalled @* Products already installed *@
+                                    </button>
+
+                                    <button type="button" class="button-installation" onclick="InstallMained()">
+                                        @ViewBag.InstallationPage @* Installation page *@
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div> <!-- /.form-horizontal -->
+                    </div> <!-- /.row -->
+                </div> <!-- /#form-container -->
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/product-history.jpg")' + ")";
+
+
+    })();
+    function alreadyInstalled() {
+        // 獲取當前網址的查詢參數
+        const urlParams = new URLSearchParams(window.location.search);
+        const salesOrderID = urlParams.get('SalesOrderID'); // 獲取 salesOrderID
+
+        // 使用字符串拼接生成跳轉的 URL
+        var redirectUrl = '@Url.Action("AlreadyInstalled", "Order", new { SalesOrderID = "__SalesOrderID__" })'.replace('__SalesOrderID__', salesOrderID);
+
+        // 跳轉到已安裝頁面
+        window.location.href = redirectUrl;
+    }
+    function InstallMained() {
+        // 獲取當前網址的查詢參數
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 獲取 requestDeliveryBy 的值
+        const requestDeliveryBy = urlParams.get('RequestDeliveryBy');
+
+        // 獲取 salesOrderID 的值
+        const salesOrderID = urlParams.get('SalesOrderID');
+
+        // Log the parameters to see their values
+        console.log("RequestDeliveryBy:", requestDeliveryBy);
+        console.log("SalesOrderID:", salesOrderID);
+        // 取得 <select> 元素的值
+        var installationTeamName = $("#InstallationTeamName").val();
+        var transportTeamName = $("#TransportTeamName").val();
+
+        if (salesOrderID && requestDeliveryBy) {
+            $.ajax({
+                url: '@Url.Action("OrderUpdateData", "Order")',
+                type: "POST",
+                data: {
+                    salesOrderId: salesOrderID,
+                    requestDeliveryBy: requestDeliveryBy,
+                    installationTeamName: installationTeamName,
+                    transportTeamName: transportTeamName
+                },
+                success: function (data) {
+                    console.log("Order updated successfully:", data);
+
+                    // 執行跳轉
+                    var redirectUrl = '@Html.Raw(Url.Action("InstallMain", "Order", new { SalesOrderID = "__SalesOrderID__", RequestDeliveryBy = "__RequestDeliveryBy__" }))'
+                        .replace('__SalesOrderID__', salesOrderID)
+                        .replace('__RequestDeliveryBy__', requestDeliveryBy);
+
+                    console.log("Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating order:", error);
+                }
+            });
+        } else {
+            console.error("SalesOrderID is not defined in the URL.");
+        }
+
+    }
+    </script>

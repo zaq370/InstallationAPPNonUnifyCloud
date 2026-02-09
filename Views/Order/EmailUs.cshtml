@@ -1,0 +1,142 @@
+﻿@model InstallationAPPNonUnify.ViewModels.EmailUsViewModel
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+
+<div id="EmailUsViewForm" class = "form1">
+    <div class="container" id="body-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="form-container">
+                    <div class="row">
+                        <div class="background">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="emailcolumnsection">
+                                        @using (Html.BeginForm("EmailUs", "Order", FormMethod.Post, new { id = "EmailUsForm", @class = "validationForm addRequiredStars" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0 30px;">
+                                                <h3 class="text-left">
+                                                    @ViewBag.YourDetails
+                                                </h3>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.Company))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Company, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.Company, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.FullName))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.FullName, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.TelephoneNumber))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.TelephoneNumber, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.TelephoneNumber, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.MobileNumber))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.MobileNumber, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.EmailAddress))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.Address))
+                                                    </div>
+                                                    @Html.TextAreaFor(model => model.Address, new { @class = "input-block-level input-field", @rows = 2 })
+                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.PostCode))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.PostCode, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "filedError" })
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-6" style="padding: 0 30px;">
+                                                <h3 class="text-left">
+                                                    @ViewBag.MachineDetails
+                                                </h3>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.Product))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Product, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.Product, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.Model))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Model, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.Model, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.SerialNumber))
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.SerialNumber, new { @class = "input-block-level input-field" })
+                                                    @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="fieldLabel">
+                                                        @CustomHelper.DisplayName(Model.FieldDispalyName, @Html.DisplayNameFor(model => model.RequestContext))
+                                                    </div>
+                                                    @Html.TextAreaFor(model => model.RequestContext, new { @class = "input-block-level input-field", @rows = 7, @cols = 20 })
+                                                    @Html.ValidationMessageFor(model => model.RequestContext, "", new { @class = "filedError" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" id="Button1" value='@ViewBag.SendQuery' class="btn-red-primary btn-large" />
+                                                </div>
+                                                <div class="statement white form-group">
+                                                    @Html.Raw(ViewBag.Statement)
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/email-us.jpg")' + ")";
+
+        //共用目錄中按鈕的名稱反白 (jQuery還沒載入，所以直接用JS)
+        document.getElementById("menubarEmailM").parentElement.classList.add("active");
+    })();
+</script>

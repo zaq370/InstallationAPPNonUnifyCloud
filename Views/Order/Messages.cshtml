@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+
+@{
+    string AutoRedirect = "false";
+    if (TempData.Keys.Contains("AutoRedirect"))
+    {
+        AutoRedirect = TempData["AutoRedirect"].ToString();
+    }
+
+    string RedirectController = string.Empty;
+    if (TempData.Keys.Contains("RedirectController"))
+    {
+        RedirectController = TempData["RedirectController"].ToString();
+    }
+
+    string RedirectAction = string.Empty;
+    if (TempData.Keys.Contains("RedirectAction"))
+    {
+        RedirectAction = TempData["RedirectAction"].ToString();
+    }
+
+    string RedirectTo = string.Empty;
+    if (AutoRedirect.ToLower().Equals("true") && !String.IsNullOrEmpty(RedirectController) && !String.IsNullOrEmpty(RedirectAction))
+    {
+        RedirectTo = Url.Action(RedirectAction, RedirectController).ToString();
+    }
+}
+
+<form id="EmailCompleted" class = "form1" enctype="multipart/form-data">
+    <div class="container" id="body-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="form-container">
+                    <div class="row">
+                        @{
+                            var currentPage = (string)ViewBag.CurrentPage;
+                        }
+                        @switch (currentPage)
+                        { 
+                            case "EmailCompleted":
+                                <br /><br />
+                                <h2 class="text-center">@ViewBag.Content</h2>
+                                <br /><br /><br />
+                                break;
+                            case "RequestConfirmed":
+                                <header>
+                                    <h2><p class="text-center">@ViewBag.BodyTitle</p></h2>
+                                    <br />
+                                    <div class="clearfix">
+                                        <h3>
+                                            <p class="text-center">@ViewBag.BodyContent1</p>
+                                            <p class="text-center">@ViewBag.BodyContent2</p>
+                                        </h3><br>
+                                    </div>
+                                </header>
+                                break;
+                        }
+                        @{
+                            if (!string.IsNullOrEmpty(RedirectTo)) { 
+                                <h4 class="text-center">@ViewBag.AutoRedirectIn <span id="time">5</span> @ViewBag.Seconds</h4>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    (function () {
+        try {
+            //載入上方的底圖
+            if ('@ViewBag.BackgroundImg')
+                document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content(@ViewBag.BackgroundImg)' + ")";
+            if ('@ViewBag.ActionSelection')
+                document.getElementById('@ViewBag.ActionSelection').parentElement.classList.add("active");
+            //點選上方目錄
+        } catch (e) {
+        }
+    })();
+
+    //Auto Redirect to
+    if ('@RedirectTo') {
+        var i = 5;
+        window.onload = function autoRedirect() {
+            if (i > 0) {
+                document.getElementById("time").innerText = i;
+                i--;
+                setTimeout(autoRedirect, 1000);
+            } else {
+                window.location.href = '@RedirectTo';
+            }
+        }
+    }
+    
+</script>

@@ -1,0 +1,66 @@
+﻿@model InstallationAPP2024.ViewModels.RepairRequestViewModel
+
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+
+<script>
+    @*var modelMessage = '@Html.Raw(Model.Message)';*@
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var accountProductId = "@Html.Raw(Model.AccountProductId)";
+    var newServiceCase = '@Url.Action("ProductServiceHistory", "Case")';
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+<form id="OpenRepairRequestsForm" class="form1" enctype="multipart/form-data">
+    <div class="container" id="body-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="form-container">
+                    <div class="row">
+                        <h2 class="text-center">@ViewBag.OpenRepairRequestTitle @ViewBag.LoginCustomerName</h2>
+                        <div id="createNewCaseSection" class="float-right ">
+                            <span>@ViewBag.CreateNewCaseProductForCurrentSN</span>
+                            <input type="button" id="createNewCase" value='@ViewBag.Yes' class="btn-large btn-red-primary btn-sub" onclick="createNewCaseProduct()">
+                            <input type="button" id="backToNewCase" value='@ViewBag.No' class="btn-large btn-red-primary btn-sub" onclick="backNewCaseProduct()">
+                            <br>
+                        </div>
+                        
+                        
+                        <div class="container-full" id="OpenRepairRequests">
+                            @* loading OpenRepairRequestsTable *@
+                            @{
+                                Html.RenderPartial("_OpenRepairRequest");   //initialize
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/open-repair-requests.jpg")' + ")";
+
+        //共用目錄中按鈕的名稱反白 (jQuery還沒載入，所以直接用JS)
+        document.getElementById("menubarViewCasesM").parentElement.classList.add("active");
+
+        if (accountProductId == null || accountProductId == "") {
+            document.getElementById("createNewCaseSection").style.display = "none";
+        }
+    })();
+
+    function createNewCaseProduct() {
+        $(window).attr('location', newServiceCase + "?accountProductId=" + accountProductId+"&duplicateAlert=false");
+    }
+
+    function backNewCaseProduct() {
+        $(window).attr('location', newServiceCase);
+    }
+</script>

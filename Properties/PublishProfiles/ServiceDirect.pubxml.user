@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+此檔案是由您 Web 專案的發行/封裝處理程序所使用。您可以編輯此 MSBuild 檔案，
+以自訂此處理程序的行為。若要深入了解，請造訪 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\Work\20210603 Swiss Service Direct Remodeling\CRMPortalMVC</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Code/CustomHelper.cshtml">
+      <publishTime>08/18/2021 17:02:24</publishTime>
+    </File>
+    <File Include="App_Data/BackendInfo.json">
+      <publishTime>08/13/2021 13:19:37</publishTime>
+    </File>
+    <File Include="App_Data/Elmah.Errors/ElmahErrors.txt">
+      <publishTime>07/07/2021 08:06:13</publishTime>
+    </File>
+    <File Include="App_Data/LanguagePackage.json">
+      <publishTime>08/17/2021 13:55:13</publishTime>
+    </File>
+    <File Include="App_Readme/Elmah.txt">
+      <publishTime>06/24/2021 16:33:42</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/BasicSetting.cshtml">
+      <publishTime>08/11/2021 11:22:30</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/LanguageSetting.cshtml">
+      <publishTime>08/16/2021 11:09:44</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/Login.cshtml">
+      <publishTime>08/10/2021 08:23:57</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/OutOfServiceSetting.cshtml">
+      <publishTime>08/10/2021 14:50:50</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/PickLanguageSet.cshtml">
+      <publishTime>08/16/2021 14:59:30</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/SimulateSetting.cshtml">
+      <publishTime>08/10/2021 08:24:31</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Main/WhiteList.cshtml">
+      <publishTime>08/12/2021 11:11:26</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Shared/_CMSLayout.cshtml">
+      <publishTime>08/12/2021 08:42:05</publishTime>
+    </File>
+    <File Include="Areas/CMS/Views/Web.config">
+      <publishTime>07/28/2021 09:51:25</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>06/23/2021 08:02:12</publishTime>
+    </File>
+    <File Include="bin/DocumentFormat.OpenXml.dll">
+      <publishTime>08/17/2021 08:49:38</publishTime>
+    </File>
+    <File Include="bin/Elmah.dll">
+      <publishTime>06/24/2021 16:33:40</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>06/23/2021 08:02:03</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Crm.Sdk.Proxy.dll">
+      <publishTime>06/28/2021 10:20:27</publishTime>
+    </File>
+    <File Include="bin/Microsoft.IdentityModel.Clients.ActiveDirectory.dll">
+      <publishTime>06/28/2021 10:20:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll">
+      <publishTime>06/28/2021 10:20:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Rest.ClientRuntime.dll">
+      <publishTime>06/28/2021 10:20:31</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>06/23/2021 08:02:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Mvc.FixedDisplayModes.dll">
+      <publishTime>06/23/2021 08:02:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Xrm.Sdk.Deployment.dll">
+      <publishTime>06/28/2021 10:20:27</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Xrm.Sdk.dll">
+      <publishTime>06/28/2021 10:20:27</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Xrm.Sdk.Workflow.dll">
+      <publishTime>06/28/2021 10:20:28</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Xrm.Tooling.Connector.dll">
+      <publishTime>06/28/2021 10:20:31</publishTime>
+    </File>
+    <File Include="bin/MvcPaging.dll">
+      <publishTime>08/17/2021 17:10:00</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>07/28/2021 14:05:09</publishTime>
+    </File>
+    <File Include="bin/ServiceDirect2021.dll">
+      <publishTime>08/19/2021 08:00:43</publishTime>
+    </File>
+    <File Include="bin/ServiceDirect2021.pdb">
+      <publishTime>08/19/2021 08:00:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>06/23/2021 08:02:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>07/09/2013 11:05:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>06/23/2021 08:02:11</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>06/23/2021 08:02:11</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>06/23/2021 08:02:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>06/23/2021 08:02:12</publishTime>
+    </File>
+    <File Include="bin/System.Web.Providers.dll">
+      <publishTime>06/23/2021 08:02:11</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>06/23/2021 08:02:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>06/23/2021 08:02:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>06/23/2021 08:02:09</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>06/23/2021 08:02:09</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>06/23/2021 08:02:12</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/EntityFramework.resources.dll">
+      <publishTime>06/23/2021 08:02:15</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Net.Http.Formatting.resources.dll">
+      <publishTime>06/23/2021 08:02:14</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Helpers.resources.dll">
+      <publishTime>07/09/2013 11:36:02</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Http.resources.dll">
+      <publishTime>06/23/2021 08:02:14</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Http.WebHost.resources.dll">
+      <publishTime>06/23/2021 08:02:14</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Mvc.resources.dll">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Optimization.resources.dll">
+      <publishTime>06/23/2021 08:02:15</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Providers.resources.dll">
+      <publishTime>06/23/2021 08:02:15</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.Razor.resources.dll">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.WebPages.Deployment.resources.dll">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.WebPages.Razor.resources.dll">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Web.WebPages.resources.dll">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.css">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.css.map">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap-theme.min.css.map">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css.map">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>06/23/2021 11:33:42</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css.map">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Content/custom/CaseStyle.css">
+      <publishTime>08/17/2021 11:01:14</publishTime>
+    </File>
+    <File Include="Content/custom/ChangePassword.css">
+      <publishTime>07/06/2021 13:49:42</publishTime>
+    </File>
+    <File Include="Content/custom/cms/Common.css">
+      <publishTime>08/13/2021 14:06:28</publishTime>
+    </File>
+    <File Include="Content/custom/cms/Login.css">
+      <publishTime>08/09/2021 10:00:05</publishTime>
+    </File>
+    <File Include="Content/custom/CustomerDetail.css">
+      <publishTime>07/05/2021 14:05:14</publishTime>
+    </File>
+    <File Include="Content/custom/CustomerProduct.css">
+      <publishTime>07/15/2021 14:28:05</publishTime>
+    </File>
+    <File Include="Content/custom/CustomerProductHistory.css">
+      <publishTime>08/11/2021 09:45:50</publishTime>
+    </File>
+    <File Include="Content/custom/Default.css">
+      <publishTime>08/18/2021 16:20:00</publishTime>
+    </File>
+    <File Include="Content/custom/EmailUs.css">
+      <publishTime>08/09/2021 09:57:41</publishTime>
+    </File>
+    <File Include="Content/custom/EmailUsAuth.css">
+      <publishTime>08/09/2021 08:50:24</publishTime>
+    </File>
+    <File Include="Content/custom/Error.css">
+      <publishTime>07/07/2021 15:23:54</publishTime>
+    </File>
+    <File Include="Content/custom/GlobalError.css">
+      <publishTime>07/08/2021 15:15:27</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/change-password.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/customer-details.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/email-us.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/new-service-case.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/open-repair-requests.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/CaseHeader/product-history.jpg">
+      <publishTime>07/02/2021 16:23:18</publishTime>
+    </File>
+    <File Include="Content/custom/images/email-us.jpg">
+      <publishTime>06/25/2021 10:45:45</publishTime>
+    </File>
+    <File Include="Content/custom/images/favicon.ico">
+      <publishTime>06/24/2021 17:19:47</publishTime>
+    </File>
+    <File Include="Content/custom/images/header-matrix-logo.png">
+      <publishTime>06/25/2021 09:32:06</publishTime>
+    </File>
+    <File Include="Content/custom/images/login_002_new.jpg">
+      <publishTime>06/23/2021 11:16:43</publishTime>
+    </File>
+    <File Include="Content/custom/images/matrix-logo-white-wpadding.png">
+      <publishTime>06/23/2021 09:19:06</publishTime>
+    </File>
+    <File Include="Content/custom/Login.css">
+      <publishTime>08/09/2021 09:52:40</publishTime>
+    </File>
+    <File Include="Content/custom/NewServiceCase.css">
+      <publishTime>07/15/2021 15:16:45</publishTime>
+    </File>
+    <File Include="Content/custom/OpenRepairRequests.css">
+      <publishTime>07/23/2021 09:53:59</publishTime>
+    </File>
+    <File Include="Content/custom/ProductServiceHistory.css">
+      <publishTime>07/26/2021 13:58:57</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>06/23/2021 08:01:59</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_222222_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_454545_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_888888_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery-ui.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.accordion.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.all.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.autocomplete.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.base.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.button.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.core.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.datepicker.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.dialog.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.progressbar.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.resizable.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.selectable.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.slider.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.tabs.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.theme.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_222222_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_454545_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_888888_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery-ui.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.accordion.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.autocomplete.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.button.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.core.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.datepicker.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.dialog.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.progressbar.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.resizable.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.selectable.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.slider.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.tabs.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.theme.min.css">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>06/23/2021 08:01:59</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>08/17/2021 17:10:01</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Scripts/Custom/Common.js">
+      <publishTime>08/18/2021 11:36:31</publishTime>
+    </File>
+    <File Include="Scripts/Custom/CustomerProduct.js">
+      <publishTime>08/18/2021 16:51:17</publishTime>
+    </File>
+    <File Include="Scripts/Custom/NewServiceCase.js">
+      <publishTime>08/18/2021 16:48:50</publishTime>
+    </File>
+    <File Include="Scripts/Custom/ProductServiceHistory.js">
+      <publishTime>08/18/2021 17:03:56</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.js">
+      <publishTime>06/23/2021 08:52:27</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.min.js">
+      <publishTime>06/23/2021 08:52:27</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.min.map">
+      <publishTime>06/23/2021 08:52:27</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.24.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.24.min.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>06/23/2021 08:02:06</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>06/23/2021 08:02:06</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>06/23/2021 08:02:07</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.2.0.debug.js">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.2.0.js">
+      <publishTime>06/23/2021 08:02:13</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>06/23/2021 08:02:08</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>06/23/2021 08:52:28</publishTime>
+    </File>
+    <File Include="Views/Case/ChangePassword.cshtml">
+      <publishTime>08/09/2021 17:24:32</publishTime>
+    </File>
+    <File Include="Views/Case/CustomerDetail.cshtml">
+      <publishTime>08/09/2021 17:24:38</publishTime>
+    </File>
+    <File Include="Views/Case/CustomerProductHistory.cshtml">
+      <publishTime>08/18/2021 17:19:47</publishTime>
+    </File>
+    <File Include="Views/Case/EmailUs.cshtml">
+      <publishTime>08/09/2021 17:26:55</publishTime>
+    </File>
+    <File Include="Views/Case/Error.cshtml">
+      <publishTime>07/26/2021 08:41:48</publishTime>
+    </File>
+    <File Include="Views/Case/Messages.cshtml">
+      <publishTime>08/10/2021 16:21:42</publishTime>
+    </File>
+    <File Include="Views/Case/NewServiceCase.cshtml">
+      <publishTime>08/10/2021 13:25:57</publishTime>
+    </File>
+    <File Include="Views/Case/OpenRepairRequest.cshtml">
+      <publishTime>08/18/2021 15:20:04</publishTime>
+    </File>
+    <File Include="Views/Case/ProductServiceHistory.cshtml">
+      <publishTime>08/18/2021 17:00:16</publishTime>
+    </File>
+    <File Include="Views/Case/_CustomerProduct.cshtml">
+      <publishTime>08/18/2021 15:43:41</publishTime>
+    </File>
+    <File Include="Views/Main/EmailUs.cshtml">
+      <publishTime>08/09/2021 17:27:41</publishTime>
+    </File>
+    <File Include="Views/Main/Login.cshtml">
+      <publishTime>08/10/2021 16:57:30</publishTime>
+    </File>
+    <File Include="Views/Shared/GlobalError.cshtml">
+      <publishTime>07/07/2021 15:02:07</publishTime>
+    </File>
+    <File Include="Views/Shared/OutOfService.cshtml">
+      <publishTime>07/08/2021 14:58:09</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>06/23/2021 08:18:32</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout_Case.cshtml">
+      <publishTime>07/30/2021 14:36:00</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout_Unauth.cshtml">
+      <publishTime>08/09/2021 08:40:35</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout_Unauth2.cshtml">
+      <publishTime>07/07/2021 14:13:20</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>08/17/2021 17:10:00</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>06/23/2021 08:01:59</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>08/19/2021 08:00:44</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,395 @@
+﻿@model InstallationAPPNonUnify.ViewModels.InstalledProductsViewModel
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+}
+<script>
+    var logoutUrl = '@Url.Action("Logout", "Main")';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    @*var modelMessage = '@Html.Raw(Model.Message)';*@
+    var fieldDisplayName = @Html.Raw(Json.Encode(Model.FieldDispalyName));
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+<form id="InstallMain" class="form1" enctype="multipart/form-data">
+    <div class="im-page ia-root">
+        <div class="container" id="body-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group" style="background-color:white" id="InstallMain">
+                        <h1 style="text-align:center">Matrix Fitness Installation Details</h1>
+                        <!-- Toggle buttons for "To Be Installed" and "Installed This Time" -->
+                        <div class="tab-container">
+                            <button id="toBeInstalled" class="tab-button active" type="button" onclick="toggleActive('toBeInstalled', event)">@ViewBag.ToBeInstalled</button>
+                            <button id="installedThisTime" class="tab-button" type="button" onclick="toggleActive('installedThisTime', event)">@ViewBag.InstalledThisTime</button>
+                        </div>
+                        <input type="hidden" id="SalesOrderID" value="@Request.QueryString["SalesOrderID"]" />
+                        <input type="hidden" id="RequestDeliveryBy" value="@Request.QueryString["RequestDeliveryBy"]" />
+                        @* loading CustomerOrderInformationTable *@
+                        @{
+                            Html.RenderPartial("_InstallMain");   //initialize
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    (function () {
+        //載入上方的底圖
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/CaseHeader/product-history.jpg")' + ")";
+
+
+    })();
+    function toggleActive(selectedButtonId, event) {
+        // 取消事件的預設行為，防止 postback
+        event.preventDefault();
+
+        // 取得按鈕元素
+        var toBeInstalledButton = document.getElementById('toBeInstalled');
+        var installedThisTimeButton = document.getElementById('installedThisTime');
+        var SearchMachineDiv = document.getElementById('SearchMachine');
+        var SearchMachineDiv2 = document.getElementById('SearchMachine2');
+        var ConfirmInstallationButton = document.getElementById('ConfirmInstallation');
+
+        // 取得內容區域元素
+        var InstallMainTable1 = document.getElementById('InstallMainTable1');
+        var InstallMainTable2 = document.getElementById('InstallMainTable2');
+
+        if (selectedButtonId === 'toBeInstalled') {
+            // 切換按鈕狀態
+            toBeInstalledButton.classList.add('active');
+            installedThisTimeButton.classList.remove('active');
+
+            // 顯示 'To Be Installed' 內容，隱藏 'Installed This Time' 內容
+            InstallMainTable1.style.display = 'block';
+            InstallMainTable2.style.display = 'none';
+            SearchMachineDiv.style.display = 'block';
+            SearchMachineDiv2.style.display = 'none';
+            ConfirmInstallation.style.display = 'block';
+
+        } else if (selectedButtonId === 'installedThisTime') {
+            // 切換按鈕狀態
+            installedThisTimeButton.classList.add('active');
+            toBeInstalledButton.classList.remove('active');
+
+            // 顯示 'Installed This Time' 內容，隱藏 'To Be Installed' 內容
+            InstallMainTable2.style.display = 'block';
+            InstallMainTable1.style.display = 'none';
+            SearchMachineDiv.style.display = 'none';
+            SearchMachineDiv2.style.display = 'block';
+            //ConfirmInstallationButton.style.display = 'none';
+        }
+    }
+
+    function searchProductData(event) {
+        event.preventDefault();
+
+        const productNo = document.querySelector('[name="ProductNo"]').value;
+        const salesOrderID = document.getElementById("SalesOrderID").value;
+        const requestDeliveryBy = document.getElementById("RequestDeliveryBy").value;
+
+        $.ajax({
+            url: '@Url.Action("SearchProductData", "Order")',
+            type: 'POST',
+            data:{
+                productNo: productNo,
+                salesOrderID: salesOrderID,
+                requestDeliveryBy: requestDeliveryBy
+            },
+            success: function (response) {
+                if (response.success) {
+                    // 把 InstallMainTable1 裡面換成回傳的 HTML
+                    $('#InstallMainTable1').html(response.html);
+                    setDefaultDate();
+                    Swal.fire({
+                        title: '查詢成功',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        width: '50rem'
+                    });
+                } else {
+                    Swal.fire({
+                        title: '查詢失敗',
+                        text: response.message,
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: '操作失敗',
+                    text: xhr.responseText,
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
+        });
+    }
+    function searchProductData2(event) {
+        event.preventDefault();
+
+        const productNo = document.querySelector('[name="ProductNo"]').value;
+        const salesOrderID = document.getElementById("SalesOrderID").value;
+        const requestDeliveryBy = document.getElementById("RequestDeliveryBy").value;
+
+        $.ajax({
+            url: '@Url.Action("SearchProductData2", "Order")',
+            type: 'POST',
+            data:{
+                productNo: productNo,
+                salesOrderID: salesOrderID,
+                requestDeliveryBy: requestDeliveryBy
+            },
+            success: function (response) {
+                if (response.success) {
+                    // 把 InstallMainTable1 裡面換成回傳的 HTML
+                    $('#InstallMainTable2').html(response.html);
+                    setDefaultDate();
+                    Swal.fire({
+                        title: '查詢成功',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        width: '50rem'
+                    });
+                } else {
+                    Swal.fire({
+                        title: '查詢失敗',
+                        text: response.message,
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: '操作失敗',
+                    text: xhr.responseText,
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
+        });
+    }
+    function openModal(button, event) {
+    // 取消事件的預設行為，防止 postback
+    if (event) event.preventDefault();
+
+    const productName = button.getAttribute('data-product-name');
+    const qty         = button.getAttribute('data-qty-name');
+    const qty2        = button.getAttribute('data-qty2-name');
+    const productid   = button.getAttribute('data-id-name');
+    const pno         = button.getAttribute('data-pno-name');
+    const sno         = button.getAttribute('data-sno-name');
+
+    // Modal 標題：產品名稱
+    document.getElementById('modalProductName').innerHTML = productName || '';
+
+    // 數量
+    document.getElementById('Excepted').value  = qty  || ''; // 訂單數量（Expected Quantity）
+    document.getElementById('Delivered').value = qty2 || ''; // 安裝數量（Delivered Quantity）
+
+    // Product Id / Product no
+    document.getElementById('productid').value     = productid || '';
+    document.getElementById('productno').innerText = pno || '';
+
+    // Serial no：沒有值就顯示「No serial number」
+    var serialSpan = document.getElementById('serialno');
+    if (!sno || sno.trim() === '' || sno === 'null' || sno === 'undefined') {
+        serialSpan.innerText = 'No serial number';
+    } else {
+        serialSpan.innerText = sno;
+    }
+
+    // 重設 Issue 下拉選單、備註與上傳檔案
+    var issueSelect = document.getElementById('issue');
+    if (issueSelect) issueSelect.selectedIndex = 0;
+
+    var notes = document.getElementById('notes');
+    if (notes) notes.value = '';
+
+    var fileInput = document.getElementById('upload');
+    if (fileInput) fileInput.value = '';
+
+    // 顯示模態框
+    document.getElementById('reportIssueModal').style.display = 'block';
+}
+
+function closeModal(event) {
+    // 取消事件的預設行為，防止 postback
+    if (event) event.preventDefault();
+    document.getElementById('reportIssueModal').style.display = 'none'; // 隱藏模態框
+}
+
+
+    // 也可以在外部點擊時關閉模態框
+    window.onclick = function (event) {
+        const modal = document.getElementById('reportIssueModal');
+        if (event.target === modal) {
+            closeModal(event);
+        }
+    }
+
+   function saveIssue(event) {
+    if (event) event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    var title      = $('#modalProductName').text();
+    var proID      = $('#productid').val();
+    var delivered  = $('#Delivered').val();
+    var issue      = $('#issue').val();
+    var notes      = $('#notes').val();
+    var fileData   = $('#upload')[0].files[0];
+    const salesOrderID      = urlParams.get('SalesOrderID');
+    const requestDeliveryBy = urlParams.get('RequestDeliveryBy');
+
+    // ✅ 4. 沒上傳照片的訊息文字
+    if (!fileData) {
+        alert("Please upload a photo of the issue");
+        return;
+    }
+
+    // ✅ wording 改成 Quantity，比較一致
+    if (!delivered) {
+        alert("Please input delivered quantity.");
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var base64Image = e.target.result; // 這就是 base64 字串(DataURL)
+
+        var formData = new FormData();
+        formData.append('DeliveredAmount', delivered);
+        formData.append('ProductId', proID);
+        formData.append('TitleName', title);
+        formData.append('IssueType', issue);
+        formData.append('Notes', notes);
+        formData.append('ImageBase64', base64Image);
+        formData.append('SalesOrderId', salesOrderID);
+        formData.append('RequestDeliveryBy', requestDeliveryBy);
+
+        $.ajax({
+            url: '@Url.Action("SaveIssueData", "Order")',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                Swal.fire({
+                    title: '@Html.Raw(ViewBag.IssueSaveSuccess)',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    width: '50rem'
+                });
+
+                closeModal(event);
+
+                // 加上延遲，確保 modal 關閉動畫結束再刷新
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
+            },
+            error: function () {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to save the issue. Please try again.',
+                    icon: 'error'
+                });
+            }
+        });
+    };
+
+    // 將圖片讀成 base64(DataURL)
+    reader.readAsDataURL(fileData);
+}
+
+
+    function confirmInstallation(event) {
+        // 取消事件的預設行為，防止 postback
+        event.preventDefault();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestDeliveryBy = urlParams.get('RequestDeliveryBy');
+        const salesOrderID = urlParams.get('SalesOrderID');
+
+        console.log("RequestDeliveryBy:", requestDeliveryBy);
+        console.log("SalesOrderID:", salesOrderID);
+
+        if (salesOrderID && requestDeliveryBy) {
+            // 建立 redirect URL：注意大小寫與參數名稱對應後端
+            const redirectUrl = '@Url.Action("InstallationCompletion", "Order")'
+                + '?salesOrderId=' + encodeURIComponent(salesOrderID)
+                + '&requestDeliveryBy=' + encodeURIComponent(requestDeliveryBy);
+
+            console.log("Redirecting to:", redirectUrl);
+            window.location.href = redirectUrl;
+        } else {
+            console.error('SalesOrderID or RequestDeliveryBy is not defined in the URL.');
+        }
+    }
+
+   async function nonIssue(event, el) {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestDeliveryBy = urlParams.get('RequestDeliveryBy');
+    const salesOrderID      = urlParams.get('SalesOrderID');
+    const productNo         = el?.dataset?.pnoName;
+
+    if (!salesOrderID || !requestDeliveryBy || !productNo) {
+        console.error('缺少必要參數：SalesOrderID / RequestDeliveryBy / ProductNo');
+        return;
+    }
+
+    const actionBase = '@Url.Action("InstallationNoIssue", "Order", new { area = "" })';
+    const qs = new URLSearchParams({
+        salesOrderId: salesOrderID,
+        requestDeliveryBy: requestDeliveryBy,
+        productNo: productNo
+    }).toString();
+
+    try {
+        const resp = await fetch(`${actionBase}?${qs}`, {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' } // 方便伺服器辨識 AJAX
+        });
+        const data = await resp.json();
+
+        if (data && data.success) {
+            // ✅ 後端完成 → 重新整理原始頁面
+            window.location.reload();
+        } else {
+            alert(data?.message || 'Operation failed.');
+        }
+    } catch (e) {
+        console.error(e);
+        alert('Network error.');
+    }
+}
+
+
+    // Function to set the default value for the date input
+    function setDefaultDate() {
+        const params = new URLSearchParams(window.location.search);
+        const requestDeliveryBy = params.get('RequestDeliveryBy');
+        if (requestDeliveryBy) {
+            const dateInput = document.getElementById('requestDeliveryDate');
+            dateInput.value = requestDeliveryBy; // Set the default date
+
+            const dateInput2 = document.getElementById('requestDeliveryDate2');
+            dateInput2.value = requestDeliveryBy; // Set the default date
+        }
+    }
+
+    // Call the function when the page loads
+    window.onload = setDefaultDate;
+
+</script>

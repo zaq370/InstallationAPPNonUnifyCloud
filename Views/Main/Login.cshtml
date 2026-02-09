@@ -1,0 +1,94 @@
+﻿@model InstallationAPPNonUnify.ViewModels.LoginViewModel
+@using Newtonsoft.Json
+
+@{
+    Layout = "~/Views/Shared/" + @ViewBag.Layout;
+    var test = string.Empty;
+}
+@if (Model.TestUserLanguage != null) { 
+    for (var i = 0; i < Model.TestUserLanguage.Length ; i++)
+    {
+        test = test + "," +  Model.TestUserLanguage[i];
+    }
+}
+
+
+<script>
+    var modelMessage = '@Html.Raw(Model.Message)';
+    var alertMessageFromModel = "@Html.Raw(Model.AlertMessage)";
+    var testModeMessage = '@Model.TestModeMessage';
+    (function () {
+        try {
+            if (alertMessageFromModel != null && alertMessageFromModel != "") alert(alertMessageFromModel);
+        } catch (e) { }
+    })();
+</script>
+
+<div id="LoginView">
+    <div class="jumbotron" id="jumbotronImg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="title">
+                        <p id="welcome-to-the">
+                            @ViewBag.WelcomeString
+                        </p>
+                        <p id="matrix-service-portal">
+                            @ViewBag.ServiceName
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                            @using (Html.BeginForm("Login", "Main", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginForm", @class = "form-signin validationForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <h2 class="sign-in">
+                                    @ViewBag.Signin
+                                </h2>
+                                <span class="columnName">
+                                    @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.UserName))
+                                </span>
+                                <br />
+                                <div>
+                                    @Html.TextBoxFor(model => model.UserName, new { placeholder = @ViewBag.UserIdPlaceholder, @class = "input-block-level input-field" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "filedError" })
+                                </div>
+                                <br />
+                                <span class="columnName">
+                                    @CustomHelper.DisplayName(Model.FieldDispalyName, Html.DisplayNameFor(model => model.UserPassword))
+                                </span>
+                                <br />
+                                <div>
+                                    @Html.PasswordFor(model => model.UserPassword, new { placeholder = @ViewBag.PasswordPlaceholder, @class = "input-block-level input-field" })
+                                    @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "filedError" })
+                                </div>
+                                <br />
+                                <input id="btnLogin" type="submit" value='@ViewBag.Signin' class="btn-red-primary btn-large btn-block buttons-primary-red ok" />
+                                <br>
+                                if (Model.Organization != null /*&& !Model.Organization.Equals("JHTNL")*/) { 
+                                    <a href=@Url.Action("ForgetPassword") ><u class="text-align-center">@ViewBag.ForgetPassword</u></a>
+                                }
+                            }
+                            <div class="statement">
+                                @Html.Raw(ViewBag.Statement)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        document.getElementById("jumbotronImg").style.backgroundImage = "url(" + '@Url.Content("~/Content/custom/images/login_002_new.jpg")' + ")";
+    })();
+</script>
